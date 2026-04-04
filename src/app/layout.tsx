@@ -49,6 +49,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${plusJakartaSans.variable} antialiased`}>
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
           rel="stylesheet"
