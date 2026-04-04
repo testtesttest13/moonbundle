@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
+import Image from "next/image";
 
 const features = [
   {
@@ -39,7 +40,7 @@ const features = [
     description:
       "Configurez des offres achetez-en-un-obtenez-en-un, achetez-2-le-3ème-offert, et toute combinaison Buy X Get Y. Le moteur promotionnel du e-commerce.",
     badge: null,
-    image: "/bundle.webp",
+    image: "/progress-gift.png",
   },
   {
     id: "cart",
@@ -67,7 +68,7 @@ export default function Features() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="relative px-6 py-24 sm:py-32">
+    <section id="features" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <FadeInSection className="mb-16 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-accent/15 bg-violet-accent/5 px-3 py-1 text-xs font-medium text-violet-accent">
@@ -85,7 +86,7 @@ export default function Features() {
         </FadeInSection>
 
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
-          {/* Tab buttons */}
+          {/* Tabs */}
           <div className="flex flex-row gap-2 overflow-x-auto pb-2 lg:w-64 lg:shrink-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0">
             {features.map((feat, i) => (
               <button
@@ -114,7 +115,7 @@ export default function Features() {
             ))}
           </div>
 
-          {/* Feature content */}
+          {/* Content */}
           <div className="flex-1">
             <AnimatePresence mode="wait">
               <motion.div
@@ -122,9 +123,10 @@ export default function Features() {
                 initial={{ opacity: 0, y: 12, scale: 0.97, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -8, scale: 0.97, filter: "blur(4px)" }}
-                transition={{ duration: 0.4, ease }}
+                transition={{ duration: 0.35, ease }}
                 className="glass-card overflow-hidden"
               >
+                {/* Text */}
                 <div className="p-8 sm:p-10">
                   <div className="flex items-start justify-between">
                     <div>
@@ -146,15 +148,15 @@ export default function Features() {
                   </p>
                 </div>
 
-                {/* Screenshot - taille contenue */}
-                <div className="relative mx-6 mb-6 sm:mx-8 sm:mb-8">
-                  <div className="relative overflow-hidden rounded-xl border border-white/5">
-                    <img
-                      src={features[active].image}
-                      alt={features[active].label}
-                      className="w-full max-h-[320px] object-contain object-center"
-                    />
-                  </div>
+                {/* Image - ratio fixe, bien contenue */}
+                <div className="relative mx-6 mb-6 flex items-center justify-center rounded-xl border border-white/5 bg-navy-800/50 p-4 sm:mx-8 sm:mb-8 sm:p-6">
+                  <Image
+                    src={features[active].image}
+                    alt={features[active].label}
+                    width={600}
+                    height={400}
+                    className="h-auto w-full max-w-[500px] rounded-lg object-contain"
+                  />
                 </div>
               </motion.div>
             </AnimatePresence>

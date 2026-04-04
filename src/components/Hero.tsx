@@ -6,113 +6,29 @@ import { AnimatedCounter } from "./AnimatedText";
 const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function OrbitingParticles() {
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      {/* Ring 1 */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 sm:h-[400px] sm:w-[400px]"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-blue-accent/50 shadow-[0_0_12px_rgba(77,124,255,0.6)]" />
-        <div className="absolute bottom-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-violet-accent/40 shadow-[0_0_10px_rgba(124,92,255,0.5)]" />
-      </motion.div>
-      {/* Ring 2 */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-[220px] w-[500px] -translate-x-1/2 -translate-y-1/2 sm:h-[280px] sm:w-[650px]"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute top-0 left-1/4 h-1 w-1 rounded-full bg-blue-light/60 shadow-[0_0_8px_rgba(91,141,239,0.5)]" />
-        <div className="absolute bottom-0 right-1/4 h-1.5 w-1.5 rounded-full bg-blue-accent/30" />
-        <div className="absolute top-1/2 right-0 h-1 w-1 rounded-full bg-violet-accent/20" />
-      </motion.div>
-      {/* Ring 3 - elliptical */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-[180px] w-[700px] -translate-x-1/2 -translate-y-1/2 sm:h-[200px] sm:w-[900px]"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="absolute top-0 left-1/3 h-0.5 w-0.5 rounded-full bg-white/30" />
-        <div className="absolute bottom-0 right-1/3 h-1 w-1 rounded-full bg-blue-accent/20" />
-      </motion.div>
-    </div>
-  );
-}
-
-function AnimatedCTAButton() {
-  return (
-    <a
-      href={INSTALL_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative inline-flex items-center"
-    >
-      {/* Animated glow ring */}
-      <motion.div
-        className="absolute -inset-1 rounded-full opacity-60"
-        style={{
-          background: "conic-gradient(from var(--shimmer-angle, 0deg), transparent 50%, rgba(77,124,255,0.4) 55%, rgba(124,92,255,0.4) 60%, transparent 65%)",
-        }}
-        animate={{
-          "--shimmer-angle": ["0deg", "360deg"],
-        } as Record<string, string[]>}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-      />
-      {/* Pulsing outer glow */}
-      <motion.div
-        className="absolute -inset-3 rounded-full bg-blue-accent/10 blur-xl"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* Button body */}
-      <span className="btn-shine relative z-10 flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-semibold text-navy-900 transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] group-hover:scale-[1.03]">
-        Installer Gratuitement sur Shopify
-        <img src="/shopify.png" alt="Shopify" className="h-5 w-5 object-contain" />
-      </span>
-    </a>
-  );
-}
+const showcaseImages = [
+  { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -6, x: -60, z: 1 },
+  { src: "/cart-drawer.webp", alt: "Cart Drawer", rotate: 0, x: 0, z: 3 },
+  { src: "/one-click-upsell.webp", alt: "Post-Purchase", rotate: 6, x: 60, z: 2 },
+];
 
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-28 pb-20">
-      {/* Dot grid background */}
+      {/* Dot grid */}
       <div className="dot-grid pointer-events-none absolute inset-0 opacity-60" />
 
-      {/* Animated gradient orbs */}
+      {/* Animated gradient orbs - CSS animations for perf */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <motion.div
-          className="absolute top-1/4 left-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-accent/8 blur-[120px]"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-1/4 h-[300px] w-[400px] rounded-full bg-violet-accent/6 blur-[100px]"
-          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
+        <div className="absolute top-1/4 left-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-accent/8 blur-[120px] animate-pulse-glow" />
+        <div className="absolute top-1/3 right-1/4 h-[300px] w-[400px] rounded-full bg-violet-accent/6 blur-[100px] animate-pulse-glow [animation-delay:2s]" />
       </div>
 
-      {/* Decorative animated vertical lines (TrendTrack style) */}
+      {/* Decorative lines */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute top-0 bottom-0 left-[10%] w-px bg-gradient-to-b from-transparent via-blue-accent/10 to-transparent" />
         <div className="absolute top-0 bottom-0 right-[10%] w-px bg-gradient-to-b from-transparent via-violet-accent/10 to-transparent" />
-        <motion.div
-          className="absolute left-[10%] top-[20%] h-20 w-px bg-gradient-to-b from-blue-accent/40 to-transparent"
-          animate={{ y: [0, 200, 0], opacity: [0, 1, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-[10%] top-[40%] h-16 w-px bg-gradient-to-b from-violet-accent/30 to-transparent"
-          animate={{ y: [0, 150, 0], opacity: [0, 1, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
       </div>
-
-      {/* Orbiting particles around hero */}
-      <OrbitingParticles />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
         {/* Badge */}
@@ -132,46 +48,43 @@ export default function Hero() {
         </motion.div>
 
         {/* Headline */}
-        <div className="overflow-hidden">
-          <motion.h1
-            className="max-w-4xl text-5xl leading-[1.1] font-bold tracking-tight text-white sm:text-6xl lg:text-7xl font-[family-name:var(--font-heading)]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {["Boostez", "votre", "AOV"].map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-[0.25em]"
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease }}
-              >
-                {word}
-              </motion.span>
-            ))}
-            <br />
-            {["à", "chaque"].map((word, i) => (
-              <motion.span
-                key={word}
-                className="inline-block mr-[0.25em]"
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.6, delay: 0.35 + i * 0.08, ease }}
-              >
-                {word}
-              </motion.span>
-            ))}
+        <motion.h1
+          className="max-w-4xl text-5xl leading-[1.1] font-bold tracking-tight text-white sm:text-6xl lg:text-7xl font-[family-name:var(--font-heading)]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          {["Boostez", "votre", "AOV"].map((word, i) => (
             <motion.span
-              className="inline-block bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent"
+              key={i}
+              className="inline-block mr-[0.25em]"
               initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.6, delay: 0.5, ease }}
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease }}
             >
-              étape
+              {word}
             </motion.span>
-          </motion.h1>
-        </div>
+          ))}
+          <br />
+          {["à", "chaque"].map((word, i) => (
+            <motion.span
+              key={word}
+              className="inline-block mr-[0.25em]"
+              initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.6, delay: 0.35 + i * 0.08, ease }}
+            >
+              {word}
+            </motion.span>
+          ))}
+          <motion.span
+            className="inline-block bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.6, delay: 0.5, ease }}
+          >
+            étape
+          </motion.span>
+        </motion.h1>
 
         {/* Subtitle */}
         <motion.p
@@ -181,7 +94,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.6, ease }}
         >
           L&apos;app Shopify tout-en-un pour les Bundles, Cart Upsell &amp;
-          Post-Purchase. Configurez en 5 minutes. Adorée par 250+ marchands.
+          Post-Achat. Configurez en 5 minutes. Adorée par 250+ marchands.
         </motion.p>
 
         {/* CTAs */}
@@ -191,7 +104,19 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75, ease }}
         >
-          <AnimatedCTAButton />
+          <a
+            href={INSTALL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center"
+          >
+            {/* Pulsing glow */}
+            <div className="absolute -inset-3 rounded-full bg-blue-accent/10 blur-xl animate-pulse-glow" />
+            <span className="btn-shine relative z-10 flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-semibold text-navy-900 transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] group-hover:scale-[1.03]">
+              Installer Gratuitement sur Shopify
+              <img src="/shopify.png" alt="Shopify" className="h-5 w-5 object-contain" />
+            </span>
+          </a>
           <a
             href="#features"
             className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-text-secondary backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/8"
@@ -203,7 +128,7 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Stats row */}
+        {/* Stats */}
         <motion.div
           className="mt-16 grid grid-cols-3 gap-8 sm:gap-16"
           initial={{ opacity: 0, y: 30 }}
@@ -232,28 +157,38 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Screenshot placeholder with animated border */}
+        {/* 3 images en éventail */}
         <motion.div
-          className="relative mt-20 w-full max-w-4xl"
-          initial={{ opacity: 0, y: 60, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="relative mt-20 flex h-[350px] w-full max-w-4xl items-center justify-center sm:h-[420px]"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1, ease }}
         >
-          <div className="pointer-events-none absolute -inset-8 rounded-3xl bg-gradient-to-b from-blue-accent/10 via-violet-accent/5 to-transparent blur-2xl animate-pulse-glow" />
-          <div className="animated-border">
-            <div className="relative flex h-[350px] items-center justify-center rounded-[1.25rem] bg-gradient-to-br from-navy-800 via-navy-900 to-navy-800 sm:h-[450px] lg:h-[500px]">
-              <div className="dot-grid absolute inset-0 rounded-[1.25rem] opacity-40" />
-              {/* TODO: Replace with actual app screenshot */}
-              <div className="relative flex flex-col items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5">
-                  <span className="text-2xl">📱</span>
-                </div>
-                <span className="text-sm font-medium text-text-muted">
-                  Capture d&apos;écran de l&apos;app
-                </span>
-              </div>
-            </div>
+          {/* Glow behind */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="h-64 w-[500px] rounded-full bg-blue-accent/8 blur-[80px] animate-pulse-glow" />
           </div>
+
+          {showcaseImages.map((img, i) => (
+            <motion.div
+              key={img.src}
+              className="absolute w-[260px] sm:w-[300px] will-change-transform"
+              style={{ zIndex: img.z }}
+              initial={{ opacity: 0, y: 40, rotate: 0, x: 0 }}
+              animate={{ opacity: 1, y: 0, rotate: img.rotate, x: img.x }}
+              transition={{ duration: 0.7, delay: 1.2 + i * 0.12, ease }}
+              whileHover={{ scale: 1.05, zIndex: 10, rotate: 0 }}
+            >
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-2xl shadow-black/40 transition-shadow duration-300 hover:shadow-blue-accent/10">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
