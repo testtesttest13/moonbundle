@@ -13,6 +13,7 @@ const features = [
       "Créez des bundles qui ont du sens pour vos clients avec des remises automatiques. Groupez des produits complémentaires et regardez votre panier moyen décoller.",
     badge: "Populaire",
     icon: "📦",
+    image: "/fixed-bundle.png",
   },
   {
     id: "volume",
@@ -22,6 +23,7 @@ const features = [
       "Affichez des paliers de prix qui encouragent vos clients à ajouter plus d'articles. Les remises visuelles par quantité rendent les économies évidentes et irrésistibles.",
     badge: null,
     icon: "📊",
+    image: "/quantity-breaks.png",
   },
   {
     id: "mixmatch",
@@ -31,6 +33,7 @@ const features = [
       "Donnez à vos clients la liberté de choisir leurs produits préférés tout en contrôlant la structure de remise. Flexibilité maximale, conversions maximales.",
     badge: null,
     icon: "🔀",
+    image: "/bundle.webp",
   },
   {
     id: "bogo",
@@ -40,6 +43,7 @@ const features = [
       "Configurez des offres achetez-en-un-obtenez-en-un, achetez-2-le-3ème-offert, et toute combinaison Buy X Get Y. Le moteur promotionnel du e-commerce.",
     badge: null,
     icon: "🎁",
+    image: "/bundle.webp",
   },
   {
     id: "cart",
@@ -49,6 +53,7 @@ const features = [
       "Suggestions d'upsell intelligentes, cross-sell de produits complémentaires, cadeaux gratuits et barre de progression — le tout dans un panier latéral élégant.",
     badge: "Exclusif",
     icon: "🛒",
+    image: "/cart-drawer.webp",
   },
   {
     id: "postpurchase",
@@ -58,6 +63,7 @@ const features = [
       "Captez du revenu additionnel sur la page de remerciement et de statut de commande, sans friction. Vos clients achètent en un clic — sans re-saisir leurs infos.",
     badge: "Exclusif",
     icon: "🎯",
+    image: "/one-click-upsell.webp",
   },
 ];
 
@@ -147,17 +153,12 @@ export default function Features() {
                 </div>
 
                 <div className="relative mx-6 mb-6 sm:mx-8 sm:mb-8">
-                  <div className="gradient-line flex h-[260px] items-center justify-center rounded-xl border border-white/5 bg-gradient-to-br from-navy-800 to-navy-900 sm:h-[320px]">
-                    <div className="dot-grid absolute inset-0 rounded-xl opacity-30" />
-                    {/* TODO: Remplacer par une vraie capture */}
-                    <div className="relative flex flex-col items-center gap-2">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-lg">
-                        {features[active].icon}
-                      </div>
-                      <span className="text-xs text-text-muted/50">
-                        Capture {features[active].label}
-                      </span>
-                    </div>
+                  <div className="relative overflow-hidden rounded-xl border border-white/5 bg-gradient-to-br from-navy-800 to-navy-900">
+                    <img
+                      src={features[active].image}
+                      alt={features[active].label}
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                 </div>
               </motion.div>
