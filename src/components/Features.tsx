@@ -1,19 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 const features = [
   {
@@ -63,8 +51,6 @@ const features = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Features() {
-  const isMobile = useIsMobile();
-
   return (
     <section id="features" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
@@ -86,14 +72,12 @@ export default function Features() {
             <motion.div
               key={feat.title}
               className="group relative"
-              style={{
-                marginTop: isMobile ? 0 : `${feat.offsetY}px`,
-              }}
+              style={{ marginTop: `${feat.offsetY}px` }}
               initial={{ opacity: 0, y: 50, rotate: 0 }}
               whileInView={{
                 opacity: 1,
                 y: 0,
-                rotate: isMobile ? 0 : feat.rotate,
+                rotate: feat.rotate,
               }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{

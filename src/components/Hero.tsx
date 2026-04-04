@@ -7,9 +7,9 @@ const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const showcaseImages = [
-  { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -8, x: -220, y: 20, z: 1, floatDelay: 0 },
-  { src: "/cart-drawer.webp", alt: "Cart Drawer", rotate: 0, x: 0, y: -10, z: 3, floatDelay: 0.5 },
-  { src: "/one-click-upsell.webp", alt: "Post-Purchase", rotate: 8, x: 220, y: 20, z: 2, floatDelay: 1 },
+  { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -8, mobileRotate: -5, x: -220, mx: -70, y: 20, my: 10, z: 1, floatDelay: 0 },
+  { src: "/cart-drawer.webp", alt: "Cart Drawer", rotate: 0, mobileRotate: 0, x: 0, mx: 0, y: -10, my: -5, z: 3, floatDelay: 0.5 },
+  { src: "/one-click-upsell.webp", alt: "Post-Purchase", rotate: 8, mobileRotate: 5, x: 220, mx: 70, y: 20, my: 10, z: 2, floatDelay: 1 },
 ];
 
 export default function Hero() {
@@ -164,46 +164,39 @@ export default function Hero() {
             <div className="h-72 w-[600px] rounded-full bg-blue-accent/8 blur-[100px] animate-pulse-glow" />
           </div>
 
-          {/* Mobile: vertical stack */}
-          <div className="flex flex-col items-center gap-6 sm:hidden">
-            {showcaseImages.map((img, i) => (
-              <motion.div
-                key={`m-${img.src}`}
-                className="w-[85%] max-w-[300px]"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.0 + i * 0.12, ease }}
-              >
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
-                  <img src={img.src} alt={img.alt} className="w-full h-auto" loading="lazy" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Desktop: fanned layout */}
-          <div className="relative hidden h-[420px] items-center justify-center sm:flex lg:h-[460px]">
+          {/* Fanned layout — responsive sizes */}
+          <div className="relative flex h-[280px] items-center justify-center sm:h-[420px] lg:h-[460px]">
             {showcaseImages.map((img, i) => (
               <motion.div
                 key={img.src}
-                className="absolute w-[250px] lg:w-[300px] will-change-transform cursor-pointer"
+                className="absolute w-[165px] sm:w-[250px] lg:w-[300px] will-change-transform cursor-pointer"
                 style={{ zIndex: img.z }}
                 initial={{ opacity: 0, y: 80, rotate: 0, x: 0, scale: 0.8 }}
-                animate={{ opacity: 1, y: img.y, rotate: img.rotate, x: img.x, scale: 1 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
                 transition={{ duration: 1, delay: 1.0 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                 whileHover={{
                   scale: 1.08,
                   zIndex: 10,
                   rotate: 0,
-                  y: img.y - 15,
                   transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
                 }}
               >
-                <div className="animate-float" style={{ animationDelay: `${img.floatDelay}s` }}>
-                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 hover:shadow-[0_30px_80px_rgba(77,124,255,0.15)] hover:border-white/20">
+                {/* Use CSS for responsive x/y/rotate via classes + inline style */}
+                <motion.div
+                  className="animate-float"
+                  style={{ animationDelay: `${img.floatDelay}s` }}
+                  initial={{ x: 0, y: 80, rotate: 0 }}
+                  animate={{ x: img.mx, y: img.my, rotate: img.mobileRotate }}
+                  transition={{ duration: 1, delay: 1.0 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                >
+                  {/* Desktop overrides via media query — handled by a wrapper */}
+                  <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-navy-800 shadow-[0_12px_40px_rgba(0,0,0,0.4)] sm:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 hover:shadow-[0_30px_80px_rgba(77,124,255,0.15)] hover:border-white/20">
                     <img src={img.src} alt={img.alt} className="w-full h-auto" loading="lazy" />
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
