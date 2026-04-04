@@ -7,9 +7,9 @@ const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const showcaseImages = [
-  { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -6, x: -60, z: 1 },
-  { src: "/cart-drawer.webp", alt: "Cart Drawer", rotate: 0, x: 0, z: 3 },
-  { src: "/one-click-upsell.webp", alt: "Post-Purchase", rotate: 6, x: 60, z: 2 },
+  { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -8, x: -220, y: 20, z: 1, floatDelay: 0 },
+  { src: "/cart-drawer.webp", alt: "Cart Drawer", rotate: 0, x: 0, y: -10, z: 3, floatDelay: 0.5 },
+  { src: "/one-click-upsell.webp", alt: "Post-Purchase", rotate: 8, x: 220, y: 20, z: 2, floatDelay: 1 },
 ];
 
 export default function Hero() {
@@ -157,39 +157,62 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* 3 images en éventail */}
-        <motion.div
-          className="relative mt-20 flex h-[350px] w-full max-w-4xl items-center justify-center sm:h-[420px]"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1, ease }}
-        >
-          {/* Glow behind */}
+        {/* 3 images en éventail déployé */}
+        <div className="relative mt-20 flex h-[380px] w-full max-w-5xl items-center justify-center sm:h-[450px]">
+          {/* Glow */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div className="h-64 w-[500px] rounded-full bg-blue-accent/8 blur-[80px] animate-pulse-glow" />
+            <div className="h-72 w-[600px] rounded-full bg-blue-accent/8 blur-[100px] animate-pulse-glow" />
           </div>
 
           {showcaseImages.map((img, i) => (
             <motion.div
               key={img.src}
-              className="absolute w-[260px] sm:w-[300px] will-change-transform"
+              className="absolute w-[240px] sm:w-[280px] lg:w-[300px] will-change-transform cursor-pointer"
               style={{ zIndex: img.z }}
-              initial={{ opacity: 0, y: 40, rotate: 0, x: 0 }}
-              animate={{ opacity: 1, y: 0, rotate: img.rotate, x: img.x }}
-              transition={{ duration: 0.7, delay: 1.2 + i * 0.12, ease }}
-              whileHover={{ scale: 1.05, zIndex: 10, rotate: 0 }}
+              initial={{
+                opacity: 0,
+                y: 80,
+                rotate: 0,
+                x: 0,
+                scale: 0.8,
+              }}
+              animate={{
+                opacity: 1,
+                y: img.y,
+                rotate: img.rotate,
+                x: img.x,
+                scale: 1,
+              }}
+              transition={{
+                duration: 1,
+                delay: 1.0 + i * 0.15,
+                ease: [0.34, 1.56, 0.64, 1],
+              }}
+              whileHover={{
+                scale: 1.08,
+                zIndex: 10,
+                rotate: 0,
+                y: img.y - 15,
+                transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+              }}
             >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-2xl shadow-black/40 transition-shadow duration-300 hover:shadow-blue-accent/10">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
+              {/* Floating animation via CSS */}
+              <div
+                className="animate-float"
+                style={{ animationDelay: `${img.floatDelay}s` }}
+              >
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 hover:shadow-[0_30px_80px_rgba(77,124,255,0.15)] hover:border-white/20">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-auto"
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
