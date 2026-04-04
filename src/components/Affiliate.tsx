@@ -6,6 +6,13 @@ import { FadeInSection } from "./AnimatedText";
 const ease = [0.22, 1, 0.36, 1] as const;
 const WHATSAPP_URL = "https://wa.me/33670438611";
 
+const benefits = [
+  { text: "Commissions récurrentes sur chaque vente" },
+  { text: "Dashboard de suivi en temps réel" },
+  { text: "Support dédié et ressources marketing" },
+  { text: "Aucun frais d'entrée — 100% gratuit" },
+];
+
 export default function Affiliate() {
   return (
     <section className="relative px-6 py-24 sm:py-32 overflow-hidden">
@@ -17,13 +24,11 @@ export default function Affiliate() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease }}
         >
-          {/* Background gradient */}
+          {/* Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-400/[0.04] via-navy-800/80 to-blue-accent/[0.04]" />
-
-          {/* Grid pattern */}
           <div className="dot-grid pointer-events-none absolute inset-0 opacity-30" />
 
-          {/* Decorative corner accents */}
+          {/* Corner accents */}
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             <div className="absolute top-0 left-0 h-20 w-px bg-gradient-to-b from-green-400/30 to-transparent" />
             <div className="absolute top-0 left-0 h-px w-20 bg-gradient-to-r from-green-400/30 to-transparent" />
@@ -36,7 +41,7 @@ export default function Affiliate() {
           </div>
 
           <div className="relative z-10 flex flex-col items-center px-8 py-16 text-center sm:px-16 sm:py-20 lg:flex-row lg:text-left lg:gap-16">
-            {/* Left content */}
+            {/* Left */}
             <div className="flex-1">
               <FadeInSection>
                 <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/5 px-4 py-1.5 text-xs font-medium text-green-400">
@@ -62,7 +67,7 @@ export default function Affiliate() {
               </FadeInSection>
             </div>
 
-            {/* Right - benefits + CTA */}
+            {/* Right */}
             <div className="mt-10 flex-1 lg:mt-0">
               <motion.div
                 className="flex flex-col gap-4"
@@ -71,12 +76,7 @@ export default function Affiliate() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2, ease }}
               >
-                {[
-                  { icon: "💰", text: "Commissions récurrentes sur chaque vente" },
-                  { icon: "📊", text: "Dashboard de suivi en temps réel" },
-                  { icon: "🤝", text: "Support dédié et ressources marketing" },
-                  { icon: "🚀", text: "Aucun frais d'entrée — 100% gratuit" },
-                ].map((item, i) => (
+                {benefits.map((item, i) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-3 rounded-xl bg-white/[0.03] px-5 py-3.5 backdrop-blur-sm"
@@ -85,7 +85,9 @@ export default function Affiliate() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: 0.3 + i * 0.08, ease }}
                   >
-                    <span className="text-lg">{item.icon}</span>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-400/15 text-[10px] text-green-400">
+                      ✓
+                    </span>
                     <span className="text-sm text-text-secondary">{item.text}</span>
                   </motion.div>
                 ))}
@@ -111,7 +113,7 @@ export default function Affiliate() {
                   <span className="relative z-10">Contactez-nous sur WhatsApp</span>
                 </a>
                 <span className="text-xs text-text-muted">
-                  Réponse sous 24h · Programme géré en direct
+                  Réponse sous 24h — Programme géré en direct
                 </span>
               </motion.div>
             </div>
