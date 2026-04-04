@@ -1,72 +1,50 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
-import Image from "next/image";
 
 const features = [
   {
-    id: "bundles",
-    label: "Bundles Fixes",
-    title: "Vendez des lots de produits sélectionnés",
-    description:
-      "Créez des bundles qui ont du sens pour vos clients avec des remises automatiques. Groupez des produits complémentaires et regardez votre panier moyen décoller.",
-    badge: "Populaire",
+    title: "Bundles Fixes",
+    tagline: "Groupez vos produits, boostez le panier",
     image: "/fixed-bundle.png",
+    span: "col-span-1",
   },
   {
-    id: "volume",
-    label: "Remises Volume",
-    title: "Plus ils achètent, plus ils économisent",
-    description:
-      "Affichez des paliers de prix qui encouragent vos clients à ajouter plus d'articles. Les remises visuelles par quantité rendent les économies évidentes et irrésistibles.",
-    badge: null,
+    title: "Remises Volume",
+    tagline: "Plus ils achètent, plus ils économisent",
     image: "/quantity-breaks.png",
+    span: "col-span-1",
   },
   {
-    id: "mixmatch",
-    label: "Mix & Match",
-    title: "Laissez vos clients composer leur bundle",
-    description:
-      "Donnez à vos clients la liberté de choisir leurs produits préférés tout en contrôlant la structure de remise. Flexibilité maximale, conversions maximales.",
-    badge: null,
-    image: "/bundle.webp",
-  },
-  {
-    id: "bogo",
-    label: "BOGO",
-    title: "Le mécanisme promo le plus puissant",
-    description:
-      "Configurez des offres achetez-en-un-obtenez-en-un, achetez-2-le-3ème-offert, et toute combinaison Buy X Get Y. Le moteur promotionnel du e-commerce.",
-    badge: null,
-    image: "/progress-gift.png",
-  },
-  {
-    id: "cart",
-    label: "Cart Drawer",
-    title: "Un panier latéral magnifique",
-    description:
-      "Suggestions d'upsell intelligentes, cross-sell de produits complémentaires, cadeaux gratuits et barre de progression — le tout dans un panier latéral élégant.",
-    badge: "Exclusif",
+    title: "Cart Drawer",
+    tagline: "Un panier latéral qui vend pour vous",
     image: "/cart-drawer.webp",
+    span: "col-span-1 sm:col-span-2 lg:col-span-1",
   },
   {
-    id: "postpurchase",
-    label: "Post-Achat",
-    title: "Offres one-click après le paiement",
-    description:
-      "Captez du revenu additionnel sur la page de remerciement et de statut de commande, sans friction. Vos clients achètent en un clic — sans re-saisir leurs infos.",
-    badge: "Exclusif",
+    title: "Mix & Match",
+    tagline: "Vos clients composent leur bundle",
+    image: "/bundle.webp",
+    span: "col-span-1",
+  },
+  {
+    title: "Post-Achat",
+    tagline: "Upsell one-click après le paiement",
     image: "/one-click-upsell.webp",
+    span: "col-span-1",
+  },
+  {
+    title: "Barre & Cadeaux",
+    tagline: "Progress bar et free gifts dans le panier",
+    image: "/progress-gift.png",
+    span: "col-span-1 sm:col-span-2 lg:col-span-1",
   },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Features() {
-  const [active, setActive] = useState(0);
-
   return (
     <section id="features" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
@@ -80,87 +58,46 @@ export default function Features() {
               augmenter l&apos;AOV
             </span>
           </h2>
-          <p className="mx-auto mt-5 max-w-lg text-base text-text-muted">
-            Six outils puissants, une seule expérience fluide. Plus besoin de jongler entre plusieurs apps.
-          </p>
         </FadeInSection>
 
-        <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
-          {/* Tabs */}
-          <div className="flex flex-row gap-2 overflow-x-auto pb-2 lg:w-64 lg:shrink-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0">
-            {features.map((feat, i) => (
-              <button
-                key={feat.id}
-                onClick={() => setActive(i)}
-                className={`group relative flex shrink-0 items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition-all duration-300 ${
-                  active === i
-                    ? "bg-white/[0.06] text-white"
-                    : "text-text-muted hover:bg-white/[0.03] hover:text-text-secondary"
-                }`}
-              >
-                {active === i && (
-                  <motion.div
-                    className="absolute left-0 top-1/2 hidden h-6 w-0.5 -translate-y-1/2 rounded-full bg-blue-accent lg:block"
-                    layoutId="activeTab"
-                    transition={{ duration: 0.3, ease }}
-                  />
-                )}
-                <span className="relative z-10">{feat.label}</span>
-                {feat.badge && (
-                  <span className="rounded-full bg-blue-accent/10 px-2 py-0.5 text-[10px] font-semibold text-blue-accent">
-                    {feat.badge}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((feat, i) => (
+            <motion.div
+              key={feat.title}
+              className={`group ${feat.span}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.07, ease }}
+              style={{ perspective: "800px" }}
+            >
+              <div className="relative h-full overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 transition-all duration-500 group-hover:border-white/15 group-hover:bg-white/[0.04] group-hover:[transform:rotateX(2deg)_rotateY(-2deg)_scale(1.02)]">
+                {/* Hover glow */}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-blue-accent/[0.04] to-violet-accent/[0.02]" />
 
-          {/* Content */}
-          <div className="flex-1">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, y: 12, scale: 0.97, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -8, scale: 0.97, filter: "blur(4px)" }}
-                transition={{ duration: 0.35, ease }}
-                className="glass-card overflow-hidden"
-              >
-                {/* Text */}
-                <div className="p-8 sm:p-10">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      {features[active].badge && (
-                        <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-blue-accent/15 to-violet-accent/15 px-3 py-1 text-xs font-semibold text-blue-accent">
-                          {features[active].badge}
-                        </span>
-                      )}
-                      <h3 className="text-2xl font-bold text-white sm:text-3xl font-[family-name:var(--font-heading)]">
-                        {features[active].title}
-                      </h3>
-                    </div>
-                    <span className="hidden text-5xl opacity-5 sm:block font-[family-name:var(--font-heading)]">
-                      0{active + 1}
-                    </span>
-                  </div>
-                  <p className="mt-4 max-w-lg leading-relaxed text-text-muted">
-                    {features[active].description}
-                  </p>
-                </div>
+                {/* Title */}
+                <h3 className="relative z-10 text-base font-bold text-white font-[family-name:var(--font-heading)]">
+                  {feat.title}
+                </h3>
 
-                {/* Image - ratio fixe, bien contenue */}
-                <div className="relative mx-6 mb-6 flex items-center justify-center rounded-xl border border-white/5 bg-navy-800/50 p-4 sm:mx-8 sm:mb-8 sm:p-6">
-                  <Image
-                    src={features[active].image}
-                    alt={features[active].label}
-                    width={600}
-                    height={400}
-                    className="h-auto w-full max-w-[500px] rounded-lg object-contain"
+                {/* Image */}
+                <div className="relative z-10 my-4 overflow-hidden rounded-xl border border-white/5 bg-navy-800/50">
+                  <img
+                    src={feat.image}
+                    alt={feat.title}
+                    className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]"
+                    loading="lazy"
                   />
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+
+                {/* Tagline */}
+                <p className="relative z-10 text-sm text-text-muted">
+                  {feat.tagline}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
