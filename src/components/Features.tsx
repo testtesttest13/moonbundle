@@ -8,37 +8,43 @@ const features = [
     title: "Bundles Fixes",
     tagline: "Groupez vos produits, boostez le panier",
     image: "/fixed-bundle.png",
-    span: "col-span-1",
+    rotate: -3,
+    offsetY: 0,
   },
   {
     title: "Remises Volume",
     tagline: "Plus ils achètent, plus ils économisent",
     image: "/quantity-breaks.png",
-    span: "col-span-1",
+    rotate: 2,
+    offsetY: 30,
   },
   {
     title: "Cart Drawer",
     tagline: "Un panier latéral qui vend pour vous",
     image: "/cart-drawer.webp",
-    span: "col-span-1 sm:col-span-2 lg:col-span-1",
+    rotate: -1.5,
+    offsetY: -10,
   },
   {
     title: "Mix & Match",
     tagline: "Vos clients composent leur bundle",
     image: "/bundle.webp",
-    span: "col-span-1",
+    rotate: 3,
+    offsetY: 20,
   },
   {
     title: "Post-Achat",
     tagline: "Upsell one-click après le paiement",
     image: "/one-click-upsell.webp",
-    span: "col-span-1",
+    rotate: -2.5,
+    offsetY: -15,
   },
   {
     title: "Barre & Cadeaux",
-    tagline: "Progress bar et free gifts dans le panier",
+    tagline: "Progress bar et free gifts intégrés",
     image: "/progress-gift.png",
-    span: "col-span-1 sm:col-span-2 lg:col-span-1",
+    rotate: 2,
+    offsetY: 10,
   },
 ];
 
@@ -48,7 +54,7 @@ export default function Features() {
   return (
     <section id="features" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <FadeInSection className="mb-16 text-center">
+        <FadeInSection className="mb-20 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-accent/15 bg-violet-accent/5 px-3 py-1 text-xs font-medium text-violet-accent">
             Fonctionnalités
           </span>
@@ -60,39 +66,47 @@ export default function Features() {
           </h2>
         </FadeInSection>
 
-        {/* Bento grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Scattered asymmetric cards */}
+        <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-10 sm:gap-y-20">
           {features.map((feat, i) => (
             <motion.div
               key={feat.title}
-              className={`group ${feat.span}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.07, ease }}
-              style={{ perspective: "800px" }}
+              className="group relative"
+              style={{ marginTop: `${feat.offsetY}px` }}
+              initial={{ opacity: 0, y: 60, rotate: 0 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                rotate: feat.rotate,
+              }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: [0.34, 1.56, 0.64, 1] as const,
+              }}
+              whileHover={{
+                rotate: 0,
+                scale: 1.04,
+                transition: { duration: 0.3, ease: ease },
+              }}
             >
-              <div className="relative h-full overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 transition-all duration-500 group-hover:border-white/15 group-hover:bg-white/[0.04] group-hover:[transform:rotateX(2deg)_rotateY(-2deg)_scale(1.02)]">
-                {/* Hover glow */}
-                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-blue-accent/[0.04] to-violet-accent/[0.02]" />
+              {/* Image — no container, just a border that wraps the image */}
+              <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.3)] transition-all duration-500 group-hover:border-white/20 group-hover:shadow-[0_16px_60px_rgba(77,124,255,0.1)]">
+                <img
+                  src={feat.image}
+                  alt={feat.title}
+                  className="block w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
 
-                {/* Title */}
-                <h3 className="relative z-10 text-base font-bold text-white font-[family-name:var(--font-heading)]">
+              {/* Text below */}
+              <div className="mt-5 px-1">
+                <h3 className="text-lg font-bold text-white font-[family-name:var(--font-heading)]">
                   {feat.title}
                 </h3>
-
-                {/* Image */}
-                <div className="relative z-10 my-4 overflow-hidden rounded-xl border border-white/5 bg-navy-800/50">
-                  <img
-                    src={feat.image}
-                    alt={feat.title}
-                    className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Tagline */}
-                <p className="relative z-10 text-sm text-text-muted">
+                <p className="mt-1 text-sm text-text-muted">
                   {feat.tagline}
                 </p>
               </div>
