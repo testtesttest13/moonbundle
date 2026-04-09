@@ -25,11 +25,15 @@ const languages: { code: Language; name: string; subtitle: string; flag: React.R
     name: "English",
     subtitle: "Site in English",
     flag: (
-      <svg viewBox="0 0 60 40" className="h-full w-full">
-        <rect width="60" height="40" fill="#012169" />
-        <path d="M0,0 L60,40 M60,0 L0,40" stroke="#FFFFFF" strokeWidth="6" />
-        <path d="M30,0 V40 M0,20 H60" stroke="#FFFFFF" strokeWidth="10" />
-        <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" strokeWidth="6" />
+      <svg viewBox="0 0 60 30" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <clipPath id="uk-stripes">
+          <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" />
+        </clipPath>
+        <rect width="60" height="30" fill="#012169" />
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" strokeWidth="6" />
+        <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#uk-stripes)" stroke="#C8102E" strokeWidth="4" />
+        <path d="M30,0 V30 M0,15 H60" stroke="#FFFFFF" strokeWidth="10" />
+        <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
       </svg>
     ),
   },
