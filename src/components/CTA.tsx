@@ -1,11 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function CTA() {
+  const { t } = useTranslation();
   return (
     <section className="relative px-6 py-24 sm:py-32 overflow-hidden">
       <motion.div
@@ -71,7 +73,7 @@ export default function CTA() {
                 <div className="flex text-yellow-400 text-xs">
                   {Array.from({ length: 5 }).map((_, i) => <span key={i}>★</span>)}
                 </div>
-                <span className="text-xs text-text-muted ml-1">1 200+ marchands</span>
+                <span className="text-xs text-text-muted ml-1">{t.ctaHome.socialProof}</span>
               </div>
             </motion.div>
 
@@ -82,10 +84,10 @@ export default function CTA() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1, ease }}
             >
-              Prêt à booster
+              {t.ctaHome.titlePart1}
               <br />
               <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-                votre chiffre d&apos;affaires ?
+                {t.ctaHome.titlePart2}
               </span>
             </motion.h2>
 
@@ -96,7 +98,7 @@ export default function CTA() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2, ease }}
             >
-              Rejoignez 1 200+ marchands qui ont augmenté leur panier moyen avec Moonbundles.
+              {t.ctaHome.subtitle}
             </motion.p>
 
             {/* CTA Button */}
@@ -113,7 +115,7 @@ export default function CTA() {
                 rel="noopener noreferrer"
                 className="btn-shine group relative inline-flex items-center gap-3 rounded-full bg-white px-10 py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:scale-[1.03]"
               >
-                <span className="relative z-10">Installer Gratuitement</span>
+                <span className="relative z-10">{t.ctaHome.button}</span>
                 <motion.span
                   className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full bg-navy-900 text-[10px] text-white"
                   animate={{ x: [0, 3, 0] }}
@@ -131,18 +133,12 @@ export default function CTA() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4, ease }}
             >
-              <span className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-green-400" />
-                Sans carte bancaire
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-green-400" />
-                Plan gratuit disponible
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-green-400" />
-                Résiliable à tout moment
-              </span>
+              {t.ctaHome.perks.map((perk) => (
+                <span key={perk} className="flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-green-400" />
+                  {perk}
+                </span>
+              ))}
             </motion.div>
           </div>
         </div>

@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
 import { FadeInSection } from "../AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const AVG_SUBSCRIPTION = 25; // $/mois moyen
 const COMMISSION_RATE = 0.4;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function EarningsCalculator() {
+  const { t } = useTranslation();
   const [referrals, setReferrals] = useState(50);
 
   const monthly = Math.round(referrals * AVG_SUBSCRIPTION * COMMISSION_RATE);
@@ -37,16 +39,16 @@ export default function EarningsCalculator() {
       <div className="mx-auto max-w-5xl">
         <FadeInSection className="mb-12 text-center sm:mb-16">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-accent/15 bg-violet-accent/5 px-3 py-1 text-xs font-medium text-violet-accent">
-            Calculateur de revenus
+            {t.calculator.badge}
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            Combien tu peux{" "}
+            {t.calculator.titlePart1}{" "}
             <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-transparent">
-              gagner ?
+              {t.calculator.titlePart2}
             </span>
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm text-text-muted sm:text-base">
-            Bouge le slider pour voir tes revenus estimés en temps réel.
+            {t.calculator.subtitle}
           </p>
         </FadeInSection>
 
@@ -70,7 +72,7 @@ export default function EarningsCalculator() {
                   htmlFor="referrals-slider"
                   className="text-xs font-medium uppercase tracking-wider text-text-muted"
                 >
-                  Filleuls actifs
+                  {t.calculator.sliderLabel}
                 </label>
                 <span className="text-2xl font-bold text-white sm:text-3xl font-[family-name:var(--font-heading)]">
                   {referrals}
@@ -86,7 +88,7 @@ export default function EarningsCalculator() {
                 step={1}
                 onChange={(e) => setReferrals(Number(e.target.value))}
                 style={{ ["--progress" as string]: `${progress}%` }}
-                aria-label="Nombre de filleuls actifs"
+                aria-label={t.calculator.sliderAria}
               />
               <div className="mt-3 flex justify-between text-[11px] text-text-muted">
                 <span>0</span>
@@ -96,8 +98,8 @@ export default function EarningsCalculator() {
                 <span>200+</span>
               </div>
               <p className="mt-6 text-xs leading-relaxed text-text-muted">
-                Basé sur un abonnement moyen de <span className="text-text-secondary">${AVG_SUBSCRIPTION}/mois</span> × <span className="text-text-secondary">40% commission</span>.
-                Estimation indicative — les vrais montants varient selon le plan choisi par tes filleuls.
+                {t.calculator.basedOn} <span className="text-text-secondary">${AVG_SUBSCRIPTION}{t.calculator.perMonthLabel}</span> <span className="text-text-secondary">{t.calculator.multiplier}</span>.
+                {" "}{t.calculator.disclaimer}
               </p>
             </div>
 
@@ -105,7 +107,7 @@ export default function EarningsCalculator() {
             <div className="grid grid-cols-2 gap-4 lg:w-[340px] lg:shrink-0 lg:grid-cols-1 lg:gap-3">
               <div className="rounded-2xl border border-blue-accent/20 bg-gradient-to-br from-blue-accent/[0.08] to-transparent p-5 sm:p-6">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
-                  Par mois
+                  {t.calculator.perMonth}
                 </p>
                 <motion.span className="mt-2 block bg-gradient-to-r from-white to-blue-light bg-clip-text text-3xl font-bold text-transparent sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
                   {monthlyDisplay}
@@ -113,7 +115,7 @@ export default function EarningsCalculator() {
               </div>
               <div className="rounded-2xl border border-violet-accent/20 bg-gradient-to-br from-violet-accent/[0.08] to-transparent p-5 sm:p-6">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-violet-accent">
-                  Par an
+                  {t.calculator.perYear}
                 </p>
                 <motion.span className="mt-2 block bg-gradient-to-r from-white to-violet-accent bg-clip-text text-3xl font-bold text-transparent sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
                   {yearlyDisplay}

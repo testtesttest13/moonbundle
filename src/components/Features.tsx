@@ -2,66 +2,38 @@
 
 import { motion } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const features = [
-  {
-    title: "Bundles Fixes",
-    tagline: "Groupez vos produits, boostez le panier",
-    image: "/fixed-bundle.png",
-    rotate: -3,
-    offsetY: 0,
-  },
-  {
-    title: "Remises Volume",
-    tagline: "Plus ils achètent, plus ils économisent",
-    image: "/quantity-breaks.png",
-    rotate: 2,
-    offsetY: 30,
-  },
-  {
-    title: "Cart Drawer",
-    tagline: "Un panier latéral qui vend pour vous",
-    image: "/cart-drawer.webp",
-    rotate: -1.5,
-    offsetY: -10,
-  },
-  {
-    title: "Mix & Match",
-    tagline: "Vos clients composent leur bundle",
-    image: "/bundle.webp",
-    rotate: 3,
-    offsetY: 20,
-  },
-  {
-    title: "Post-Achat",
-    tagline: "Upsell one-click après le paiement",
-    image: "/one-click-upsell.webp",
-    rotate: -2.5,
-    offsetY: -15,
-  },
-  {
-    title: "Barre & Cadeaux",
-    tagline: "Progress bar et free gifts intégrés",
-    image: "/progress-gift.png",
-    rotate: 2,
-    offsetY: 10,
-  },
+const featureMeta = [
+  { image: "/fixed-bundle.png", rotate: -3, offsetY: 0 },
+  { image: "/quantity-breaks.png", rotate: 2, offsetY: 30 },
+  { image: "/cart-drawer.webp", rotate: -1.5, offsetY: -10 },
+  { image: "/bundle.webp", rotate: 3, offsetY: 20 },
+  { image: "/one-click-upsell.webp", rotate: -2.5, offsetY: -15 },
+  { image: "/progress-gift.png", rotate: 2, offsetY: 10 },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Features() {
+  const { t } = useTranslation();
+  const features = featureMeta.map((meta, i) => ({
+    ...meta,
+    title: t.features.cards[i].title,
+    tagline: t.features.cards[i].tagline,
+  }));
+
   return (
     <section id="features" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <FadeInSection className="mb-14 text-center sm:mb-20">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-accent/15 bg-violet-accent/5 px-3 py-1 text-xs font-medium text-violet-accent">
-            Fonctionnalités
+            {t.features.badge}
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl font-[family-name:var(--font-heading)]">
-            Tout ce qu&apos;il faut pour{" "}
+            {t.features.titlePart1}{" "}
             <span className="bg-gradient-to-r from-violet-accent to-blue-accent bg-clip-text text-transparent">
-              augmenter l&apos;AOV
+              {t.features.titlePart2}
             </span>
           </h2>
         </FadeInSection>

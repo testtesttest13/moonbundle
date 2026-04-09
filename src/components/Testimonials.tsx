@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const reviews = [
   {
@@ -45,6 +46,7 @@ const reviews = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Testimonials() {
+  const { t } = useTranslation();
   return (
     <section id="reviews" className="relative px-6 py-24 sm:py-32 overflow-hidden">
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-violet-accent/5 blur-[150px]" aria-hidden="true" />
@@ -52,16 +54,16 @@ export default function Testimonials() {
       <div className="mx-auto max-w-6xl">
         <FadeInSection className="mb-16 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-yellow-400/15 bg-yellow-400/5 px-3 py-1 text-xs font-medium text-yellow-400">
-            ★ Note 5.0/5
+            {t.testimonials.badge}
           </span>
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl font-[family-name:var(--font-heading)]">
-            Adorée par les marchands{" "}
+            {t.testimonials.titlePart1}{" "}
             <span className="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
-              du monde entier
+              {t.testimonials.titlePart2}
             </span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-base text-text-muted">
-            Notée 5.0/5 sur le Shopify App Store avec 250+ avis.
+            {t.testimonials.subtitle}
           </p>
         </FadeInSection>
 
@@ -111,7 +113,7 @@ export default function Testimonials() {
                     <p className="text-xs font-medium text-text-secondary">
                       {review.author}
                     </p>
-                    <p className="text-[10px] text-text-muted">Marchand Shopify Vérifié</p>
+                    <p className="text-[10px] text-text-muted">{t.testimonials.verifiedMerchant}</p>
                   </div>
                 </div>
               </div>

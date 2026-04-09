@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -25,7 +26,13 @@ const showcaseImages = [
 ];
 
 export default function Hero() {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
+  // Headline: 6 words, last one (étape/step) gets the gradient
+  const headlineWords = t.hero.headline;
+  const firstLine = headlineWords.slice(0, 3); // Boostez votre AOV / Boost your AOV
+  const secondLineStart = headlineWords.slice(3, 5); // à chaque / at every
+  const lastWord = headlineWords[5]; // étape / step
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-28 pb-20">
       {/* Dot grid */}
@@ -56,7 +63,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
             </span>
-            Built for Shopify · Noté 5.0/5
+            {t.hero.badge}
           </span>
         </motion.div>
 
@@ -66,9 +73,9 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          {["Boostez", "votre", "AOV"].map((word, i) => (
+          {firstLine.map((word, i) => (
             <motion.span
-              key={i}
+              key={`l1-${i}`}
               className="inline-block mr-[0.25em]"
               initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -78,9 +85,9 @@ export default function Hero() {
             </motion.span>
           ))}
           <br />
-          {["à", "chaque"].map((word, i) => (
+          {secondLineStart.map((word, i) => (
             <motion.span
-              key={word}
+              key={`l2-${i}`}
               className="inline-block mr-[0.25em]"
               initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -95,7 +102,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.6, delay: 0.5, ease }}
           >
-            étape
+            {lastWord}
           </motion.span>
         </motion.h1>
 
@@ -106,8 +113,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6, ease }}
         >
-          L&apos;app Shopify tout-en-un pour les Bundles, Cart Upsell &amp;
-          Post-Achat. Configurez en 5 minutes. Adorée par 250+ marchands.
+          {t.hero.subtitle}
         </motion.p>
 
         {/* CTAs */}
@@ -126,7 +132,7 @@ export default function Hero() {
             {/* Pulsing glow */}
             <div className="absolute -inset-3 rounded-full bg-blue-accent/10 blur-xl animate-pulse-glow" />
             <span className="btn-shine relative z-10 flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-semibold text-navy-900 transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] group-hover:scale-[1.03]">
-              Installer Gratuitement sur Shopify
+              {t.hero.ctaPrimary}
               <img src="/shopify.png" alt="Shopify" className="h-5 w-5 object-contain" />
             </span>
           </a>
@@ -134,7 +140,7 @@ export default function Hero() {
             href="#features"
             className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-text-secondary backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/8"
           >
-            Voir la démo
+            {t.hero.ctaSecondary}
             <span className="inline-block text-xs transition-transform duration-300 group-hover:translate-x-0.5">
               ▶
             </span>
@@ -154,7 +160,7 @@ export default function Hero() {
               suffix="+"
               className="text-2xl font-bold text-white sm:text-3xl font-[family-name:var(--font-heading)]"
             />
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Marchands Actifs</p>
+            <p className="mt-1 text-xs text-text-muted sm:text-sm">{t.hero.stats.merchants}</p>
           </div>
           <div className="text-center">
             <AnimatedCounter
@@ -162,11 +168,11 @@ export default function Hero() {
               suffix="+"
               className="text-2xl font-bold text-white sm:text-3xl font-[family-name:var(--font-heading)]"
             />
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Avis 5 étoiles</p>
+            <p className="mt-1 text-xs text-text-muted sm:text-sm">{t.hero.stats.reviews}</p>
           </div>
           <div className="text-center">
             <span className="text-2xl font-bold text-white sm:text-3xl font-[family-name:var(--font-heading)]">5.0</span>
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Note App Store</p>
+            <p className="mt-1 text-xs text-text-muted sm:text-sm">{t.hero.stats.rating}</p>
           </div>
         </motion.div>
 

@@ -2,53 +2,63 @@
 
 import { motion } from "framer-motion";
 import { FadeInSection } from "../AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const splits = [
+const splitMeta = [
   {
-    title: "Tu gardes tout",
-    description: "40% pour toi",
-    subtext: "L'option par défaut. Simple et direct.",
-    segments: [{ pct: 100, color: "from-blue-accent to-blue-light", label: "Toi" }],
+    segments: [{ pct: 100, color: "from-blue-accent to-blue-light" }],
+    highlighted: false,
   },
   {
-    title: "Réseau de sous-affiliés",
-    description: "30% pour toi · 10% sous-affiliés",
-    subtext: "Crée ton propre réseau d'ambassadeurs.",
     segments: [
-      { pct: 75, color: "from-blue-accent to-blue-light", label: "Toi" },
-      { pct: 25, color: "from-violet-accent to-violet-accent/60", label: "Sous-affiliés" },
+      { pct: 75, color: "from-blue-accent to-blue-light" },
+      { pct: 25, color: "from-violet-accent to-violet-accent/60" },
     ],
     highlighted: true,
   },
   {
-    title: "Partenariat 50/50",
-    description: "20% pour toi · 20% partenaire",
-    subtext: "Splitte avec un collaborateur.",
     segments: [
-      { pct: 50, color: "from-blue-accent to-blue-light", label: "Toi" },
-      { pct: 50, color: "from-violet-accent to-violet-accent/60", label: "Partenaire" },
+      { pct: 50, color: "from-blue-accent to-blue-light" },
+      { pct: 50, color: "from-violet-accent to-violet-accent/60" },
     ],
+    highlighted: false,
   },
 ];
 
 export default function Repartition() {
+  const { t } = useTranslation();
+  const splits = t.repartition.splits.map((s, i) => {
+    const meta = splitMeta[i];
+    const labels = [s.legendYou, s.legendOther].filter(Boolean);
+    return {
+      title: s.title,
+      subtext: s.subtext,
+      description: s.description,
+      highlighted: meta.highlighted,
+      segments: meta.segments.map((seg, si) => ({
+        pct: seg.pct,
+        color: seg.color,
+        label: labels[si] || s.legendYou,
+      })),
+    };
+  });
   return (
     <section className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
         <FadeInSection className="mb-14 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-accent/15 bg-blue-accent/5 px-3 py-1 text-xs font-medium text-blue-accent">
-            Flexibilité
+            {t.repartition.badge}
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            Répartis tes 40%{" "}
+            {t.repartition.titlePart1}{" "}
             <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-transparent">
-              comme tu veux
+              {t.repartition.titlePart2}
             </span>
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm text-text-muted sm:text-base">
-            C&apos;est toi qui décides comment ta commission est partagée.
+            {t.repartition.subtitle}
           </p>
         </FadeInSection>
 
@@ -101,7 +111,7 @@ export default function Repartition() {
         </div>
 
         <p className="mt-10 text-center text-xs text-text-muted">
-          Configurable depuis ton dashboard Mantle.
+          {t.repartition.footnote}
         </p>
       </div>
     </section>

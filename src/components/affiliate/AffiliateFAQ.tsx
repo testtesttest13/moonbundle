@@ -3,46 +3,26 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeInSection } from "../AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const faqs = [
-  {
-    q: "Comment sont faits les paiements ?",
-    a: "Les paiements sont effectués chaque mois via Mantle. Tu suis tout depuis ton dashboard affilié, avec un historique complet de tes commissions.",
-  },
-  {
-    q: "Comment je suis mes filleuls ?",
-    a: "Tu as un dashboard dédié qui track chaque inscription, chaque paiement, et tes commissions en temps réel. Tu vois exactement qui s'est inscrit, quand, et combien tu as gagné.",
-  },
-  {
-    q: "Le code promo tracke même sans le lien affilié ?",
-    a: "Oui. Si ton filleul utilise ton code promo à l'inscription (même sans cliquer sur ton lien), la commission est automatiquement attribuée à ton compte affilié.",
-  },
-  {
-    q: "Je peux faire de la pub avec mon lien ?",
-    a: "Oui, tu peux promouvoir ton lien sur tous tes canaux : réseaux sociaux, email, YouTube, blog, communautés Discord/Skool, ou même en publicité payante.",
-  },
-  {
-    q: "C'est vraiment à vie ?",
-    a: "Oui. Tant que ton filleul reste abonné à Moonbundles, tu touches ta commission chaque mois. Pas de limite dans le temps, pas de plafond de gains.",
-  },
-];
-
 export default function AffiliateFAQ() {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const faqs = t.faq.items;
 
   return (
     <section className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-3xl">
         <FadeInSection className="mb-14 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-accent/15 bg-blue-accent/5 px-3 py-1 text-xs font-medium text-blue-accent">
-            FAQ
+            {t.faq.badge}
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            Questions{" "}
+            {t.faq.titlePart1}{" "}
             <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-transparent">
-              fréquentes
+              {t.faq.titlePart2}
             </span>
           </h2>
         </FadeInSection>

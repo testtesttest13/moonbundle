@@ -1,22 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const WHATSAPP_URL = "https://wa.me/33670438611";
 const ease = [0.22, 1, 0.36, 1] as const;
-
-const headlineWords = [
-  { text: "Gagne", gradient: false },
-  { text: "40%", gradient: true },
-  { text: "à", gradient: false },
-  { text: "vie", gradient: true },
-  { text: "sur", gradient: false },
-  { text: "chaque", gradient: false },
-  { text: "abonnement", gradient: false },
-  { text: "que", gradient: false },
-  { text: "tu", gradient: false },
-  { text: "génères", gradient: false },
-];
 
 function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -27,6 +15,11 @@ function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
 }
 
 export default function AffiliateHero() {
+  const { t } = useTranslation();
+  const headlineWords = t.affiliateHero.headline.map((word) => ({
+    text: word,
+    gradient: (t.affiliateHero.gradientWords as readonly string[]).includes(word),
+  }));
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-28 pb-20">
       {/* Dot grid */}
@@ -57,7 +50,7 @@ export default function AffiliateHero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
             </span>
-            Programme Affilié
+            {t.affiliateHero.badge}
           </span>
         </motion.div>
 
@@ -89,7 +82,7 @@ export default function AffiliateHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8, ease }}
         >
-          Un lien, un code promo. Pas de limite. Un revenu automatique chaque mois.
+          {t.affiliateHero.subtitle}
         </motion.p>
 
         {/* CTAs */}
@@ -108,14 +101,14 @@ export default function AffiliateHero() {
             <div className="absolute -inset-3 rounded-full bg-green-500/20 blur-xl animate-pulse-glow" />
             <span className="btn-shine relative z-10 flex items-center gap-3 rounded-full bg-green-500 px-8 py-4 text-sm font-semibold text-white transition-all duration-300 group-hover:bg-green-400 group-hover:shadow-[0_0_40px_rgba(74,222,128,0.3)] group-hover:scale-[1.03]">
               <WhatsAppIcon />
-              Devenir affilié
+              {t.affiliateHero.ctaPrimary}
             </span>
           </a>
           <a
             href="#how-it-works"
             className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-text-secondary backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08]"
           >
-            Voir comment ça marche
+            {t.affiliateHero.ctaSecondary}
             <span className="inline-block text-xs transition-transform duration-300 group-hover:translate-x-0.5">
               →
             </span>
@@ -129,24 +122,21 @@ export default function AffiliateHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.1, ease }}
         >
-          <div className="text-center">
-            <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-3xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]">
-              40%
-            </span>
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Commission récurrente</p>
-          </div>
-          <div className="text-center">
-            <span className="bg-gradient-to-r from-violet-accent to-blue-light bg-clip-text text-3xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]">
-              À vie
-            </span>
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Aucune limite de temps</p>
-          </div>
-          <div className="text-center">
-            <span className="bg-gradient-to-r from-blue-light to-blue-accent bg-clip-text text-3xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]">
-              0€
-            </span>
-            <p className="mt-1 text-xs text-text-muted sm:text-sm">Frais d&apos;entrée</p>
-          </div>
+          {t.affiliateHero.stats.map((stat, i) => {
+            const gradients = [
+              "from-blue-accent to-violet-accent",
+              "from-violet-accent to-blue-light",
+              "from-blue-light to-blue-accent",
+            ];
+            return (
+              <div key={i} className="text-center">
+                <span className={`bg-gradient-to-r ${gradients[i]} bg-clip-text text-3xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]`}>
+                  {stat.value}
+                </span>
+                <p className="mt-1 text-xs text-text-muted sm:text-sm">{stat.label}</p>
+              </div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

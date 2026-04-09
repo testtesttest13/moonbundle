@@ -2,93 +2,80 @@
 
 import { motion } from "framer-motion";
 import { FadeInSection } from "./AnimatedText";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const competitors = [
+type CellValue = boolean | "separateApp" | "fiveApps" | string;
+
+const competitorsRaw: { name: string; values: Record<string, CellValue> }[] = [
   {
     name: "FastBundle",
-    bundles: true,
-    volume: true,
-    cart: false,
-    postPurchase: false,
-    freeGifts: false,
-    allInOne: false,
-    rating: "4.9",
+    values: {
+      bundles: true,
+      volume: true,
+      cart: false,
+      postPurchase: false,
+      freeGifts: false,
+      allInOne: false,
+      rating: "4.9",
+    },
   },
   {
     name: "AOV.ai",
-    bundles: true,
-    volume: true,
-    cart: "App séparée",
-    postPurchase: "App séparée",
-    freeGifts: "App séparée",
-    allInOne: "5 apps",
-    rating: "5.0",
+    values: {
+      bundles: true,
+      volume: true,
+      cart: "separateApp",
+      postPurchase: "separateApp",
+      freeGifts: "separateApp",
+      allInOne: "fiveApps",
+      rating: "5.0",
+    },
   },
   {
     name: "Kaching",
-    bundles: true,
-    volume: true,
-    cart: false,
-    postPurchase: false,
-    freeGifts: true,
-    allInOne: false,
-    rating: "4.9",
+    values: {
+      bundles: true,
+      volume: true,
+      cart: false,
+      postPurchase: false,
+      freeGifts: true,
+      allInOne: false,
+      rating: "4.9",
+    },
   },
 ];
 
-const features = [
-  { key: "bundles", label: "Bundles Produit" },
-  { key: "volume", label: "Remises Volume" },
-  { key: "cart", label: "Cart Drawer" },
-  { key: "postPurchase", label: "Upsell Post-Achat" },
-  { key: "freeGifts", label: "Cadeaux Gratuits" },
-  { key: "allInOne", label: "Tout-en-un (1 app)" },
-  { key: "rating", label: "Note" },
-];
-
-function Badge({ value }: { value: boolean | string }) {
-  if (value === true)
-    return (
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-400/15 text-xs text-green-400">
-        ✓
-      </span>
-    );
-  if (value === false)
-    return (
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-[10px] text-white/20">
-        ✗
-      </span>
-    );
-  return (
-    <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-text-muted">
-      {value}
-    </span>
-  );
-}
-
 export default function Comparison() {
+  const { t } = useTranslation();
+
+  // Resolve special string values to localized text
+  const resolveValue = (val: CellValue): boolean | string => {
+    if (val === "separateApp") return t.comparison.separateApp;
+    if (val === "fiveApps") return t.comparison.fiveApps;
+    return val;
+  };
+
   return (
     <section id="compare" className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
         <FadeInSection className="mb-16 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-400/15 bg-green-400/5 px-3 py-1 text-xs font-medium text-green-400">
-            Comparatif
+            {t.comparison.badge}
           </span>
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl font-[family-name:var(--font-heading)]">
-            Pourquoi{" "}
+            {t.comparison.titlePart1}{" "}
             <span className="bg-gradient-to-r from-green-400 to-blue-accent bg-clip-text text-transparent">
-              Moonbundles
+              {t.comparison.titlePart2}
             </span>{" "}
-            ?
+            {t.comparison.titleEnd}
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-base text-text-muted">
-            Une seule app pour remplacer toutes les autres. Comparez par vous-même.
+            {t.comparison.subtitle}
           </p>
         </FadeInSection>
 
-        {/* Cards layout: Moonbundles card vs others */}
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Moonbundles card - hero card */}
           <motion.div
@@ -109,13 +96,13 @@ export default function Comparison() {
                   <h3 className="text-lg font-bold text-white font-[family-name:var(--font-heading)]">Moonbundles</h3>
                   <div className="flex items-center gap-1 text-xs">
                     <span className="text-yellow-400">★</span>
-                    <span className="text-text-muted">5.0/5 · 250+ avis</span>
+                    <span className="text-text-muted">{t.comparison.reviewsCount}</span>
                   </div>
                 </div>
               </div>
 
               <ul className="flex flex-col gap-3.5">
-                {features.map((feat, i) => (
+                {t.comparison.features.map((feat, i) => (
                   <motion.li
                     key={feat.key}
                     className="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"
@@ -136,7 +123,7 @@ export default function Comparison() {
 
               <div className="mt-6 pt-5 border-t border-white/5 text-center">
                 <span className="rounded-full bg-blue-accent/10 px-4 py-1.5 text-xs font-semibold text-blue-accent">
-                  Tout inclus · 1 seule app
+                  {t.comparison.allInOne}
                 </span>
               </div>
             </div>
@@ -144,7 +131,7 @@ export default function Comparison() {
 
           {/* Competitors stack */}
           <div className="flex flex-col gap-4">
-            {competitors.map((comp, ci) => (
+            {competitorsRaw.map((comp, ci) => (
               <motion.div
                 key={comp.name}
                 className="glass-card p-6"
@@ -155,12 +142,13 @@ export default function Comparison() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-sm font-semibold text-text-secondary">{comp.name}</h4>
-                  <span className="text-xs text-text-muted">Note : {comp.rating}</span>
+                  <span className="text-xs text-text-muted">{t.comparison.ratingLabel} {comp.values.rating as string}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  {features.slice(0, -1).map((feat) => {
-                    const val = comp[feat.key as keyof typeof comp];
+                  {t.comparison.features.slice(0, -1).map((feat) => {
+                    const rawVal = comp.values[feat.key];
+                    const val = resolveValue(rawVal);
                     const isGood = val === true;
                     const isBad = val === false;
                     return (
