@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Logo from "./Logo";
 
 const NAV_LINKS = [
-  { label: "Fonctionnalités", href: "#features" },
-  { label: "Avis", href: "#reviews" },
-  { label: "Comparatif", href: "#compare" },
+  { label: "Fonctionnalités", href: "/#features" },
+  { label: "Avis", href: "/#reviews" },
+  { label: "Comparatif", href: "/#compare" },
+  { label: "Affilié", href: "/affiliate" },
 ];
 
 const INSTALL_URL = "https://apps.shopify.com/moonbundle";

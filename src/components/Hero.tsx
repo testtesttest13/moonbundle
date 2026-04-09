@@ -1,10 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedText";
 
 const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const ease = [0.22, 1, 0.36, 1] as const;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 
 const showcaseImages = [
   { src: "/fixed-bundle.png", alt: "Product Bundles", rotate: -8, mobileRotate: -5, x: -220, mx: -70, y: 20, my: 10, z: 1, floatDelay: 0 },
@@ -13,6 +25,7 @@ const showcaseImages = [
 ];
 
 export default function Hero() {
+  const isMobile = useIsMobile();
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-28 pb-20">
       {/* Dot grid */}
@@ -184,12 +197,16 @@ export default function Hero() {
                   transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
                 }}
               >
-                {/* Use CSS for responsive x/y/rotate via classes + inline style */}
+                {/* Responsive x/y/rotate based on screen size */}
                 <motion.div
                   className="animate-float"
                   style={{ animationDelay: `${img.floatDelay}s` }}
                   initial={{ x: 0, y: 80, rotate: 0 }}
-                  animate={{ x: img.mx, y: img.my, rotate: img.mobileRotate }}
+                  animate={{
+                    x: isMobile ? img.mx : img.x,
+                    y: isMobile ? img.my : img.y,
+                    rotate: isMobile ? img.mobileRotate : img.rotate,
+                  }}
                   transition={{ duration: 1, delay: 1.0 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                 >
                   {/* Desktop overrides via media query — handled by a wrapper */}
