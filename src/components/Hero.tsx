@@ -185,43 +185,42 @@ export default function Hero() {
 
           {/* Fanned layout — responsive sizes */}
           <div className="relative flex h-[280px] items-center justify-center sm:h-[420px] lg:h-[460px]">
-            {showcaseImages.map((img, i) => (
-              <motion.div
-                key={img.src}
-                className="absolute w-[165px] sm:w-[250px] lg:w-[300px] will-change-transform cursor-pointer"
-                style={{ zIndex: img.z }}
-                initial={{ opacity: 0, y: 80, rotate: 0, x: 0, scale: 0.8 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                }}
-                transition={{ duration: 1, delay: 1.0 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-                whileHover={{
-                  scale: 1.08,
-                  zIndex: 10,
-                  rotate: 0,
-                  transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
-                }}
-              >
-                {/* Responsive x/y/rotate based on screen size */}
+            {showcaseImages.map((img, i) => {
+              const targetX = isMobile ? img.mx : img.x;
+              const targetY = isMobile ? img.my : img.y;
+              const targetRotate = isMobile ? img.mobileRotate : img.rotate;
+              return (
                 <motion.div
-                  className="animate-float"
-                  style={{ animationDelay: `${img.floatDelay}s` }}
-                  initial={{ x: 0, y: 80, rotate: 0 }}
+                  key={img.src}
+                  className="absolute w-[165px] sm:w-[250px] lg:w-[300px] will-change-transform cursor-pointer"
+                  style={{ zIndex: img.z }}
+                  initial={{ opacity: 0, x: 0, y: 80, rotate: 0, scale: 0.8 }}
                   animate={{
-                    x: isMobile ? img.mx : img.x,
-                    y: isMobile ? img.my : img.y,
-                    rotate: isMobile ? img.mobileRotate : img.rotate,
+                    opacity: 1,
+                    x: targetX,
+                    y: targetY,
+                    rotate: targetRotate,
+                    scale: 1,
                   }}
-                  transition={{ duration: 1, delay: 1.0 + i * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                  transition={{
+                    duration: 1,
+                    delay: 1.0 + i * 0.15,
+                    ease: [0.34, 1.56, 0.64, 1],
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                    zIndex: 10,
+                    rotate: 0,
+                    y: targetY - 15,
+                    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+                  }}
                 >
-                  {/* Desktop overrides via media query — handled by a wrapper */}
                   <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-navy-800 shadow-[0_12px_40px_rgba(0,0,0,0.4)] sm:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 hover:shadow-[0_30px_80px_rgba(77,124,255,0.15)] hover:border-white/20">
                     <img src={img.src} alt={img.alt} className="w-full h-auto" loading="lazy" />
                   </div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
