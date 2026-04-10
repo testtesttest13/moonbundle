@@ -13,26 +13,32 @@ const checklist = [
   {
     title: "Travaille ton copywriting",
     desc: "« Café aux champignons adaptogènes bio » personne en veut. « Retrouve ton énergie sans nervosité en 14 jours » tout le monde veut essayer.",
+    example: "Exemple : remplace « Complément alimentaire naturel » par « Retrouve ton énergie en 14 jours — sans nervosité ».",
   },
   {
     title: "Adapte tes CTA à ta cible",
     desc: "« Ajouter au panier » ça parle à personne. « Transformer mes nuits » ça donne envie de cliquer.",
+    example: "Exemple : tu vends des matelas → « Je veux mieux dormir » convertit 2x plus que « Ajouter au panier ».",
   },
   {
     title: "Ajoute des cross-sell et upsell dans ton panier",
     desc: "Le client est prêt à acheter — c'est le moment de lui proposer un produit complémentaire.",
+    example: "Exemple : le client a un shampoing dans le panier → propose le masque capillaire en upsell à -15%.",
   },
   {
     title: "Rajoute des cadeaux pour pousser le panier",
     desc: "Livraison gratuite, ebook, guide d'utilisation, garantie étendue. Le client rajoute un produit juste pour débloquer le palier.",
+    example: "Exemple : « Plus que 12€ pour débloquer la livraison gratuite + un guide offert ».",
   },
   {
     title: "Propose un upsell complémentaire après l'achat",
     desc: "Tu vends des coussins ? Propose une taie d'oreiller. Tu vends du shampoing ? Propose l'après-shampoing. Le client vient de payer, 20% acceptent.",
+    example: "Exemple : page de confirmation → « Ajoute l'après-shampoing pour 9€ au lieu de 14€ — en 1 clic ».",
   },
   {
     title: "A/B teste tes offres et tes concepts",
     desc: "Même produit, même trafic, deux structures différentes. Une des deux convertit 2x mieux et tu le sauras jamais si tu testes pas.",
+    example: "Exemple : teste un bundle « 2+1 offert » vs une remise volume « -20% dès 3 achetés » pendant 7 jours.",
   },
 ];
 
@@ -58,37 +64,6 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-function Checkbox({ checked, onChange }: { checked: boolean; onChange: () => void }) {
-  return (
-    <button
-      onClick={onChange}
-      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 transition-all duration-300 ${
-        checked
-          ? "border-blue-accent bg-blue-accent text-white scale-105"
-          : "border-white/15 bg-white/[0.03] hover:border-white/25"
-      }`}
-      aria-label={checked ? "Marquer comme non fait" : "Marquer comme fait"}
-    >
-      {checked && (
-        <motion.svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-3.5 w-3.5"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          <polyline points="20 6 9 17 4 12" />
-        </motion.svg>
-      )}
-    </button>
-  );
-}
-
 export default function ChecklistPage() {
   const [checked, setChecked] = useState<boolean[]>(new Array(checklist.length).fill(false));
   const completedCount = checked.filter(Boolean).length;
@@ -104,7 +79,7 @@ export default function ChecklistPage() {
 
   return (
     <div className="min-h-screen bg-[#0a1628]">
-      {/* Grid background */}
+      {/* Grid */}
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.025]"
         style={{
@@ -114,14 +89,13 @@ export default function ChecklistPage() {
         }}
       />
 
-      {/* Ambient orbs */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute top-[10%] left-[15%] h-72 w-72 rounded-full bg-blue-accent/5 blur-[100px] animate-pulse-glow" />
         <div className="absolute top-[50%] right-[10%] h-56 w-56 rounded-full bg-violet-accent/4 blur-[100px] animate-pulse-glow [animation-delay:3s]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-[640px] px-5 py-10 sm:px-6 sm:py-14">
-        {/* ===== HEADER (logo only) ===== */}
+        {/* Logo */}
         <motion.div
           className="mb-12 flex items-center gap-2.5"
           initial={{ opacity: 0, y: 10 }}
@@ -134,7 +108,7 @@ export default function ChecklistPage() {
           </span>
         </motion.div>
 
-        {/* ===== HERO ===== */}
+        {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +135,7 @@ export default function ChecklistPage() {
           </p>
         </motion.div>
 
-        {/* ===== PROGRESS BAR ===== */}
+        {/* Progress */}
         <motion.div
           className="mt-10 mb-6"
           initial={{ opacity: 0, y: 15 }}
@@ -187,67 +161,91 @@ export default function ChecklistPage() {
               className="mt-2 text-xs font-medium text-green-400"
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease }}
             >
               Checklist complète — bravo !
             </motion.p>
           )}
         </motion.div>
 
-        {/* ===== CHECKLIST ===== */}
+        {/* Cards */}
         <div className="flex flex-col gap-3">
-          {checklist.map((item, i) => (
-            <motion.div
-              key={i}
-              className={`glass-card group overflow-hidden transition-all duration-300 ${
-                checked[i]
-                  ? "border-blue-accent/20 bg-blue-accent/[0.03]"
-                  : "hover:-translate-y-0.5"
-              }`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease }}
-            >
-              <button
+          {checklist.map((item, i) => {
+            const done = checked[i];
+            return (
+              <motion.div
+                key={i}
                 onClick={() => toggle(i)}
-                className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
+                className={`glass-card cursor-pointer overflow-hidden transition-all duration-300 select-none ${
+                  done
+                    ? "border-blue-accent/20 bg-blue-accent/[0.03]"
+                    : "hover:-translate-y-0.5"
+                }`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease }}
               >
-                <Checkbox checked={checked[i]} onChange={() => toggle(i)} />
+                <div className="flex items-start gap-4 p-5 sm:p-6">
+                  {/* Checkbox */}
+                  <div
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-all duration-300 ${
+                      done
+                        ? "border-blue-accent bg-blue-accent text-white"
+                        : "border-white/15 bg-white/[0.03]"
+                    }`}
+                  >
+                    {done && (
+                      <motion.svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-3 w-3"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </motion.svg>
+                    )}
+                  </div>
 
-                <div className="min-w-0 flex-1">
-                  <h2
-                    className={`text-base font-bold sm:text-lg font-[family-name:var(--font-heading)] transition-colors duration-300 ${
-                      checked[i] ? "text-blue-accent" : "text-white"
-                    }`}
-                  >
-                    {item.title}
-                  </h2>
-                  <p
-                    className={`mt-1.5 text-sm leading-relaxed transition-colors duration-300 ${
-                      checked[i] ? "text-text-muted/60" : "text-text-muted"
-                    }`}
-                  >
-                    {item.desc}
-                  </p>
+                  {/* Content */}
+                  <div className="min-w-0 flex-1">
+                    <h2
+                      className={`text-base font-bold sm:text-lg font-[family-name:var(--font-heading)] transition-colors duration-300 ${
+                        done ? "text-blue-accent" : "text-white"
+                      }`}
+                    >
+                      {item.title}
+                    </h2>
+                    <p
+                      className={`mt-1.5 text-sm leading-relaxed transition-colors duration-300 ${
+                        done ? "text-text-muted/50" : "text-text-muted"
+                      }`}
+                    >
+                      {item.desc}
+                    </p>
+                    {/* Exemple */}
+                    <p
+                      className={`mt-3 rounded-lg bg-white/[0.03] px-3.5 py-2.5 text-xs leading-relaxed italic transition-colors duration-300 ${
+                        done ? "text-text-muted/40" : "text-text-secondary/70"
+                      }`}
+                    >
+                      {item.example}
+                    </p>
+                  </div>
                 </div>
-
-                {/* Step indicator */}
-                <span
-                  className={`mt-0.5 shrink-0 text-xs font-bold transition-colors duration-300 ${
-                    checked[i] ? "text-blue-accent/40" : "text-white/10"
-                  }`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </button>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* ===== DIVIDER ===== */}
+        {/* Divider */}
         <div className="my-12 h-px bg-gradient-to-r from-transparent via-blue-accent/15 to-transparent" />
 
-        {/* ===== CTA MOONBUNDLES ===== */}
+        {/* CTA */}
         <motion.div
           className="relative overflow-hidden rounded-2xl border border-blue-accent/20 bg-gradient-to-br from-blue-accent/[0.08] to-violet-accent/[0.04]"
           initial={{ opacity: 0, y: 30 }}
@@ -260,12 +258,8 @@ export default function ChecklistPage() {
           </div>
 
           <div className="relative z-10 p-6 sm:p-8">
-            <p className="text-center text-base font-semibold text-white sm:text-lg font-[family-name:var(--font-heading)]">
-              Tout ça se configure en 5 min avec Moonbundles
-            </p>
-
             {/* Promo code */}
-            <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
               <div className="min-w-0">
                 <p className="text-[10px] font-medium uppercase tracking-wider text-blue-accent">
                   20% de réduction avec le code
@@ -277,12 +271,12 @@ export default function ChecklistPage() {
               <CopyButton text={PROMO_CODE} />
             </div>
 
-            {/* Install button */}
+            {/* Button */}
             <a
               href={INSTALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-shine group mt-6 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
+              className="btn-shine group mt-5 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
             >
               <span className="relative z-10">Installer Moonbundles</span>
               <img src="/shopify.png" alt="Shopify" className="relative z-10 h-5 w-5 object-contain" />
@@ -290,7 +284,7 @@ export default function ChecklistPage() {
           </div>
         </motion.div>
 
-        {/* ===== CTA WHATSAPP ===== */}
+        {/* WhatsApp */}
         <motion.div
           className="mt-5"
           initial={{ opacity: 0, y: 20 }}
@@ -316,7 +310,7 @@ export default function ChecklistPage() {
           </div>
         </motion.div>
 
-        {/* ===== FOOTER ===== */}
+        {/* Footer */}
         <div className="mt-12 text-center text-xs text-text-muted/50">
           Moonbundles by{" "}
           <a
