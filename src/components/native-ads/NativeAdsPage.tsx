@@ -73,7 +73,7 @@ const steps = [
     desc: "Copie les prompts Nanobanana que Claude t'a générés et colle-les directement dans Nanobanana. Tu récupères des images de native ads réalistes, sans logo, sans produit, juste le problème de ton client. Prêtes à lancer sur Meta.",
     sub: "Copie le prompt → colle dans Nanobanana → télécharge tes images → lance tes pubs",
     action: "link" as const,
-    href: "https://nanobanana.com",
+    href: "https://higgsfield.ai/image/nano_banana_flash",
     btnLabel: "Aller sur Nanobanana",
   },
 ];
@@ -263,10 +263,13 @@ export default function NativeAdsPage() {
 
           <div className="glass-card overflow-hidden">
             <div className="flex flex-col sm:flex-row">
-              {/* Image placeholder */}
-              <div className="flex h-[220px] items-center justify-center bg-gradient-to-br from-blue-accent/10 to-violet-accent/5 sm:h-auto sm:w-1/2">
-                {/* TODO: Replace with actual native ad screenshot */}
-                <span className="text-xs text-text-muted/50">Exemple native ad</span>
+              {/* Image */}
+              <div className="sm:w-1/2">
+                <img
+                  src="/downloads/native.webp"
+                  alt="Exemple de native ad qui scale"
+                  className="h-full w-full object-cover"
+                />
               </div>
 
               {/* Text */}
