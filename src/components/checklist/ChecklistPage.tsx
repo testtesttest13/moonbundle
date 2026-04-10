@@ -12,27 +12,27 @@ const PROMO_CODE = "4K4MZMMS69";
 const checklist = [
   {
     title: "Travaille ton copywriting",
-    desc: "\u00AB Caf\u00e9 aux champignons adaptog\u00e8nes bio \u00BB personne en veut. \u00AB Retrouve ton \u00e9nergie sans nervosit\u00e9 en 14 jours \u00BB tout le monde veut essayer.",
+    desc: "« Café aux champignons adaptogènes bio » personne en veut. « Retrouve ton énergie sans nervosité en 14 jours » tout le monde veut essayer.",
   },
   {
-    title: "Adapte tes CTA \u00e0 ta cible",
-    desc: "\u00AB Ajouter au panier \u00BB \u00e7a parle \u00e0 personne. \u00AB Transformer mes nuits \u00BB \u00e7a donne envie de cliquer.",
+    title: "Adapte tes CTA à ta cible",
+    desc: "« Ajouter au panier » ça parle à personne. « Transformer mes nuits » ça donne envie de cliquer.",
   },
   {
     title: "Ajoute des cross-sell et upsell dans ton panier",
-    desc: "Le client est pr\u00eat \u00e0 acheter\u00a0\u2014\u00a0c\u2019est le moment de lui proposer un produit compl\u00e9mentaire.",
+    desc: "Le client est prêt à acheter — c'est le moment de lui proposer un produit complémentaire.",
   },
   {
     title: "Rajoute des cadeaux pour pousser le panier",
-    desc: "Livraison gratuite, ebook, guide d\u2019utilisation, garantie \u00e9tendue. Le client rajoute un produit juste pour d\u00e9bloquer le palier.",
+    desc: "Livraison gratuite, ebook, guide d'utilisation, garantie étendue. Le client rajoute un produit juste pour débloquer le palier.",
   },
   {
-    title: "Propose un upsell compl\u00e9mentaire apr\u00e8s l\u2019achat",
-    desc: "Tu vends des coussins\u00a0? Propose une taie d\u2019oreiller. Tu vends du shampoing\u00a0? Propose l\u2019apr\u00e8s-shampoing. Le client vient de payer, 20% acceptent.",
+    title: "Propose un upsell complémentaire après l'achat",
+    desc: "Tu vends des coussins ? Propose une taie d'oreiller. Tu vends du shampoing ? Propose l'après-shampoing. Le client vient de payer, 20% acceptent.",
   },
   {
     title: "A/B teste tes offres et tes concepts",
-    desc: "M\u00eame produit, m\u00eame trafic, deux structures diff\u00e9rentes. Une des deux convertit 2x mieux et tu le sauras jamais si tu testes pas.",
+    desc: "Même produit, même trafic, deux structures différentes. Une des deux convertit 2x mieux et tu le sauras jamais si tu testes pas.",
   },
 ];
 
@@ -53,12 +53,55 @@ function CopyButton({ text }: { text: string }) {
           : "border border-blue-accent/30 bg-blue-accent/10 text-blue-accent hover:bg-blue-accent/20"
       }`}
     >
-      {copied ? "Copi\u00e9 \u2713" : "Copier"}
+      {copied ? "Copié ✓" : "Copier"}
+    </button>
+  );
+}
+
+function Checkbox({ checked, onChange }: { checked: boolean; onChange: () => void }) {
+  return (
+    <button
+      onClick={onChange}
+      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 transition-all duration-300 ${
+        checked
+          ? "border-blue-accent bg-blue-accent text-white scale-105"
+          : "border-white/15 bg-white/[0.03] hover:border-white/25"
+      }`}
+      aria-label={checked ? "Marquer comme non fait" : "Marquer comme fait"}
+    >
+      {checked && (
+        <motion.svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3.5 w-3.5"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </motion.svg>
+      )}
     </button>
   );
 }
 
 export default function ChecklistPage() {
+  const [checked, setChecked] = useState<boolean[]>(new Array(checklist.length).fill(false));
+  const completedCount = checked.filter(Boolean).length;
+  const progress = (completedCount / checklist.length) * 100;
+
+  const toggle = (index: number) => {
+    setChecked((prev) => {
+      const next = [...prev];
+      next[index] = !next[index];
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#0a1628]">
       {/* Grid background */}
@@ -102,11 +145,11 @@ export default function ChecklistPage() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
             </span>
-            Moonbundles
+            Checklist CRO
           </span>
 
           <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl font-[family-name:var(--font-heading)]">
-            6 quick wins \u00e0 appliquer sur ton store{" "}
+            6 quick wins à appliquer sur ton store{" "}
             <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
               en moins de 2h
             </span>
@@ -114,35 +157,89 @@ export default function ChecklistPage() {
 
           <p className="mt-4 text-sm leading-relaxed text-text-muted sm:text-base">
             La checklist CRO qu&apos;on utilise sur chaque store qu&apos;on analyse.
-            Applique ces 6 points et ton panier moyen augmente de 20 \u00e0 40%.
+            Applique ces 6 points et ton panier moyen augmente de 20 à 40%.
           </p>
         </motion.div>
 
+        {/* ===== PROGRESS BAR ===== */}
+        <motion.div
+          className="mt-10 mb-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15, ease }}
+        >
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-xs font-medium text-text-muted">Ta progression</span>
+            <span className="text-xs font-semibold text-blue-accent">
+              {completedCount}/{checklist.length}
+            </span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-white/[0.06] border border-white/[0.04]">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-blue-accent to-violet-accent"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.4, ease }}
+            />
+          </div>
+          {completedCount === checklist.length && (
+            <motion.p
+              className="mt-2 text-xs font-medium text-green-400"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease }}
+            >
+              Checklist complète — bravo !
+            </motion.p>
+          )}
+        </motion.div>
+
         {/* ===== CHECKLIST ===== */}
-        <div className="mt-12 flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {checklist.map((item, i) => (
             <motion.div
               key={i}
-              className="glass-card group overflow-hidden p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+              className={`glass-card group overflow-hidden transition-all duration-300 ${
+                checked[i]
+                  ? "border-blue-accent/20 bg-blue-accent/[0.03]"
+                  : "hover:-translate-y-0.5"
+              }`}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease }}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease }}
             >
-              <div className="flex gap-4">
-                {/* Number */}
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-accent text-sm font-bold text-white">
-                  {i + 1}
-                </div>
+              <button
+                onClick={() => toggle(i)}
+                className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
+              >
+                <Checkbox checked={checked[i]} onChange={() => toggle(i)} />
 
-                <div className="min-w-0">
-                  <h2 className="text-base font-bold text-white sm:text-lg font-[family-name:var(--font-heading)]">
+                <div className="min-w-0 flex-1">
+                  <h2
+                    className={`text-base font-bold sm:text-lg font-[family-name:var(--font-heading)] transition-colors duration-300 ${
+                      checked[i] ? "text-blue-accent" : "text-white"
+                    }`}
+                  >
                     {item.title}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                  <p
+                    className={`mt-1.5 text-sm leading-relaxed transition-colors duration-300 ${
+                      checked[i] ? "text-text-muted/60" : "text-text-muted"
+                    }`}
+                  >
                     {item.desc}
                   </p>
                 </div>
-              </div>
+
+                {/* Step indicator */}
+                <span
+                  className={`mt-0.5 shrink-0 text-xs font-bold transition-colors duration-300 ${
+                    checked[i] ? "text-blue-accent/40" : "text-white/10"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </button>
             </motion.div>
           ))}
         </div>
@@ -152,27 +249,26 @@ export default function ChecklistPage() {
 
         {/* ===== CTA MOONBUNDLES ===== */}
         <motion.div
-          className="overflow-hidden rounded-2xl border border-blue-accent/20 bg-gradient-to-br from-blue-accent/[0.08] to-violet-accent/[0.04]"
+          className="relative overflow-hidden rounded-2xl border border-blue-accent/20 bg-gradient-to-br from-blue-accent/[0.08] to-violet-accent/[0.04]"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease }}
         >
-          {/* Background glow */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-64 rounded-full bg-blue-accent/10 blur-[80px]" />
           </div>
 
           <div className="relative z-10 p-6 sm:p-8">
             <p className="text-center text-base font-semibold text-white sm:text-lg font-[family-name:var(--font-heading)]">
-              Tout \u00e7a se configure en 5 min avec Moonbundles
+              Tout ça se configure en 5 min avec Moonbundles
             </p>
 
-            {/* Promo code box */}
+            {/* Promo code */}
             <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
               <div className="min-w-0">
                 <p className="text-[10px] font-medium uppercase tracking-wider text-blue-accent">
-                  20% de r\u00e9duction avec le code
+                  20% de réduction avec le code
                 </p>
                 <p className="mt-1 truncate text-lg font-bold tracking-widest text-white sm:text-xl font-[family-name:var(--font-heading)]">
                   {PROMO_CODE}
@@ -196,7 +292,7 @@ export default function ChecklistPage() {
 
         {/* ===== CTA WHATSAPP ===== */}
         <motion.div
-          className="mt-6"
+          className="mt-5"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-30px" }}
@@ -204,7 +300,7 @@ export default function ChecklistPage() {
         >
           <div className="glass-card p-5 text-center sm:p-6">
             <p className="text-sm text-text-muted">
-              Une question ? On t&apos;aide \u00e0 setup tes offres
+              Une question ? On t&apos;aide à setup tes offres
             </p>
             <a
               href={WHATSAPP_URL}
