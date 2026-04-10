@@ -9,36 +9,46 @@ const INSTALL_URL = "https://apps.shopify.com/moonbundle";
 const WHATSAPP_URL = "https://wa.me/33670438611";
 const PROMO_CODE = "4K4MZMMS69";
 
-const checklist = [
+function Bad({ children }: { children: React.ReactNode }) {
+  return <span className="rounded bg-red-500/10 px-1.5 py-0.5 text-red-400 line-through decoration-red-400/40">{children}</span>;
+}
+function Good({ children }: { children: React.ReactNode }) {
+  return <span className="rounded bg-green-400/10 px-1.5 py-0.5 text-green-400 font-medium">{children}</span>;
+}
+function Hl({ children }: { children: React.ReactNode }) {
+  return <span className="text-blue-accent font-medium">{children}</span>;
+}
+
+const checklist: { title: string; desc: React.ReactNode; example: React.ReactNode }[] = [
   {
     title: "Travaille ton copywriting",
-    desc: "« Café aux champignons adaptogènes bio » personne en veut. « Retrouve ton énergie sans nervosité en 14 jours » tout le monde veut essayer.",
-    example: "Exemple : remplace « Complément alimentaire naturel » par « Retrouve ton énergie en 14 jours — sans nervosité ».",
+    desc: <><Bad>Café aux champignons adaptogènes bio</Bad> personne en veut. <Good>Retrouve ton énergie sans nervosité en 14 jours</Good> tout le monde veut essayer.</>,
+    example: <>Remplace <Bad>Complément alimentaire naturel</Bad> par <Good>Retrouve ton énergie en 14 jours — sans nervosité</Good></>,
   },
   {
     title: "Adapte tes CTA à ta cible",
-    desc: "« Ajouter au panier » ça parle à personne. « Transformer mes nuits » ça donne envie de cliquer.",
-    example: "Exemple : tu vends des matelas → « Je veux mieux dormir » convertit 2x plus que « Ajouter au panier ».",
+    desc: <><Bad>Ajouter au panier</Bad> ça parle à personne. <Good>Transformer mes nuits</Good> ça donne envie de cliquer.</>,
+    example: <>Tu vends des matelas → <Good>Je veux mieux dormir</Good> convertit <Hl>2x plus</Hl> que <Bad>Ajouter au panier</Bad></>,
   },
   {
     title: "Ajoute des cross-sell et upsell dans ton panier",
-    desc: "Le client est prêt à acheter — c'est le moment de lui proposer un produit complémentaire.",
-    example: "Exemple : le client a un shampoing dans le panier → propose le masque capillaire en upsell à -15%.",
+    desc: <>Le client est prêt à acheter — c&apos;est le moment de lui proposer un <Hl>produit complémentaire</Hl>.</>,
+    example: <>Le client a un shampoing dans le panier → propose le <Good>masque capillaire en upsell à -15%</Good></>,
   },
   {
     title: "Rajoute des cadeaux pour pousser le panier",
-    desc: "Livraison gratuite, ebook, guide d'utilisation, garantie étendue. Le client rajoute un produit juste pour débloquer le palier.",
-    example: "Exemple : « Plus que 12€ pour débloquer la livraison gratuite + un guide offert ».",
+    desc: <>Livraison gratuite, ebook, guide d&apos;utilisation, garantie étendue. Le client rajoute un produit juste pour <Hl>débloquer le palier</Hl>.</>,
+    example: <><Good>Plus que 12€ pour la livraison gratuite + un guide offert</Good> — le client ajoute un produit pour y arriver.</>,
   },
   {
     title: "Propose un upsell complémentaire après l'achat",
-    desc: "Tu vends des coussins ? Propose une taie d'oreiller. Tu vends du shampoing ? Propose l'après-shampoing. Le client vient de payer, 20% acceptent.",
-    example: "Exemple : page de confirmation → « Ajoute l'après-shampoing pour 9€ au lieu de 14€ — en 1 clic ».",
+    desc: <>Tu vends des coussins ? Propose une taie d&apos;oreiller. Tu vends du shampoing ? Propose l&apos;après-shampoing. Le client vient de payer, <Hl>20% acceptent</Hl>.</>,
+    example: <>Page de confirmation → <Good>Ajoute l&apos;après-shampoing pour 9€ au lieu de 14€ — en 1 clic</Good></>,
   },
   {
     title: "A/B teste tes offres et tes concepts",
-    desc: "Même produit, même trafic, deux structures différentes. Une des deux convertit 2x mieux et tu le sauras jamais si tu testes pas.",
-    example: "Exemple : teste un bundle « 2+1 offert » vs une remise volume « -20% dès 3 achetés » pendant 7 jours.",
+    desc: <>Même produit, même trafic, deux structures différentes. Une des deux convertit <Hl>2x mieux</Hl> et tu le sauras jamais si tu testes pas.</>,
+    example: <>Teste <Good>bundle 2+1 offert</Good> vs <Good>remise volume -20% dès 3</Good> pendant 7 jours. Garde celui qui convertit.</>,
   },
 ];
 
