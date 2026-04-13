@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const INSTALL_URL = "https://apps.shopify.com/moonbundle";
+const INSTALL_URL = "/api/go?from=cta";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function CTA() {

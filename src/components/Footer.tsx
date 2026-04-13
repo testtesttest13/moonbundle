@@ -3,7 +3,7 @@
 import Logo from "./Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const INSTALL_URL = "https://apps.shopify.com/moonbundle";
+const INSTALL_URL = "/api/go?from=footer";
 
 export default function Footer() {
   const { t } = useTranslation();

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import type { Language } from "@/lib/i18n/translations";
 
-const INSTALL_URL = "https://apps.shopify.com/moonbundle";
+const INSTALL_URL = "/api/go?from=navbar";
 
 function FrFlag() {
   return (

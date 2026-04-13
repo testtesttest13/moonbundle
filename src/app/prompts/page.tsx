@@ -151,7 +151,7 @@ export default function PromptsPage() {
             d&apos;optimiser ta conversion et ton panier moyen
           </p>
           <a
-            href="https://apps.shopify.com/moonbundle"
+            href="/api/go?from=prompts"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-shine mt-6 inline-block rounded-xl bg-blue-accent px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(77,124,255,0.25)]"

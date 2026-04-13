@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const INSTALL_URL = "https://apps.shopify.com/moonbundle";
+const INSTALL_URL = "/api/go?from=checklist";
 const WHATSAPP_URL = "https://wa.me/33670438611";
 const PROMO_CODE = "4K4MZMMS69";
 

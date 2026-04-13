@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedText";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const INSTALL_URL = "https://apps.shopify.com/moonbundle";
+const INSTALL_URL = "/api/go?from=home";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 function useIsMobile() {
