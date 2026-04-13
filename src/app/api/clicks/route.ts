@@ -12,12 +12,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [totalClicks, totalViews] = await Promise.all([
+    const [totalClicks, totalViews, totalCopyCode, totalDownloadPdf] = await Promise.all([
       kv.hgetall("clicks:total"),
       kv.hgetall("views:total"),
+      kv.hgetall("events:copy-code:total"),
+      kv.hgetall("events:download-pdf:total"),
     ]);
 
-    // Ensure all pages are present
+    // Ensure all pages present
     const clicks: Record<string, number> = {};
     const views: Record<string, number> = {};
     for (const page of ALL_PAGES) {
@@ -25,7 +27,12 @@ export async function GET(req: NextRequest) {
       views[page] = ((totalViews as Record<string, number>)?.[page]) || 0;
     }
 
-    // Get last 14 days
+    const events = {
+      copyCode: (totalCopyCode as Record<string, number>) || {},
+      downloadPdf: (totalDownloadPdf as Record<string, number>) || {},
+    };
+
+    // Last 14 days
     const days: Record<string, { clicks: Record<string, number>; views: Record<string, number> }> = {};
     for (let i = 0; i < 14; i++) {
       const d = new Date();
@@ -41,7 +48,7 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    return NextResponse.json({ clicks, views, days, pages: ALL_PAGES });
+    return NextResponse.json({ clicks, views, events, days, pages: ALL_PAGES });
   } catch {
     return NextResponse.json(
       { error: "KV non configuré. Crée un store Upstash Redis dans Vercel → Storage." },

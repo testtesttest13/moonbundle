@@ -35,6 +35,11 @@ function CopyButton({ text }: { text: string }) {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event: "copy-code", page: "native-ads" }),
+      }).catch(() => {});
     });
   };
   return (
@@ -51,6 +56,14 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
+function trackEvent(event: string, page: string, detail?: string) {
+  fetch("/api/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ event, page, detail }),
+  }).catch(() => {});
+}
+
 const steps = [
   {
     title: "Apprends à connaître ton persona",
@@ -59,6 +72,7 @@ const steps = [
     action: "download" as const,
     href: "/downloads/persona-prompt.pdf",
     btnLabel: "Télécharger le prompt Persona",
+    trackDetail: "persona",
   },
   {
     title: "Génère tes concepts de native ads",
@@ -67,6 +81,7 @@ const steps = [
     action: "download" as const,
     href: "/downloads/native-ads-prompt.pdf",
     btnLabel: "Télécharger le prompt Native Ads",
+    trackDetail: "native-ads-prompt",
   },
   {
     title: "Crée tes visuels sur Nanobanana",
@@ -75,6 +90,7 @@ const steps = [
     action: "link" as const,
     href: "https://higgsfield.ai/image/nano_banana_flash",
     btnLabel: "Aller sur Nanobanana",
+    trackDetail: "",
   },
 ];
 
@@ -191,6 +207,7 @@ export default function NativeAdsPage() {
                       <a
                         href={step.href}
                         download
+                        onClick={() => trackEvent("download-pdf", "native-ads", step.trackDetail)}
                         className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
                       >
                         <DownloadIcon />
