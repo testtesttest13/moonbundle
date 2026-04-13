@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -11,9 +11,9 @@ const PAGE_LABELS: Record<string, { name: string; color: string }> = {
   checklist: { name: "Checklist CRO", color: "from-yellow-400 to-orange-400" },
   "native-ads": { name: "Guide Native Ads", color: "from-pink-400 to-rose-400" },
   prompts: { name: "Prompts Sidekick", color: "from-cyan-400 to-blue-accent" },
-  navbar: { name: "Navbar (global)", color: "from-violet-accent to-purple-400" },
-  cta: { name: "CTA Final (home)", color: "from-blue-light to-blue-accent" },
-  footer: { name: "Footer (global)", color: "from-gray-400 to-gray-500" },
+  navbar: { name: "Navbar", color: "from-violet-accent to-purple-400" },
+  cta: { name: "CTA Final", color: "from-blue-light to-blue-accent" },
+  footer: { name: "Footer", color: "from-gray-400 to-gray-500" },
 };
 
 interface DayData {
@@ -34,15 +34,16 @@ export default function ClicksPanel() {
   const [data, setData] = useState<ClickData | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
-  const fetchData = async (key: string) => {
+  const fetchData = useCallback(async (key: string) => {
     const res = await fetch(`/api/clicks?key=${key}`);
     if (!res.ok) {
       const j = await res.json();
       throw new Error(j.error || "Erreur");
     }
     return res.json();
-  };
+  }, []);
 
   const login = async () => {
     setLoading(true);
@@ -51,6 +52,7 @@ export default function ClicksPanel() {
       const json = await fetchData(password);
       setData(json);
       setAuthed(true);
+      setLastRefresh(new Date());
       sessionStorage.setItem("clicks-key", password);
     } catch (e) {
       setError((e as Error).message);
@@ -58,31 +60,45 @@ export default function ClicksPanel() {
     setLoading(false);
   };
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     const key = sessionStorage.getItem("clicks-key");
     if (!key) return;
     try {
       setData(await fetchData(key));
+      setLastRefresh(new Date());
     } catch {}
-  };
+  }, [fetchData]);
 
+  // Auto-login
   useEffect(() => {
     const key = sessionStorage.getItem("clicks-key");
     if (key) {
       setPassword(key);
       fetchData(key)
-        .then((json) => { setData(json); setAuthed(true); })
+        .then((json) => { setData(json); setAuthed(true); setLastRefresh(new Date()); })
         .catch(() => {});
     }
-  }, []);
+  }, [fetchData]);
+
+  // Auto-refresh toutes les 15s
+  useEffect(() => {
+    if (!authed) return;
+    const interval = setInterval(refresh, 15000);
+    return () => clearInterval(interval);
+  }, [authed, refresh]);
 
   const totalClicks = data ? Object.values(data.clicks).reduce((a, b) => a + b, 0) : 0;
   const totalViews = data ? Object.values(data.views).reduce((a, b) => a + b, 0) : 0;
-  const convRate = totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : "0.0";
+  const clickRate = totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : "0.0";
 
-  // Content pages only (not navbar/footer/cta)
   const contentPages = ["home", "affiliate", "checklist", "native-ads", "prompts"];
   const ctaPages = ["navbar", "cta", "footer"];
+
+  // Today data
+  const today = new Date().toISOString().slice(0, 10);
+  const todayData = data?.days[today];
+  const todayViews = todayData ? Object.values(todayData.views).reduce((a, b) => a + b, 0) : 0;
+  const todayClicks = todayData ? Object.values(todayData.clicks).reduce((a, b) => a + b, 0) : 0;
 
   // === LOGIN ===
   if (!authed) {
@@ -154,7 +170,11 @@ export default function ClicksPanel() {
               <h1 className="text-xl font-bold text-white sm:text-2xl font-[family-name:var(--font-heading)]">
                 Analytics
               </h1>
-              <p className="text-xs text-text-muted">Moonbundles Dashboard</p>
+              <p className="text-xs text-text-muted">
+                {lastRefresh && (
+                  <>Mis à jour {lastRefresh.toLocaleTimeString("fr-FR")} · <span className="text-green-400">live 15s</span></>
+                )}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -179,32 +199,43 @@ export default function ClicksPanel() {
         </div>
 
         {/* === TOP STATS === */}
-        <div className="mb-8 grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {[
             { label: "Vues totales", value: totalViews, gradient: "from-blue-accent to-violet-accent" },
             { label: "Clics totaux", value: totalClicks, gradient: "from-green-400 to-emerald-300" },
-            { label: "Taux de conversion", value: `${convRate}%`, gradient: "from-yellow-400 to-orange-400" },
+            { label: "Taux de clic", value: `${clickRate}%`, gradient: "from-yellow-400 to-orange-400" },
+            { label: "Vues aujourd'hui", value: todayViews, gradient: "from-cyan-400 to-blue-accent" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
-              className="glass-card p-4 sm:p-6"
+              className="glass-card p-4 sm:p-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.08, ease }}
+              transition={{ duration: 0.4, delay: i * 0.06, ease }}
             >
-              <p className="text-[10px] font-medium uppercase tracking-wider text-text-muted sm:text-xs">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-text-muted">
                 {stat.label}
               </p>
-              <p className={`mt-2 bg-gradient-to-r ${stat.gradient} bg-clip-text text-2xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]`}>
+              <p className={`mt-1.5 bg-gradient-to-r ${stat.gradient} bg-clip-text text-2xl font-bold text-transparent sm:text-3xl font-[family-name:var(--font-heading)]`}>
                 {stat.value}
               </p>
             </motion.div>
           ))}
         </div>
 
-        {/* === PAGES CONTENT === */}
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-text-muted">
-          Pages de contenu
+        {/* Today clicks */}
+        <div className="mb-8 glass-card p-4 flex items-center justify-between">
+          <span className="text-xs text-text-muted">Clics aujourd&apos;hui</span>
+          <span className="text-sm font-bold text-green-400 font-[family-name:var(--font-heading)]">{todayClicks}</span>
+        </div>
+
+        {/* === PAGES LIVE === */}
+        <h2 className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-text-muted">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+          </span>
+          Pages en direct
         </h2>
         <div className="mb-8 flex flex-col gap-2.5">
           {contentPages.map((page, i) => {
@@ -212,6 +243,10 @@ export default function ClicksPanel() {
             const views = data?.views[page] || 0;
             const clicks = data?.clicks[page] || 0;
             const rate = views > 0 ? ((clicks / views) * 100).toFixed(1) : "0.0";
+            const todayPageViews = todayData?.views[page] || 0;
+            const todayPageClicks = todayData?.clicks[page] || 0;
+            const maxViews = Math.max(...contentPages.map(p => data?.views[p] || 0), 1);
+            const barWidth = (views / maxViews) * 100;
             return (
               <motion.div
                 key={page}
@@ -221,34 +256,43 @@ export default function ClicksPanel() {
                 transition={{ duration: 0.3, delay: 0.1 + i * 0.05, ease }}
               >
                 <div className="p-4 sm:p-5">
+                  {/* Title row */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2.5">
-                      <div className={`h-2 w-2 rounded-full bg-gradient-to-r ${info.color}`} />
+                      <div className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${info.color}`} />
                       <span className="text-sm font-medium text-white">{info.name}</span>
                     </div>
-                    <span className={`bg-gradient-to-r ${info.color} bg-clip-text text-xs font-bold text-transparent`}>
-                      {rate}% conv.
+                    <span className="text-[10px] text-text-muted">
+                      {rate}% taux de clic
                     </span>
                   </div>
 
-                  {/* Stats row */}
-                  <div className="flex gap-4 sm:gap-6">
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-4 gap-3 sm:gap-4">
                     <div>
-                      <p className="text-[10px] uppercase tracking-wider text-text-muted">Vues</p>
-                      <p className="text-lg font-bold text-white font-[family-name:var(--font-heading)]">{views}</p>
+                      <p className="text-[9px] uppercase tracking-wider text-text-muted/70">Vues</p>
+                      <p className="text-base font-bold text-white font-[family-name:var(--font-heading)]">{views}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-wider text-text-muted">Clics</p>
-                      <p className="text-lg font-bold text-blue-accent font-[family-name:var(--font-heading)]">{clicks}</p>
+                      <p className="text-[9px] uppercase tracking-wider text-text-muted/70">Clics</p>
+                      <p className="text-base font-bold text-blue-accent font-[family-name:var(--font-heading)]">{clicks}</p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] uppercase tracking-wider text-text-muted/70">Vues 24h</p>
+                      <p className="text-base font-bold text-cyan-400 font-[family-name:var(--font-heading)]">{todayPageViews}</p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] uppercase tracking-wider text-text-muted/70">Clics 24h</p>
+                      <p className="text-base font-bold text-green-400 font-[family-name:var(--font-heading)]">{todayPageClicks}</p>
                     </div>
                   </div>
 
-                  {/* Bar */}
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                  {/* Bar relative aux autres pages */}
+                  <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/[0.04]">
                     <motion.div
-                      className={`h-full rounded-full bg-gradient-to-r ${info.color}`}
+                      className={`h-full rounded-full bg-gradient-to-r ${info.color} opacity-60`}
                       initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(parseFloat(rate), 100)}%` }}
+                      animate={{ width: `${barWidth}%` }}
                       transition={{ duration: 0.8, delay: 0.2 + i * 0.05, ease }}
                     />
                   </div>
@@ -260,12 +304,13 @@ export default function ClicksPanel() {
 
         {/* === CTA BUTTONS === */}
         <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-text-muted">
-          Boutons CTA (global)
+          Boutons CTA
         </h2>
         <div className="mb-8 grid grid-cols-3 gap-2.5">
           {ctaPages.map((page, i) => {
             const info = PAGE_LABELS[page] || { name: page, color: "from-white to-white" };
             const clicks = data?.clicks[page] || 0;
+            const todayC = todayData?.clicks[page] || 0;
             return (
               <motion.div
                 key={page}
@@ -274,15 +319,18 @@ export default function ClicksPanel() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.3 + i * 0.05, ease }}
               >
-                <p className="text-[10px] uppercase tracking-wider text-text-muted truncate">{info.name}</p>
+                <p className="text-[10px] uppercase tracking-wider text-text-muted">{info.name}</p>
                 <p className="mt-1 text-xl font-bold text-blue-accent font-[family-name:var(--font-heading)]">{clicks}</p>
-                <p className="text-[10px] text-text-muted">clics</p>
+                <p className="text-[10px] text-text-muted/50">
+                  {todayC > 0 && <span className="text-green-400">+{todayC} aujourd&apos;hui</span>}
+                  {todayC === 0 && "clics total"}
+                </p>
               </motion.div>
             );
           })}
         </div>
 
-        {/* === DAILY BREAKDOWN === */}
+        {/* === DAILY === */}
         <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-text-muted">
           14 derniers jours
         </h2>
@@ -293,15 +341,15 @@ export default function ClicksPanel() {
               .map(([date, day]) => {
                 const dayViews = Object.values(day.views).reduce((a, b) => a + b, 0);
                 const dayClicks = Object.values(day.clicks).reduce((a, b) => a + b, 0);
-                const isToday = date === new Date().toISOString().slice(0, 10);
+                const isToday = date === today;
                 return (
                   <div key={date} className={`glass-card p-4 ${isToday ? "border-blue-accent/20" : ""}`}>
                     <div className="flex items-center justify-between mb-2">
                       <span className="flex items-center gap-2 text-sm font-medium text-white">
                         {date}
                         {isToday && (
-                          <span className="rounded-full bg-blue-accent/15 px-2 py-0.5 text-[9px] font-semibold text-blue-accent">
-                            Aujourd&apos;hui
+                          <span className="rounded-full bg-green-400/15 px-2 py-0.5 text-[9px] font-semibold text-green-400">
+                            Live
                           </span>
                         )}
                       </span>
@@ -317,25 +365,21 @@ export default function ClicksPanel() {
 
                     {(dayViews > 0 || dayClicks > 0) && (
                       <div className="flex flex-wrap gap-1.5">
-                        {Object.entries(day.views).map(([p, n]) => (
-                          <span
-                            key={`v-${p}`}
-                            className="rounded bg-white/5 px-2 py-0.5 text-[10px] text-text-muted"
-                          >
-                            {(PAGE_LABELS[p]?.name || p).split(" ")[0]}: {n}v
-                            {day.clicks[p] ? ` / ${day.clicks[p]}c` : ""}
-                          </span>
-                        ))}
-                        {Object.entries(day.clicks)
-                          .filter(([p]) => !day.views[p])
-                          .map(([p, n]) => (
+                        {[...new Set([...Object.keys(day.views), ...Object.keys(day.clicks)])].map((p) => {
+                          const v = day.views[p] || 0;
+                          const c = day.clicks[p] || 0;
+                          const label = (PAGE_LABELS[p]?.name || p);
+                          return (
                             <span
-                              key={`c-${p}`}
-                              className="rounded bg-blue-accent/10 px-2 py-0.5 text-[10px] text-blue-accent"
+                              key={p}
+                              className="rounded bg-white/5 px-2 py-0.5 text-[10px] text-text-muted"
                             >
-                              {(PAGE_LABELS[p]?.name || p).split(" ")[0]}: {n}c
+                              {label.length > 12 ? label.slice(0, 12) + "…" : label}:{" "}
+                              <span className="text-text-secondary">{v}v</span>
+                              {c > 0 && <> / <span className="text-blue-accent">{c}c</span></>}
                             </span>
-                          ))}
+                          );
+                        })}
                       </div>
                     )}
                     {dayViews === 0 && dayClicks === 0 && (
@@ -345,6 +389,19 @@ export default function ClicksPanel() {
                 );
               })}
         </div>
+
+        {/* Logout */}
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("clicks-key");
+            setAuthed(false);
+            setData(null);
+            setPassword("");
+          }}
+          className="mt-10 text-xs text-text-muted/40 hover:text-text-muted"
+        >
+          Déconnexion
+        </button>
       </div>
     </div>
   );
