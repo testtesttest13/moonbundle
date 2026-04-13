@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import LanguageModal from "@/components/LanguageModal";
+import PageTracker from "@/components/PageTracker";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -59,6 +60,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen overflow-x-hidden grain">
         <LanguageProvider>
+          <PageTracker />
           <LanguageModal />
           {children}
         </LanguageProvider>
