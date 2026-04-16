@@ -3,11 +3,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const INSTALL_URL = "/api/go?from=native-ads";
 const WHATSAPP_URL = "https://wa.me/33670438611";
 const PROMO_CODE = "4K4MZMMS69";
+
+const stepsMeta = [
+  { action: "download" as const, href: "/downloads/persona-prompt.pdf", trackDetail: "persona" },
+  { action: "download" as const, href: "/downloads/native-ads-prompt.pdf", trackDetail: "native-ads-prompt" },
+  { action: "link" as const, href: "https://higgsfield.ai/image/nano_banana_flash", trackDetail: "" },
+];
 
 function DownloadIcon() {
   return (
@@ -30,6 +37,7 @@ function ExternalIcon() {
 }
 
 function CopyButton({ text }: { text: string }) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const copy = () => {
     navigator.clipboard.writeText(text).then(() => {
@@ -51,7 +59,7 @@ function CopyButton({ text }: { text: string }) {
           : "border border-blue-accent/30 bg-blue-accent/10 text-blue-accent hover:bg-blue-accent/20"
       }`}
     >
-      {copied ? "Copié ✓" : "Copier"}
+      {copied ? t.nativeAds.copyDone : t.nativeAds.copyIdle}
     </button>
   );
 }
@@ -64,43 +72,10 @@ function trackEvent(event: string, page: string, detail?: string) {
   }).catch(() => {});
 }
 
-const steps = [
-  {
-    title: "Apprends à connaître ton persona",
-    desc: "Tu connais pas parfaitement ton client ? Ce prompt va te poser 19 questions sur ton produit, ta cible et ton marché. À la fin Claude te génère une fiche persona complète avec les frustrations, les désirs, les mots exacts de ton client et ses déclencheurs d'achat.",
-    sub: "Télécharge le PDF → colle le prompt dans Claude → réponds aux questions",
-    action: "download" as const,
-    href: "/downloads/persona-prompt.pdf",
-    btnLabel: "Télécharger le prompt Persona",
-    trackDetail: "persona",
-  },
-  {
-    title: "Génère tes concepts de native ads",
-    desc: "Envoie ce prompt à Claude avec le lien de ton site. Il analyse ton store et te génère 5 concepts de native ads complets : le hook, la description de l'image, le prompt Nanobanana prêt à copier, l'angle publicitaire et le texte de la pub Meta.",
-    sub: "Télécharge le PDF → colle le prompt dans Claude → ajoute ton URL → récupère tes 5 concepts",
-    action: "download" as const,
-    href: "/downloads/native-ads-prompt.pdf",
-    btnLabel: "Télécharger le prompt Native Ads",
-    trackDetail: "native-ads-prompt",
-  },
-  {
-    title: "Crée tes visuels sur Nanobanana",
-    desc: "Copie les prompts Nanobanana que Claude t'a générés et colle-les directement dans Nanobanana. Tu récupères des images de native ads réalistes, sans logo, sans produit, juste le problème de ton client. Prêtes à lancer sur Meta.",
-    sub: "Copie le prompt → colle dans Nanobanana → télécharge tes images → lance tes pubs",
-    action: "link" as const,
-    href: "https://higgsfield.ai/image/nano_banana_flash",
-    btnLabel: "Aller sur Nanobanana",
-    trackDetail: "",
-  },
-];
-
-const painPoints = [
-  "Pas de bundles → AOV trop bas",
-  "Pas de structure d'offre → conversion faible",
-  "Pas d'upsell → tu laisses du cash sur la table",
-];
-
 export default function NativeAdsPage() {
+  const { t } = useTranslation();
+  const tr = t.nativeAds;
+
   return (
     <div className="min-h-screen bg-[#0a1628]">
       {/* Grid */}
@@ -118,7 +93,7 @@ export default function NativeAdsPage() {
         <div className="absolute top-[50%] right-[10%] h-56 w-56 rounded-full bg-violet-accent/4 blur-[100px] animate-pulse-glow [animation-delay:3s]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[680px] px-5 py-10 sm:px-6 sm:py-14">
+      <div className="relative z-10 mx-auto max-w-[680px] px-5 py-10 sm:px-6 sm:py-14 lg:max-w-4xl lg:px-10 lg:py-20">
         {/* Logo */}
         <motion.a
           href="https://moonbundles.io"
@@ -144,90 +119,89 @@ export default function NativeAdsPage() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
             </span>
-            Guide Gratuit
+            {tr.heroBadge}
           </span>
 
-          <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl font-[family-name:var(--font-heading)]">
-            Crée des native ads qui scalent{" "}
+          <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
+            {tr.heroTitle}{" "}
             <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-              pour ton e-commerce
+              {tr.heroTitleHighlight}
             </span>
           </h1>
 
-          <p className="mt-4 text-sm leading-relaxed text-text-muted sm:text-base">
-            Le framework complet en 3 étapes : analyse ton persona, génère tes concepts,
-            crée tes visuels. Tout est automatisé avec Claude AI et Nanobanana.
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-text-muted sm:text-base lg:text-lg">
+            {tr.heroSubtitle}
           </p>
         </motion.div>
 
         {/* ===== 3 STEPS ===== */}
         <div className="mt-12">
           <motion.h2
-            className="mb-8 text-xl font-bold text-white sm:text-2xl font-[family-name:var(--font-heading)]"
+            className="mb-8 text-xl font-bold text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15, ease }}
           >
-            3 étapes pour créer des native ads{" "}
-            <span className="text-blue-accent">qui convertissent</span>
+            {tr.stepsTitle}{" "}
+            <span className="text-blue-accent">{tr.stepsTitleHighlight}</span>
           </motion.h2>
 
           <div className="flex flex-col gap-5">
-            {steps.map((step, i) => (
-              <motion.div
-                key={i}
-                className="glass-card overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease }}
-              >
-                <div className="p-6 sm:p-8">
-                  {/* Header */}
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-accent text-sm font-bold text-white">
-                      {i + 1}
+            {tr.steps.map((step, i) => {
+              const meta = stepsMeta[i];
+              return (
+                <motion.div
+                  key={i}
+                  className="glass-card overflow-hidden"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease }}
+                >
+                  <div className="p-6 sm:p-8">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-accent text-sm font-bold text-white">
+                        {i + 1}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
+                          {step.title}
+                        </h3>
+                        <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                          {step.desc}
+                        </p>
+                        <p className="mt-3 text-xs text-text-muted/60 italic">
+                          {step.sub}
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
-                        {step.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                        {step.desc}
-                      </p>
-                      <p className="mt-3 text-xs text-text-muted/60 italic">
-                        {step.sub}
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Button */}
-                  <div className="mt-6 ml-14">
-                    {step.action === "download" ? (
-                      // TODO: Replace placeholder PDFs with actual PDF files
-                      <a
-                        href={step.href}
-                        download
-                        onClick={() => trackEvent("download-pdf", "native-ads", step.trackDetail)}
-                        className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
-                      >
-                        <DownloadIcon />
-                        <span className="relative z-10">{step.btnLabel}</span>
-                      </a>
-                    ) : (
-                      <a
-                        href={step.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2.5 rounded-xl border border-blue-accent/30 bg-transparent px-6 py-3 text-sm font-semibold text-blue-accent transition-all duration-300 hover:bg-blue-accent/10"
-                      >
-                        <ExternalIcon />
-                        <span>{step.btnLabel}</span>
-                      </a>
-                    )}
+                    <div className="mt-6 ml-14">
+                      {meta.action === "download" ? (
+                        <a
+                          href={meta.href}
+                          download
+                          onClick={() => trackEvent("download-pdf", "native-ads", meta.trackDetail)}
+                          className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
+                        >
+                          <DownloadIcon />
+                          <span className="relative z-10">{step.btnLabel}</span>
+                        </a>
+                      ) : (
+                        <a
+                          href={meta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2.5 rounded-xl border border-blue-accent/30 bg-transparent px-6 py-3 text-sm font-semibold text-blue-accent transition-all duration-300 hover:bg-blue-accent/10"
+                        >
+                          <ExternalIcon />
+                          <span>{step.btnLabel}</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
@@ -239,24 +213,24 @@ export default function NativeAdsPage() {
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease }}
         >
-          <h2 className="mb-6 text-xl font-bold leading-tight text-white sm:text-2xl font-[family-name:var(--font-heading)]">
-            Tu sais maintenant générer du trafic.{" "}
+          <h2 className="mb-6 text-xl font-bold leading-tight text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]">
+            {tr.tensionTitle}{" "}
             <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-              Mais voilà pourquoi tu perds encore de l&apos;argent.
+              {tr.tensionTitleHighlight}
             </span>
           </h2>
 
-          <div className="flex flex-col gap-3">
-            {painPoints.map((point, i) => (
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            {tr.painPoints.map((point, i) => (
               <motion.div
                 key={point}
-                className="glass-card flex items-start gap-3 p-5"
+                className="glass-card flex items-start gap-3 p-5 md:flex-col md:items-start md:gap-4 md:p-6"
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08, ease }}
               >
-                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-400/15 text-[11px] font-bold text-red-400">
+                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-400/15 text-[11px] font-bold text-red-400 md:mt-0 md:h-7 md:w-7 md:text-sm">
                   ✕
                 </span>
                 <p className="text-sm leading-relaxed text-text-secondary sm:text-base">
@@ -267,15 +241,15 @@ export default function NativeAdsPage() {
           </div>
 
           <motion.p
-            className="mt-6 text-sm leading-relaxed text-text-muted sm:text-base"
+            className="mt-6 text-sm leading-relaxed text-text-muted sm:text-base lg:text-center lg:text-lg"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3, ease }}
           >
-            <span className="text-white">90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.</span>{" "}
-            C&apos;est exactement ce que{" "}
-            <span className="font-semibold text-blue-accent">Moonbundles corrige</span>.
+            <span className="text-white">{tr.bridgeStat}</span>
+            {tr.bridgeMiddle}
+            <span className="font-semibold text-blue-accent">{tr.bridgeBrand}</span>.
           </motion.p>
         </motion.div>
 
@@ -294,17 +268,17 @@ export default function NativeAdsPage() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-64 rounded-full bg-blue-accent/10 blur-[80px]" />
           </div>
 
-          <div className="relative z-10 p-6 sm:p-8">
-            <h3 className="text-center text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
-              Configure tes offres en 5 min{" "}
-              <span className="text-blue-accent">et encaisse plus sur chaque commande.</span>
+          <div className="relative z-10 p-6 sm:p-8 lg:p-12">
+            <h3 className="mx-auto max-w-2xl text-center text-lg font-bold text-white sm:text-xl lg:text-2xl font-[family-name:var(--font-heading)]">
+              {tr.ctaTitle}{" "}
+              <span className="text-blue-accent">{tr.ctaTitleHighlight}</span>
             </h3>
 
             {/* Promo code */}
-            <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
+            <div className="mx-auto mt-6 flex max-w-xl items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
               <div className="min-w-0">
                 <p className="text-[10px] font-medium uppercase tracking-wider text-blue-accent">
-                  20% de réduction avec le code
+                  {tr.promoLabel}
                 </p>
                 <p className="mt-1 truncate text-lg font-bold tracking-widest text-white sm:text-xl font-[family-name:var(--font-heading)]">
                   {PROMO_CODE}
@@ -315,7 +289,7 @@ export default function NativeAdsPage() {
 
             {/* Open loop / trust */}
             <p className="mt-5 text-center text-xs italic text-text-muted">
-              « Un user est passé de 3 à 12 ventes/jour sans changer ses ads. »
+              {tr.openLoop}
             </p>
 
             {/* Button */}
@@ -323,10 +297,10 @@ export default function NativeAdsPage() {
               href={INSTALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-shine group mt-3 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
+              className="btn-shine group mx-auto mt-3 flex w-full max-w-xl items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
             >
-              <span className="relative z-10">Augmenter mon AOV en 5 min</span>
-              <img src="/shopify.png" alt="Shopify" className="relative z-10 h-5 w-5 object-contain" />
+              <span className="relative z-10">{tr.ctaButton}</span>
+              <Image src="/shopify.png" alt="Shopify" width={20} height={20} className="relative z-10 h-5 w-5 object-contain" />
             </a>
           </div>
         </motion.div>
@@ -340,9 +314,7 @@ export default function NativeAdsPage() {
           transition={{ duration: 0.5, delay: 0.1, ease }}
         >
           <div className="glass-card p-5 text-center sm:p-6">
-            <p className="text-sm text-text-muted">
-              Une question ? On t&apos;aide à setup tes offres
-            </p>
+            <p className="text-sm text-text-muted">{tr.whatsappText}</p>
             <a
               href={WHATSAPP_URL}
               target="_blank"
@@ -352,7 +324,7 @@ export default function NativeAdsPage() {
               <svg className="relative z-10 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
               </svg>
-              <span className="relative z-10">Nous contacter sur WhatsApp</span>
+              <span className="relative z-10">{tr.whatsappButton}</span>
             </a>
           </div>
         </motion.div>

@@ -264,6 +264,55 @@ export const translations: Record<Language, TranslationDict> = {
       footnote: "Réponse sous 24h — Programme géré en direct",
     },
 
+    nativeAds: {
+      heroBadge: "Guide Gratuit",
+      heroTitle: "Crée des native ads qui scalent",
+      heroTitleHighlight: "pour ton e-commerce",
+      heroSubtitle:
+        "Le framework complet en 3 étapes : analyse ton persona, génère tes concepts, crée tes visuels. Tout est automatisé avec Claude AI et Nanobanana.",
+      stepsTitle: "3 étapes pour créer des native ads",
+      stepsTitleHighlight: "qui convertissent",
+      steps: [
+        {
+          title: "Apprends à connaître ton persona",
+          desc: "Tu connais pas parfaitement ton client ? Ce prompt va te poser 19 questions sur ton produit, ta cible et ton marché. À la fin Claude te génère une fiche persona complète avec les frustrations, les désirs, les mots exacts de ton client et ses déclencheurs d'achat.",
+          sub: "Télécharge le PDF → colle le prompt dans Claude → réponds aux questions",
+          btnLabel: "Télécharger le prompt Persona",
+        },
+        {
+          title: "Génère tes concepts de native ads",
+          desc: "Envoie ce prompt à Claude avec le lien de ton site. Il analyse ton store et te génère 5 concepts de native ads complets : le hook, la description de l'image, le prompt Nanobanana prêt à copier, l'angle publicitaire et le texte de la pub Meta.",
+          sub: "Télécharge le PDF → colle le prompt dans Claude → ajoute ton URL → récupère tes 5 concepts",
+          btnLabel: "Télécharger le prompt Native Ads",
+        },
+        {
+          title: "Crée tes visuels sur Nanobanana",
+          desc: "Copie les prompts Nanobanana que Claude t'a générés et colle-les directement dans Nanobanana. Tu récupères des images de native ads réalistes, sans logo, sans produit, juste le problème de ton client. Prêtes à lancer sur Meta.",
+          sub: "Copie le prompt → colle dans Nanobanana → télécharge tes images → lance tes pubs",
+          btnLabel: "Aller sur Nanobanana",
+        },
+      ],
+      tensionTitle: "Tu sais maintenant générer du trafic.",
+      tensionTitleHighlight: "Mais voilà pourquoi tu perds encore de l'argent.",
+      painPoints: [
+        "Pas de bundles → AOV trop bas",
+        "Pas de structure d'offre → conversion faible",
+        "Pas d'upsell → tu laisses du cash sur la table",
+      ],
+      bridgeStat: "90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.",
+      bridgeMiddle: " C'est exactement ce que ",
+      bridgeBrand: "Moonbundles corrige",
+      ctaTitle: "Configure tes offres en 5 min",
+      ctaTitleHighlight: "et encaisse plus sur chaque commande.",
+      promoLabel: "20% de réduction avec le code",
+      openLoop: "« Un user est passé de 3 à 12 ventes/jour sans changer ses ads. »",
+      ctaButton: "Augmenter mon AOV en 5 min",
+      copyIdle: "Copier",
+      copyDone: "Copié ✓",
+      whatsappText: "Une question ? On t'aide à setup tes offres",
+      whatsappButton: "Nous contacter sur WhatsApp",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choisis ta langue",
@@ -527,6 +576,55 @@ export const translations: Record<Language, TranslationDict> = {
       footnote: "Reply within 24h — Program managed in direct",
     },
 
+    nativeAds: {
+      heroBadge: "Free Guide",
+      heroTitle: "Create native ads that scale",
+      heroTitleHighlight: "for your e-commerce",
+      heroSubtitle:
+        "The complete 3-step framework: analyze your persona, generate your concepts, create your visuals. All automated with Claude AI and Nanobanana.",
+      stepsTitle: "3 steps to create native ads",
+      stepsTitleHighlight: "that convert",
+      steps: [
+        {
+          title: "Get to know your persona",
+          desc: "Don't know your customer perfectly? This prompt asks 19 questions about your product, your target and your market. At the end, Claude generates a full persona sheet with frustrations, desires, the exact words your customer uses and their buying triggers.",
+          sub: "Download the PDF → paste the prompt into Claude → answer the questions",
+          btnLabel: "Download the Persona prompt",
+        },
+        {
+          title: "Generate your native ads concepts",
+          desc: "Send this prompt to Claude with your store URL. It analyzes your site and generates 5 complete native ad concepts: the hook, the image description, the ready-to-copy Nanobanana prompt, the ad angle, and the Meta ad copy.",
+          sub: "Download the PDF → paste the prompt into Claude → add your URL → get your 5 concepts",
+          btnLabel: "Download the Native Ads prompt",
+        },
+        {
+          title: "Create your visuals on Nanobanana",
+          desc: "Copy the Nanobanana prompts Claude generated and paste them directly into Nanobanana. You get realistic native ad images — no logo, no product, just your customer's problem. Ready to launch on Meta.",
+          sub: "Copy the prompt → paste into Nanobanana → download your images → launch your ads",
+          btnLabel: "Go to Nanobanana",
+        },
+      ],
+      tensionTitle: "You now know how to drive traffic.",
+      tensionTitleHighlight: "But here's why you're still losing money.",
+      painPoints: [
+        "No bundles → AOV too low",
+        "No offer structure → weak conversion",
+        "No upsell → you leave cash on the table",
+      ],
+      bridgeStat: "90% of stores with good ads aren't profitable because of this.",
+      bridgeMiddle: " That's exactly what ",
+      bridgeBrand: "Moonbundles fixes",
+      ctaTitle: "Set up your offers in 5 min",
+      ctaTitleHighlight: "and cash in more on every order.",
+      promoLabel: "20% off with the code",
+      openLoop: "\u201CA merchant went from 3 to 12 sales/day without changing his ads.\u201D",
+      ctaButton: "Boost my AOV in 5 min",
+      copyIdle: "Copy",
+      copyDone: "Copied ✓",
+      whatsappText: "Got a question? We'll help you set up your offers",
+      whatsappButton: "Contact us on WhatsApp",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choose your language",
@@ -673,6 +771,30 @@ export interface TranslationDict {
     subtitlePart2: string;
     button: string;
     footnote: string;
+  };
+  nativeAds: {
+    heroBadge: string;
+    heroTitle: string;
+    heroTitleHighlight: string;
+    heroSubtitle: string;
+    stepsTitle: string;
+    stepsTitleHighlight: string;
+    steps: { title: string; desc: string; sub: string; btnLabel: string }[];
+    tensionTitle: string;
+    tensionTitleHighlight: string;
+    painPoints: string[];
+    bridgeStat: string;
+    bridgeMiddle: string;
+    bridgeBrand: string;
+    ctaTitle: string;
+    ctaTitleHighlight: string;
+    promoLabel: string;
+    openLoop: string;
+    ctaButton: string;
+    copyIdle: string;
+    copyDone: string;
+    whatsappText: string;
+    whatsappButton: string;
   };
   languageModal: {
     welcome: string;
