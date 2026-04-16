@@ -94,10 +94,10 @@ const steps = [
   },
 ];
 
-const stats = [
-  { value: "3x", text: "plus de clics qu'une pub produit classique" },
-  { value: "70%", text: "des gens lisent une native ad sans savoir que c'est une pub" },
-  { value: "-50%", text: "de coût par clic vs une pub classique" },
+const painPoints = [
+  "Pas de bundles → AOV trop bas",
+  "Pas de structure d'offre → conversion faible",
+  "Pas d'upsell → tu laisses du cash sur la table",
 ];
 
 export default function NativeAdsPage() {
@@ -231,7 +231,7 @@ export default function NativeAdsPage() {
           </div>
         </div>
 
-        {/* ===== WHY NATIVE ADS ===== */}
+        {/* ===== TENSION ===== */}
         <motion.div
           className="mt-16"
           initial={{ opacity: 0, y: 30 }}
@@ -239,30 +239,44 @@ export default function NativeAdsPage() {
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease }}
         >
-          <h2 className="mb-8 text-center text-xl font-bold text-white sm:text-2xl font-[family-name:var(--font-heading)]">
-            Pourquoi les native ads{" "}
-            <span className="text-blue-accent">surperforment</span>
+          <h2 className="mb-6 text-xl font-bold leading-tight text-white sm:text-2xl font-[family-name:var(--font-heading)]">
+            Tu sais maintenant générer du trafic.{" "}
+            <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
+              Mais voilà pourquoi tu perds encore de l&apos;argent.
+            </span>
           </h2>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {stats.map((stat, i) => (
+          <div className="flex flex-col gap-3">
+            {painPoints.map((point, i) => (
               <motion.div
-                key={i}
-                className="glass-card p-6 text-center"
-                initial={{ opacity: 0, y: 20 }}
+                key={point}
+                className="glass-card flex items-start gap-3 p-5"
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1, ease }}
+                transition={{ duration: 0.4, delay: i * 0.08, ease }}
               >
-                <span className="block bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-4xl font-bold text-transparent sm:text-5xl font-[family-name:var(--font-heading)]">
-                  {stat.value}
+                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-400/15 text-[11px] font-bold text-red-400">
+                  ✕
                 </span>
-                <p className="mt-2 text-xs leading-relaxed text-text-muted sm:text-sm">
-                  {stat.text}
+                <p className="text-sm leading-relaxed text-text-secondary sm:text-base">
+                  {point}
                 </p>
               </motion.div>
             ))}
           </div>
+
+          <motion.p
+            className="mt-6 text-sm leading-relaxed text-text-muted sm:text-base"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3, ease }}
+          >
+            <span className="text-white">90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.</span>{" "}
+            C&apos;est exactement ce que{" "}
+            <span className="font-semibold text-blue-accent">Moonbundles corrige</span>.
+          </motion.p>
         </motion.div>
 
         {/* ===== DIVIDER ===== */}
@@ -282,27 +296,9 @@ export default function NativeAdsPage() {
 
           <div className="relative z-10 p-6 sm:p-8">
             <h3 className="text-center text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
-              Tu sais maintenant générer du trafic.{" "}
-              <span className="text-blue-accent">Mais voilà pourquoi tu perds encore de l&apos;argent.</span>
+              Configure tes offres en 5 min{" "}
+              <span className="text-blue-accent">et encaisse plus sur chaque commande.</span>
             </h3>
-
-            <ul className="mx-auto mt-6 flex max-w-md flex-col gap-2.5">
-              {[
-                "Pas de bundles → AOV trop bas",
-                "Pas de structure d'offre → conversion faible",
-                "Pas d'upsell → tu laisses du cash sur la table",
-              ].map((point) => (
-                <li key={point} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                  <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-accent" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mx-auto mt-5 max-w-md text-center text-sm leading-relaxed text-text-muted">
-              90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.{" "}
-              <span className="text-white">C&apos;est exactement ce que Moonbundles corrige.</span>
-            </p>
 
             {/* Promo code */}
             <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
