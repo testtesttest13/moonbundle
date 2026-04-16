@@ -265,51 +265,6 @@ export default function NativeAdsPage() {
           </div>
         </motion.div>
 
-        {/* ===== EXEMPLE ===== */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease }}
-        >
-          <h2 className="mb-8 text-xl font-bold text-white sm:text-2xl font-[family-name:var(--font-heading)]">
-            Exemple de native ad{" "}
-            <span className="text-blue-accent">qui scale</span>
-          </h2>
-
-          <div className="glass-card overflow-hidden">
-            <div className="flex flex-col sm:flex-row">
-              {/* Image */}
-              <div className="sm:w-1/2">
-                <img
-                  src="/downloads/native.webp"
-                  alt="Exemple de native ad qui scale"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="flex-1 p-6 sm:p-8">
-                <ul className="flex flex-col gap-3.5">
-                  {[
-                    "Cette native a dépensé des milliers d'euros sur Meta",
-                    "Pas de logo, pas de produit, pas de prix",
-                    "Juste une photo qui montre le problème et un titre qui fait peur",
-                    "Le client clique par curiosité, pas par envie d'acheter",
-                    "Et il atterrit sur la page produit",
-                  ].map((point, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                      <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-accent" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* ===== DIVIDER ===== */}
         <div className="my-14 h-px bg-gradient-to-r from-transparent via-blue-accent/15 to-transparent" />
 
@@ -327,11 +282,26 @@ export default function NativeAdsPage() {
 
           <div className="relative z-10 p-6 sm:p-8">
             <h3 className="text-center text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
-              Tes native ads ramènent du trafic.{" "}
-              <span className="text-blue-accent">Moonbundles le transforme en revenu.</span>
+              Tu sais maintenant générer du trafic.{" "}
+              <span className="text-blue-accent">Mais voilà pourquoi tu perds encore de l&apos;argent.</span>
             </h3>
-            <p className="mx-auto mt-3 max-w-md text-center text-sm text-text-muted">
-              Bundles, cart drawer, upsell post-achat. Configure tes offres en 5 min et augmente ton panier moyen.
+
+            <ul className="mx-auto mt-6 flex max-w-md flex-col gap-2.5">
+              {[
+                "Pas de bundles → AOV trop bas",
+                "Pas de structure d'offre → conversion faible",
+                "Pas d'upsell → tu laisses du cash sur la table",
+              ].map((point) => (
+                <li key={point} className="flex items-start gap-2.5 text-sm text-text-secondary">
+                  <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-accent" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+
+            <p className="mx-auto mt-5 max-w-md text-center text-sm leading-relaxed text-text-muted">
+              90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.{" "}
+              <span className="text-white">C&apos;est exactement ce que Moonbundles corrige.</span>
             </p>
 
             {/* Promo code */}
@@ -347,14 +317,19 @@ export default function NativeAdsPage() {
               <CopyButton text={PROMO_CODE} />
             </div>
 
+            {/* Open loop / trust */}
+            <p className="mt-5 text-center text-xs italic text-text-muted">
+              « Un user est passé de 3 à 12 ventes/jour sans changer ses ads. »
+            </p>
+
             {/* Button */}
             <a
               href={INSTALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-shine group mt-5 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
+              className="btn-shine group mt-3 flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
             >
-              <span className="relative z-10">Installer Moonbundles</span>
+              <span className="relative z-10">Augmenter mon AOV en 5 min</span>
               <img src="/shopify.png" alt="Shopify" className="relative z-10 h-5 w-5 object-contain" />
             </a>
           </div>
