@@ -36,6 +36,14 @@ function ExternalIcon() {
   );
 }
 
+function BoltIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 relative z-10">
+      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+    </svg>
+  );
+}
+
 function CopyButton({ text }: { text: string }) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
@@ -100,7 +108,7 @@ function PromoCountdown() {
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <div className="mt-5 rounded-xl border border-blue-accent/25 bg-navy-900/60 p-4 sm:p-5">
+    <div className="rounded-xl border border-blue-accent/25 bg-navy-900/60 p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
@@ -139,8 +147,14 @@ function PromoCountdown() {
 }
 
 export default function NativeAdsPage() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const tr = t.nativeAds;
+  const hrefForStep = (meta: (typeof stepsMeta)[number]) => {
+    if (meta.action === "download" && lang === "en") {
+      return meta.href.replace(".pdf", "-en.pdf");
+    }
+    return meta.href;
+  };
 
   return (
     <div className="min-h-screen bg-[#0a1628]">
@@ -244,7 +258,7 @@ export default function NativeAdsPage() {
                     <div className="mt-6 ml-14">
                       {meta.action === "download" ? (
                         <a
-                          href={meta.href}
+                          href={hrefForStep(meta)}
                           download
                           onClick={() => trackEvent("download-pdf", "native-ads", meta.trackDetail)}
                           className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
@@ -302,8 +316,6 @@ export default function NativeAdsPage() {
                       {tr.bridgeMiddle}
                       <span className="font-semibold text-blue-accent">{tr.bridgeBrand}</span>.
                     </p>
-
-                    <PromoCountdown />
                   </div>
                 </div>
 
@@ -314,8 +326,13 @@ export default function NativeAdsPage() {
                     rel="noopener noreferrer"
                     className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
                   >
+                    <BoltIcon />
                     <span className="relative z-10">{tr.ctaButton}</span>
                   </a>
+                </div>
+
+                <div className="mt-5 ml-14">
+                  <PromoCountdown />
                 </div>
               </div>
             </motion.div>
