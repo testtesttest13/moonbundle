@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
@@ -70,6 +70,72 @@ function trackEvent(event: string, page: string, detail?: string) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ event, page, detail }),
   }).catch(() => {});
+}
+
+const PROMO_DEADLINE_KEY = "nativeads-promo-deadline";
+const PROMO_WINDOW_MS = 48 * 60 * 60 * 1000;
+
+function PromoCountdown() {
+  const { t } = useTranslation();
+  const tr = t.nativeAds;
+  const [remaining, setRemaining] = useState<number | null>(null);
+
+  useEffect(() => {
+    let deadline = Number(localStorage.getItem(PROMO_DEADLINE_KEY));
+    if (!deadline || Number.isNaN(deadline) || deadline < Date.now()) {
+      deadline = Date.now() + PROMO_WINDOW_MS;
+      localStorage.setItem(PROMO_DEADLINE_KEY, String(deadline));
+    }
+    const tick = () => setRemaining(Math.max(0, deadline - Date.now()));
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (remaining === null || remaining <= 0) return null;
+
+  const h = Math.floor(remaining / 3_600_000);
+  const m = Math.floor((remaining / 60_000) % 60);
+  const s = Math.floor((remaining / 1000) % 60);
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    <div className="mt-5 rounded-xl border border-blue-accent/25 bg-navy-900/60 p-4 sm:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-400" />
+            </span>
+            {tr.fomoBadge}
+          </p>
+          <p className="mt-1 truncate text-lg font-bold tracking-widest text-white sm:text-xl font-[family-name:var(--font-heading)]">
+            {PROMO_CODE}
+          </p>
+          <p className="text-[10px] text-text-muted/70">{tr.fomoSubtitle}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider text-text-muted">
+            {tr.fomoExpires}
+          </span>
+          <div className="flex items-center gap-1 tabular-nums">
+            {[h, m, s].map((v, idx) => (
+              <div
+                key={idx}
+                className="flex h-9 min-w-[2.25rem] items-center justify-center rounded-md border border-white/10 bg-white/5 px-1.5 text-sm font-bold text-white"
+              >
+                {pad(v)}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="mt-3 flex justify-end">
+        <CopyButton text={PROMO_CODE} />
+      </div>
+    </div>
+  );
 }
 
 export default function NativeAdsPage() {
@@ -202,108 +268,59 @@ export default function NativeAdsPage() {
                 </motion.div>
               );
             })}
+
+            {/* ===== STEP 4 — CTA INCOGNITO ===== */}
+            <motion.div
+              className="glass-card overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1, ease }}
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-accent text-sm font-bold text-white">
+                    4
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-white sm:text-xl font-[family-name:var(--font-heading)]">
+                      {tr.ctaStepTitle}
+                    </h3>
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {tr.painPoints.map((point) => (
+                        <li
+                          key={point}
+                          className="flex items-start gap-2.5 text-sm leading-relaxed text-text-muted"
+                        >
+                          <span className="mt-1.5 flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-accent" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-sm leading-relaxed text-text-muted">
+                      <span className="text-white">{tr.bridgeStat}</span>
+                      {tr.bridgeMiddle}
+                      <span className="font-semibold text-blue-accent">{tr.bridgeBrand}</span>.
+                    </p>
+
+                    <PromoCountdown />
+                  </div>
+                </div>
+
+                <div className="mt-6 ml-14">
+                  <a
+                    href={INSTALL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-shine inline-flex items-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)]"
+                  >
+                    <span className="relative z-10">{tr.ctaButton}</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
-
-        {/* ===== TENSION ===== */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease }}
-        >
-          <h2 className="mb-6 text-xl font-bold leading-tight text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]">
-            {tr.tensionTitle}{" "}
-            <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-              {tr.tensionTitleHighlight}
-            </span>
-          </h2>
-
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-            {tr.painPoints.map((point, i) => (
-              <motion.div
-                key={point}
-                className="glass-card flex items-start gap-3 p-5 md:flex-col md:items-start md:gap-4 md:p-6"
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08, ease }}
-              >
-                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-400/15 text-[11px] font-bold text-red-400 md:mt-0 md:h-7 md:w-7 md:text-sm">
-                  ✕
-                </span>
-                <p className="text-sm leading-relaxed text-text-secondary sm:text-base">
-                  {point}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.p
-            className="mt-6 text-sm leading-relaxed text-text-muted sm:text-base lg:text-center lg:text-lg"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3, ease }}
-          >
-            <span className="text-white">{tr.bridgeStat}</span>
-            {tr.bridgeMiddle}
-            <span className="font-semibold text-blue-accent">{tr.bridgeBrand}</span>.
-          </motion.p>
-        </motion.div>
-
-        {/* ===== DIVIDER ===== */}
-        <div className="my-14 h-px bg-gradient-to-r from-transparent via-blue-accent/15 to-transparent" />
-
-        {/* ===== CTA MOONBUNDLES ===== */}
-        <motion.div
-          className="relative overflow-hidden rounded-2xl border border-blue-accent/20 bg-gradient-to-br from-blue-accent/[0.08] to-violet-accent/[0.04]"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease }}
-        >
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-64 rounded-full bg-blue-accent/10 blur-[80px]" />
-          </div>
-
-          <div className="relative z-10 p-6 sm:p-8 lg:p-12">
-            <h3 className="mx-auto max-w-2xl text-center text-lg font-bold text-white sm:text-xl lg:text-2xl font-[family-name:var(--font-heading)]">
-              {tr.ctaTitle}{" "}
-              <span className="text-blue-accent">{tr.ctaTitleHighlight}</span>
-            </h3>
-
-            {/* Promo code */}
-            <div className="mx-auto mt-6 flex max-w-xl items-center justify-between gap-3 rounded-xl border border-blue-accent/20 bg-navy-900/80 px-4 py-3 sm:px-5">
-              <div className="min-w-0">
-                <p className="text-[10px] font-medium uppercase tracking-wider text-blue-accent">
-                  {tr.promoLabel}
-                </p>
-                <p className="mt-1 truncate text-lg font-bold tracking-widest text-white sm:text-xl font-[family-name:var(--font-heading)]">
-                  {PROMO_CODE}
-                </p>
-              </div>
-              <CopyButton text={PROMO_CODE} />
-            </div>
-
-            {/* Open loop / trust */}
-            <p className="mt-5 text-center text-xs italic text-text-muted">
-              {tr.openLoop}
-            </p>
-
-            {/* Button */}
-            <a
-              href={INSTALL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-shine group mx-auto mt-3 flex w-full max-w-xl items-center justify-center gap-3 rounded-xl bg-white py-4 text-sm font-semibold text-navy-900 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:scale-[1.01]"
-            >
-              <span className="relative z-10">{tr.ctaButton}</span>
-              <Image src="/shopify.png" alt="Shopify" width={20} height={20} className="relative z-10 h-5 w-5 object-contain" />
-            </a>
-          </div>
-        </motion.div>
 
         {/* ===== WHATSAPP ===== */}
         <motion.div

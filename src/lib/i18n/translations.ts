@@ -292,8 +292,7 @@ export const translations: Record<Language, TranslationDict> = {
           btnLabel: "Aller sur Nanobanana",
         },
       ],
-      tensionTitle: "Tu sais maintenant générer du trafic.",
-      tensionTitleHighlight: "Mais voilà pourquoi tu perds encore de l'argent.",
+      ctaStepTitle: "Un user est passé de 3 à 12 ventes/jour sans changer ses ads",
       painPoints: [
         "Pas de bundles → AOV trop bas",
         "Pas de structure d'offre → conversion faible",
@@ -302,10 +301,9 @@ export const translations: Record<Language, TranslationDict> = {
       bridgeStat: "90% des stores avec de bonnes ads ne sont pas rentables à cause de ça.",
       bridgeMiddle: " C'est exactement ce que ",
       bridgeBrand: "Moonbundles corrige",
-      ctaTitle: "Configure tes offres en 5 min",
-      ctaTitleHighlight: "et encaisse plus sur chaque commande.",
-      promoLabel: "20% de réduction avec le code",
-      openLoop: "« Un user est passé de 3 à 12 ventes/jour sans changer ses ads. »",
+      fomoBadge: "-20% sur Moonbundles",
+      fomoSubtitle: "Offre valable 48h seulement",
+      fomoExpires: "Expire dans",
       ctaButton: "Augmenter mon AOV en 5 min",
       copyIdle: "Copier",
       copyDone: "Copié ✓",
@@ -604,8 +602,7 @@ export const translations: Record<Language, TranslationDict> = {
           btnLabel: "Go to Nanobanana",
         },
       ],
-      tensionTitle: "You now know how to drive traffic.",
-      tensionTitleHighlight: "But here's why you're still losing money.",
+      ctaStepTitle: "A merchant went from 3 to 12 sales/day without changing his ads",
       painPoints: [
         "No bundles → AOV too low",
         "No offer structure → weak conversion",
@@ -614,10 +611,9 @@ export const translations: Record<Language, TranslationDict> = {
       bridgeStat: "90% of stores with good ads aren't profitable because of this.",
       bridgeMiddle: " That's exactly what ",
       bridgeBrand: "Moonbundles fixes",
-      ctaTitle: "Set up your offers in 5 min",
-      ctaTitleHighlight: "and cash in more on every order.",
-      promoLabel: "20% off with the code",
-      openLoop: "\u201CA merchant went from 3 to 12 sales/day without changing his ads.\u201D",
+      fomoBadge: "-20% on Moonbundles",
+      fomoSubtitle: "48h only",
+      fomoExpires: "Expires in",
       ctaButton: "Boost my AOV in 5 min",
       copyIdle: "Copy",
       copyDone: "Copied ✓",
@@ -780,16 +776,14 @@ export interface TranslationDict {
     stepsTitle: string;
     stepsTitleHighlight: string;
     steps: { title: string; desc: string; sub: string; btnLabel: string }[];
-    tensionTitle: string;
-    tensionTitleHighlight: string;
+    ctaStepTitle: string;
     painPoints: string[];
     bridgeStat: string;
     bridgeMiddle: string;
     bridgeBrand: string;
-    ctaTitle: string;
-    ctaTitleHighlight: string;
-    promoLabel: string;
-    openLoop: string;
+    fomoBadge: string;
+    fomoSubtitle: string;
+    fomoExpires: string;
     ctaButton: string;
     copyIdle: string;
     copyDone: string;
