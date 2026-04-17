@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import type { Language } from "@/lib/i18n/translations";
+
+// Pages that ship their own language picker and should skip the global modal.
+const PATHS_WITH_OWN_PICKER = new Set<string>(["/value-offer"]);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -41,15 +45,20 @@ const languages: { code: Language; name: string; subtitle: string; flag: React.R
 
 export default function LanguageModal() {
   const { setLang, hasChosen, t } = useTranslation();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hoveredCode, setHoveredCode] = useState<string | null>(null);
+  const hasOwnPicker = PATHS_WITH_OWN_PICKER.has(pathname);
 
   useEffect(() => {
+    if (hasOwnPicker) return;
     if (!hasChosen) {
       const timer = setTimeout(() => setOpen(true), 800);
       return () => clearTimeout(timer);
     }
-  }, [hasChosen]);
+  }, [hasChosen, hasOwnPicker]);
+
+  if (hasOwnPicker) return null;
 
   const handleSelect = (code: Language) => {
     setLang(code);

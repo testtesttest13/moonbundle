@@ -19,12 +19,89 @@ interface Events {
   downloadPdf: Record<string, number>;
 }
 
+interface Onboarding {
+  completed: number;
+  revenue: Record<string, number>;
+  market: Record<string, number>;
+  ads: Record<string, number>;
+}
+
 interface ClickData {
   clicks: Record<string, number>;
   views: Record<string, number>;
   events: Events;
+  onboarding?: Onboarding;
   days: Record<string, { clicks: Record<string, number>; views: Record<string, number> }>;
   pages: string[];
+}
+
+const ONBOARD_LABELS: Record<string, Record<string, string>> = {
+  revenue: {
+    "starting": "Démarre",
+    "0-5k": "0-5k",
+    "5-50k": "5-50k",
+    "50-500k": "50-500k",
+    "500k+": "500k+",
+  },
+  market: {
+    beauty: "Beauté",
+    fashion: "Mode",
+    home: "Maison",
+    health: "Santé",
+    tech: "Tech",
+    fitness: "Fitness",
+    food: "Food",
+    other: "Autre",
+  },
+  ads: {
+    meta: "Meta",
+    tiktok: "TikTok",
+    google: "Google",
+    snap: "Snap",
+    multiple: "Plusieurs",
+    none: "Aucune",
+  },
+};
+
+function OnboardBreakdown({
+  label,
+  dict,
+  data,
+}: {
+  label: string;
+  dict: Record<string, string>;
+  data: Record<string, number>;
+}) {
+  const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+  const total = entries.reduce((sum, [, n]) => sum + n, 0);
+  if (total === 0) {
+    return (
+      <div className="glass-card p-4">
+        <p className="text-[10px] uppercase tracking-wider text-text-muted">{label}</p>
+        <p className="mt-2 text-xs text-text-muted/50">—</p>
+      </div>
+    );
+  }
+  return (
+    <div className="glass-card p-4">
+      <p className="text-[10px] uppercase tracking-wider text-text-muted">{label}</p>
+      <div className="mt-3 flex flex-col gap-1.5">
+        {entries.map(([key, n]) => {
+          const pct = Math.round((n / total) * 100);
+          return (
+            <div key={key} className="flex items-center gap-2 text-[11px]">
+              <span className="w-16 shrink-0 text-text-muted">{dict[key] || key}</span>
+              <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-white/5">
+                <div className="absolute inset-y-0 left-0 rounded-full bg-blue-accent/70" style={{ width: `${pct}%` }} />
+              </div>
+              <span className="w-10 shrink-0 text-right font-medium text-white tabular-nums">{n}</span>
+              <span className="w-8 shrink-0 text-right text-text-muted/60 tabular-nums">{pct}%</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default function ClicksPanel() {
@@ -208,6 +285,21 @@ export default function ClicksPanel() {
                   ))}
                 </div>
               </div>
+            </div>
+          </>
+        )}
+
+        {/* === ONBOARDING === */}
+        {data?.onboarding && data.onboarding.completed > 0 && (
+          <>
+            <h2 className="mb-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+              <span>Onboarding value-offer</span>
+              <span className="text-blue-accent">{data.onboarding.completed} complétés</span>
+            </h2>
+            <div className="mb-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <OnboardBreakdown label="CA mensuel" dict={ONBOARD_LABELS.revenue} data={data.onboarding.revenue} />
+              <OnboardBreakdown label="Marché" dict={ONBOARD_LABELS.market} data={data.onboarding.market} />
+              <OnboardBreakdown label="Ads" dict={ONBOARD_LABELS.ads} data={data.onboarding.ads} />
             </div>
           </>
         )}

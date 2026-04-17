@@ -352,6 +352,48 @@ export const translations: Record<Language, TranslationDict> = {
       stickyButton: "Installer",
       whatsappText: "Une question ? On t'aide à setup tes offres",
       whatsappButton: "WhatsApp",
+      onboarding: {
+        stepLabel: "Étape",
+        back: "Retour",
+        privacy: "Anonyme · 10 secondes",
+        langWelcome: "Welcome · Bienvenue",
+        langTitle: "Choisis ta langue",
+        langSubtitle: "Pour te servir le guide dans ton langage",
+        revenueTitle: "Ton chiffre d'affaires mensuel ?",
+        revenueSubtitle: "Pour te calibrer les bons exemples",
+        revenueOptions: [
+          { key: "starting", label: "Je démarre" },
+          { key: "0-5k", label: "0 – 5k$ / mois" },
+          { key: "5-50k", label: "5 – 50k$ / mois" },
+          { key: "50-500k", label: "50 – 500k$ / mois" },
+          { key: "500k+", label: "500k$+ / mois" },
+        ],
+        marketTitle: "Tu vends quoi ?",
+        marketSubtitle: "Pour que les exemples te parlent",
+        marketOptions: [
+          { key: "beauty", label: "Beauté / Skincare" },
+          { key: "fashion", label: "Mode / Accessoires" },
+          { key: "home", label: "Maison / Déco" },
+          { key: "health", label: "Santé / Wellness" },
+          { key: "tech", label: "Tech / Gadgets" },
+          { key: "fitness", label: "Sport / Fitness" },
+          { key: "food", label: "Food / Suppléments" },
+          { key: "other", label: "Autre" },
+        ],
+        adsTitle: "Tes pubs tournent où ?",
+        adsSubtitle: "Pour cibler les bons leviers pour toi",
+        adsOptions: [
+          { key: "meta", label: "Meta (Facebook + Instagram)" },
+          { key: "tiktok", label: "TikTok" },
+          { key: "google", label: "Google Ads" },
+          { key: "snap", label: "Snapchat" },
+          { key: "multiple", label: "Plusieurs plateformes" },
+          { key: "none", label: "Pas encore d'ads" },
+        ],
+        doneTitle: "Ton guide perso est prêt",
+        doneSubtitle: "5 leçons courtes, directes, pour doubler ton AOV avec le trafic que t'as déjà.",
+        doneCta: "Découvrir le guide",
+      },
     },
 
     languageModal: {
@@ -705,6 +747,48 @@ export const translations: Record<Language, TranslationDict> = {
       stickyButton: "Install",
       whatsappText: "Got a question? We'll help you set up your offers",
       whatsappButton: "WhatsApp",
+      onboarding: {
+        stepLabel: "Step",
+        back: "Back",
+        privacy: "Anonymous · 10 seconds",
+        langWelcome: "Welcome · Bienvenue",
+        langTitle: "Pick your language",
+        langSubtitle: "So we can serve the guide in your language",
+        revenueTitle: "Your monthly revenue?",
+        revenueSubtitle: "So we calibrate the right examples for you",
+        revenueOptions: [
+          { key: "starting", label: "Just starting" },
+          { key: "0-5k", label: "$0 – $5k / mo" },
+          { key: "5-50k", label: "$5k – $50k / mo" },
+          { key: "50-500k", label: "$50k – $500k / mo" },
+          { key: "500k+", label: "$500k+ / mo" },
+        ],
+        marketTitle: "What do you sell?",
+        marketSubtitle: "So the examples hit home",
+        marketOptions: [
+          { key: "beauty", label: "Beauty / Skincare" },
+          { key: "fashion", label: "Fashion / Accessories" },
+          { key: "home", label: "Home / Decor" },
+          { key: "health", label: "Health / Wellness" },
+          { key: "tech", label: "Tech / Gadgets" },
+          { key: "fitness", label: "Sports / Fitness" },
+          { key: "food", label: "Food / Supplements" },
+          { key: "other", label: "Other" },
+        ],
+        adsTitle: "Where do your ads run?",
+        adsSubtitle: "So we target the right levers for you",
+        adsOptions: [
+          { key: "meta", label: "Meta (Facebook + Instagram)" },
+          { key: "tiktok", label: "TikTok" },
+          { key: "google", label: "Google Ads" },
+          { key: "snap", label: "Snapchat" },
+          { key: "multiple", label: "Multiple platforms" },
+          { key: "none", label: "No ads yet" },
+        ],
+        doneTitle: "Your custom guide is ready",
+        doneSubtitle: "5 short, direct lessons to double your AOV with the traffic you already have.",
+        doneCta: "Discover the guide",
+      },
     },
 
     languageModal: {
@@ -894,6 +978,26 @@ export interface TranslationDict {
     stickyButton: string;
     whatsappText: string;
     whatsappButton: string;
+    onboarding: {
+      stepLabel: string;
+      back: string;
+      privacy: string;
+      langWelcome: string;
+      langTitle: string;
+      langSubtitle: string;
+      revenueTitle: string;
+      revenueSubtitle: string;
+      revenueOptions: { key: string; label: string }[];
+      marketTitle: string;
+      marketSubtitle: string;
+      marketOptions: { key: string; label: string }[];
+      adsTitle: string;
+      adsSubtitle: string;
+      adsOptions: { key: string; label: string }[];
+      doneTitle: string;
+      doneSubtitle: string;
+      doneCta: string;
+    };
   };
   languageModal: {
     welcome: string;

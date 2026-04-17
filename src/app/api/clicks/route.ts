@@ -12,11 +12,24 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [totalClicks, totalViews, totalCopyCode, totalDownloadPdf] = await Promise.all([
+    const [
+      totalClicks,
+      totalViews,
+      totalCopyCode,
+      totalDownloadPdf,
+      onboardRevenue,
+      onboardMarket,
+      onboardAds,
+      onboardCompleted,
+    ] = await Promise.all([
       kv.hgetall("clicks:total"),
       kv.hgetall("views:total"),
       kv.hgetall("events:copy-code:total"),
       kv.hgetall("events:download-pdf:total"),
+      kv.hgetall("onboard:revenue:total"),
+      kv.hgetall("onboard:market:total"),
+      kv.hgetall("onboard:ads:total"),
+      kv.get<number>("onboard:completed:total"),
     ]);
 
     // Ensure all pages present
@@ -30,6 +43,13 @@ export async function GET(req: NextRequest) {
     const events = {
       copyCode: (totalCopyCode as Record<string, number>) || {},
       downloadPdf: (totalDownloadPdf as Record<string, number>) || {},
+    };
+
+    const onboarding = {
+      completed: Number(onboardCompleted) || 0,
+      revenue: (onboardRevenue as Record<string, number>) || {},
+      market: (onboardMarket as Record<string, number>) || {},
+      ads: (onboardAds as Record<string, number>) || {},
     };
 
     // Last 14 days
@@ -48,7 +68,7 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    return NextResponse.json({ clicks, views, events, days, pages: ALL_PAGES });
+    return NextResponse.json({ clicks, views, events, onboarding, days, pages: ALL_PAGES });
   } catch {
     return NextResponse.json(
       { error: "KV non configuré. Crée un store Upstash Redis dans Vercel → Storage." },

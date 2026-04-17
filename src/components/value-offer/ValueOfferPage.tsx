@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import OnboardingModal from "./OnboardingModal";
+
+const ONBOARD_KEY = "vo-onboarded";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const INSTALL_URL = "/api/go?from=value-offer";
@@ -173,6 +176,32 @@ function DailyCountdown() {
 export default function ValueOfferPage() {
   const { t } = useTranslation();
   const tr = t.valueOffer;
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
+
+  useEffect(() => {
+    const done = (() => {
+      try {
+        return localStorage.getItem(ONBOARD_KEY);
+      } catch {
+        return null;
+      }
+    })();
+    if (!done) setOnboardingOpen(true);
+  }, []);
+
+  const completeOnboarding = () => {
+    try {
+      localStorage.setItem(ONBOARD_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+    setOnboardingOpen(false);
+    setTimeout(() => {
+      document
+        .getElementById("vo-section-1")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
@@ -235,6 +264,7 @@ export default function ValueOfferPage() {
           {tr.sections.map((section, i) => (
             <motion.article
               key={i}
+              id={i === 0 ? "vo-section-1" : undefined}
               className="glass-card p-6 sm:p-8 lg:p-10"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -358,6 +388,10 @@ export default function ValueOfferPage() {
       </div>
 
       <StickyMobileCta />
+
+      <AnimatePresence>
+        {onboardingOpen && <OnboardingModal onComplete={completeOnboarding} />}
+      </AnimatePresence>
     </div>
   );
 }
