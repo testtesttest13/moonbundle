@@ -390,8 +390,19 @@ export const translations: Record<Language, TranslationDict> = {
           { key: "multiple", label: "Plusieurs plateformes" },
           { key: "none", label: "Pas encore d'ads" },
         ],
+        aovTitle: "Ton panier moyen actuel ?",
+        aovSubtitle: "Entre un chiffre, je te montre ton potentiel avec Moonbundles.",
+        aovPlaceholder: "45",
+        aovInputSuffix: "$",
+        aovCurrentLabel: "Actuel",
+        aovProjectedLabel: "Avec Moonbundles",
+        aovBadge: "×1.5",
+        aovGainLabel: "gain par commande",
+        aovContinue: "Voir mon potentiel",
+        aovHint: "Ton panier moyen c'est ton CA divisé par le nombre de commandes.",
         doneTitle: "Ton guide perso est prêt",
         doneSubtitle: "5 leçons courtes, directes, pour doubler ton AOV avec le trafic que t'as déjà.",
+        doneProjectionLabel: "Ton potentiel avec Moonbundles",
         doneCta: "Découvrir le guide",
       },
     },
@@ -785,8 +796,19 @@ export const translations: Record<Language, TranslationDict> = {
           { key: "multiple", label: "Multiple platforms" },
           { key: "none", label: "No ads yet" },
         ],
+        aovTitle: "Your current AOV?",
+        aovSubtitle: "Type a number, I'll show you your potential with Moonbundles.",
+        aovPlaceholder: "45",
+        aovInputSuffix: "$",
+        aovCurrentLabel: "Current",
+        aovProjectedLabel: "With Moonbundles",
+        aovBadge: "×1.5",
+        aovGainLabel: "gain per order",
+        aovContinue: "See my potential",
+        aovHint: "AOV = revenue divided by number of orders.",
         doneTitle: "Your custom guide is ready",
         doneSubtitle: "5 short, direct lessons to double your AOV with the traffic you already have.",
+        doneProjectionLabel: "Your potential with Moonbundles",
         doneCta: "Discover the guide",
       },
     },
@@ -994,8 +1016,19 @@ export interface TranslationDict {
       adsTitle: string;
       adsSubtitle: string;
       adsOptions: { key: string; label: string }[];
+      aovTitle: string;
+      aovSubtitle: string;
+      aovPlaceholder: string;
+      aovInputSuffix: string;
+      aovCurrentLabel: string;
+      aovProjectedLabel: string;
+      aovBadge: string;
+      aovGainLabel: string;
+      aovContinue: string;
+      aovHint: string;
       doneTitle: string;
       doneSubtitle: string;
+      doneProjectionLabel: string;
       doneCta: string;
     };
   };

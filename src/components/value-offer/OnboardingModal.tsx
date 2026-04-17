@@ -10,6 +10,12 @@ const ease = [0.22, 1, 0.36, 1] as const;
 type AnswerKey = "revenue" | "market" | "ads";
 type Answers = Record<AnswerKey, string>;
 
+function formatMoney(n: number) {
+  if (!Number.isFinite(n) || n <= 0) return "0";
+  const rounded = Math.round(n * 100) / 100;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
+}
+
 function FrFlag() {
   return (
     <svg viewBox="0 0 60 40" className="h-full w-full">
@@ -48,9 +54,13 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
   const { t, lang, setLang } = useTranslation();
   const tr = t.valueOffer.onboarding;
 
-  // step 0: lang, 1: revenue, 2: market, 3: ads, 4: done
+  // step 0: lang, 1: revenue, 2: market, 3: ads, 4: aov, 5: done
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({ revenue: "", market: "", ads: "" });
+  const [aov, setAov] = useState("");
+  const aovNum = Math.max(0, parseFloat(aov.replace(",", ".")) || 0);
+  const projected = aovNum * 1.5;
+  const gain = projected - aovNum;
 
   // Lock page scroll while modal is open
   useEffect(() => {
@@ -61,16 +71,16 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
     };
   }, []);
 
-  // Send answers when reaching "done"
+  // Send answers when reaching "done" (step 5)
   useEffect(() => {
-    if (step !== 4) return;
+    if (step !== 5) return;
     if (!answers.revenue || !answers.market || !answers.ads) return;
     fetch("/api/onboarding", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...answers, page: "value-offer" }),
+      body: JSON.stringify({ ...answers, aov: aovNum, page: "value-offer" }),
     }).catch(() => {});
-  }, [step, answers]);
+  }, [step, answers, aovNum]);
 
   const pickLang = (l: Language) => {
     setLang(l);
@@ -86,8 +96,8 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
 
   const finish = () => onComplete();
 
-  // Progress: 4 QCM steps (lang + 3), step 4 = done (no dot)
-  const totalSteps = 4;
+  // Progress: 5 steps with dots (lang + 4), step 5 = done (no dot)
+  const totalSteps = 5;
   const currentDot = Math.min(step, totalSteps - 1);
 
   return (
@@ -119,7 +129,7 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
 
             <div className="relative z-10">
               {/* Progress dots (hide on done) */}
-              {step < 4 && (
+              {step < 5 && (
                 <div className="mb-6 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {Array.from({ length: totalSteps }).map((_, i) => (
@@ -196,7 +206,7 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
                 {step === 1 && (
                   <StepQcm
                     key="revenue"
-                    counter={`${tr.stepLabel} 1/3`}
+                    counter={`${tr.stepLabel} 1/4`}
                     title={tr.revenueTitle}
                     subtitle={tr.revenueSubtitle}
                     options={tr.revenueOptions}
@@ -207,7 +217,7 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
                 {step === 2 && (
                   <StepQcm
                     key="market"
-                    counter={`${tr.stepLabel} 2/3`}
+                    counter={`${tr.stepLabel} 2/4`}
                     title={tr.marketTitle}
                     subtitle={tr.marketSubtitle}
                     options={tr.marketOptions}
@@ -219,7 +229,7 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
                 {step === 3 && (
                   <StepQcm
                     key="ads"
-                    counter={`${tr.stepLabel} 3/3`}
+                    counter={`${tr.stepLabel} 3/4`}
                     title={tr.adsTitle}
                     subtitle={tr.adsSubtitle}
                     options={tr.adsOptions}
@@ -228,6 +238,95 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
                 )}
 
                 {step === 4 && (
+                  <motion.div
+                    key="aov"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3, ease }}
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-accent">
+                      {tr.stepLabel} 4/4
+                    </p>
+                    <h2 className="mt-2 text-xl font-bold leading-tight text-white sm:text-2xl font-[family-name:var(--font-heading)]">
+                      {tr.aovTitle}
+                    </h2>
+                    <p className="mt-1.5 text-sm text-text-muted">{tr.aovSubtitle}</p>
+
+                    <div className="relative mt-5">
+                      <input
+                        autoFocus
+                        type="text"
+                        inputMode="decimal"
+                        value={aov}
+                        onChange={(e) => setAov(e.target.value.replace(/[^0-9.,]/g, ""))}
+                        placeholder={tr.aovPlaceholder}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && aovNum > 0) setStep(5);
+                        }}
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-center text-2xl font-bold text-white placeholder:text-text-muted/30 outline-none transition-all focus:border-blue-accent/50 focus:bg-white/[0.06] sm:text-3xl font-[family-name:var(--font-heading)]"
+                      />
+                      <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-sm font-semibold text-text-muted">
+                        {tr.aovInputSuffix}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[11px] text-text-muted/60">{tr.aovHint}</p>
+
+                    {/* Live projection */}
+                    <motion.div
+                      className="mt-5 overflow-hidden rounded-xl border border-blue-accent/25 bg-gradient-to-br from-blue-accent/[0.08] to-violet-accent/[0.04] p-4 sm:p-5"
+                      initial={{ opacity: 0.4 }}
+                      animate={{ opacity: aovNum > 0 ? 1 : 0.4 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <p className="text-[10px] uppercase tracking-wider text-text-muted">
+                            {tr.aovCurrentLabel}
+                          </p>
+                          <p className="mt-1 text-2xl font-bold text-white font-[family-name:var(--font-heading)] tabular-nums">
+                            {tr.aovInputSuffix}{formatMoney(aovNum)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="flex items-center justify-end gap-1.5 text-[10px] uppercase tracking-wider text-blue-accent">
+                            <span className="rounded bg-blue-accent/15 px-1.5 py-0.5 text-[9px] font-bold">
+                              {tr.aovBadge}
+                            </span>
+                            {tr.aovProjectedLabel}
+                          </p>
+                          <p className="mt-1 bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-2xl font-bold text-transparent font-[family-name:var(--font-heading)] tabular-nums">
+                            {tr.aovInputSuffix}{formatMoney(projected)}
+                          </p>
+                        </div>
+                      </div>
+                      {aovNum > 0 && (
+                        <motion.div
+                          className="mt-3 flex items-center justify-between border-t border-white/5 pt-3"
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                        >
+                          <span className="text-[11px] text-text-muted">{tr.aovGainLabel}</span>
+                          <span className="text-sm font-bold text-green-400 tabular-nums">
+                            +{tr.aovInputSuffix}{formatMoney(gain)}
+                          </span>
+                        </motion.div>
+                      )}
+                    </motion.div>
+
+                    <button
+                      onClick={() => setStep(5)}
+                      disabled={aovNum <= 0}
+                      className="btn-shine mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl bg-blue-accent px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-light hover:shadow-[0_0_30px_rgba(77,124,255,0.25)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-blue-accent disabled:hover:shadow-none"
+                    >
+                      <span className="relative z-10">{tr.aovContinue}</span>
+                      <ArrowIcon />
+                    </button>
+                  </motion.div>
+                )}
+
+                {step === 5 && (
                   <motion.div
                     key="done"
                     initial={{ opacity: 0, y: 15 }}
@@ -247,15 +346,42 @@ export default function OnboardingModal({ onComplete }: { onComplete: () => void
                       {tr.doneSubtitle}
                     </p>
 
+                    {aovNum > 0 && (
+                      <motion.div
+                        className="mt-5 rounded-xl border border-blue-accent/30 bg-gradient-to-br from-blue-accent/[0.12] to-violet-accent/[0.05] p-4"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.15 }}
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
+                          {tr.doneProjectionLabel}
+                        </p>
+                        <div className="mt-2 flex items-baseline justify-center gap-3 font-[family-name:var(--font-heading)]">
+                          <span className="text-xl font-bold text-text-muted line-through tabular-nums">
+                            {tr.aovInputSuffix}{formatMoney(aovNum)}
+                          </span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-blue-accent">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                          </svg>
+                          <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-3xl font-bold text-transparent tabular-nums">
+                            {tr.aovInputSuffix}{formatMoney(projected)}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-[11px] text-green-400">
+                          +{tr.aovInputSuffix}{formatMoney(gain)} · {tr.aovGainLabel}
+                        </p>
+                      </motion.div>
+                    )}
+
                     <button
                       onClick={finish}
-                      className="btn-shine mt-7 inline-flex items-center gap-2.5 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-navy-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)]"
+                      className="btn-shine mt-6 inline-flex items-center gap-2.5 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-navy-900 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)]"
                     >
                       <span className="relative z-10">{tr.doneCta}</span>
                       <ArrowIcon />
                     </button>
 
-                    {/* Echo of answers for reassurance */}
                     <p className="mt-5 text-[11px] text-text-muted/60">
                       {lang === "fr" ? "Calibré pour :" : "Calibrated for:"}{" "}
                       {labelFor(tr.revenueOptions, answers.revenue)} ·{" "}

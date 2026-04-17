@@ -24,6 +24,7 @@ interface Onboarding {
   revenue: Record<string, number>;
   market: Record<string, number>;
   ads: Record<string, number>;
+  aov: Record<string, number>;
 }
 
 interface ClickData {
@@ -60,6 +61,14 @@ const ONBOARD_LABELS: Record<string, Record<string, string>> = {
     snap: "Snap",
     multiple: "Plusieurs",
     none: "Aucune",
+  },
+  aov: {
+    "0-25": "<$25",
+    "25-50": "$25-50",
+    "50-100": "$50-100",
+    "100-200": "$100-200",
+    "200+": "$200+",
+    "unknown": "—",
   },
 };
 
@@ -296,8 +305,9 @@ export default function ClicksPanel() {
               <span>Onboarding value-offer</span>
               <span className="text-blue-accent">{data.onboarding.completed} complétés</span>
             </h2>
-            <div className="mb-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            <div className="mb-8 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <OnboardBreakdown label="CA mensuel" dict={ONBOARD_LABELS.revenue} data={data.onboarding.revenue} />
+              <OnboardBreakdown label="AOV actuel" dict={ONBOARD_LABELS.aov} data={data.onboarding.aov} />
               <OnboardBreakdown label="Marché" dict={ONBOARD_LABELS.market} data={data.onboarding.market} />
               <OnboardBreakdown label="Ads" dict={ONBOARD_LABELS.ads} data={data.onboarding.ads} />
             </div>

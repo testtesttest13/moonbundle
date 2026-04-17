@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
       onboardRevenue,
       onboardMarket,
       onboardAds,
+      onboardAov,
       onboardCompleted,
     ] = await Promise.all([
       kv.hgetall("clicks:total"),
@@ -29,6 +30,7 @@ export async function GET(req: NextRequest) {
       kv.hgetall("onboard:revenue:total"),
       kv.hgetall("onboard:market:total"),
       kv.hgetall("onboard:ads:total"),
+      kv.hgetall("onboard:aov:total"),
       kv.get<number>("onboard:completed:total"),
     ]);
 
@@ -50,6 +52,7 @@ export async function GET(req: NextRequest) {
       revenue: (onboardRevenue as Record<string, number>) || {},
       market: (onboardMarket as Record<string, number>) || {},
       ads: (onboardAds as Record<string, number>) || {},
+      aov: (onboardAov as Record<string, number>) || {},
     };
 
     // Last 14 days
