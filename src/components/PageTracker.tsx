@@ -9,6 +9,7 @@ const PATH_TO_PAGE: Record<string, string> = {
   "/checklist": "checklist",
   "/native-ads-guide": "native-ads",
   "/prompts": "prompts",
+  "/value-offer": "value-offer",
 };
 
 export default function PageTracker() {

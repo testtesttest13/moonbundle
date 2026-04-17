@@ -311,6 +311,50 @@ export const translations: Record<Language, TranslationDict> = {
       whatsappButton: "Nous contacter sur WhatsApp",
     },
 
+    valueOffer: {
+      heroBadge: "Guide Gratuit",
+      heroTitle: "La psychologie derrière les offres qui convertissent le mieux",
+      heroSubtitle:
+        "Pourquoi certains stores font x2 sur leur panier moyen avec le même produit et le même trafic.",
+      sections: [
+        {
+          title: "1 produit, 1 prix, 1 bouton",
+          text: "C'est comme ça que 90% des stores présentent leurs produits. Le client voit le prix, il décide si c'est trop cher ou pas, et il part. T'as aucun levier pour influencer sa décision. Le problème c'est pas ton produit. C'est que tu laisses le client décider seul.",
+        },
+        {
+          title: "L'effet d'ancrage : le premier prix que ton client voit change tout",
+          text: "Quand tu affiches Buy 2 Get 2 Free à $70 au lieu de $180, le client ne voit pas $70. Il voit $110 d'économie. Le prix barré à $180 est un ancrage. C'est lui qui définit la valeur perçue du produit dans la tête du client. Plus l'ancrage est haut, plus le prix réel paraît bas. C'est pour ça que les stores qui scalent affichent toujours un prix de référence élevé barré. C'est pas du fake. C'est de la psychologie de pricing.",
+        },
+        {
+          title: "Pourquoi 3 choix convertissent mieux que 1",
+          text: "Quand tu donnes 1 seul choix à ton client la question c'est « j'achète ou j'achète pas ». Quand tu donnes 3 choix la question devient « lequel je prends ». Tu passes d'une décision oui/non à une décision de comparaison. Et dans une comparaison le cerveau choisit presque toujours l'option du milieu. C'est l'effet de compromis. Le tier du milieu te semble raisonnable parce qu'il est entre le petit et le gros. C'est pour ça que les meilleurs stores taguent le tier du milieu « Most Popular » — tu confirmes le choix que le cerveau a déjà fait.",
+        },
+        {
+          title: "Buy 2 Get 1 Free vs -33% : même réduction, pas le même résultat",
+          text: "Mathématiquement c'est pareil. Psychologiquement c'est un autre monde. Le mot FREE déclenche une réaction émotionnelle. Le cerveau humain sur-évalue tout ce qui est gratuit. Quand tu dis -33% le client calcule. Quand tu dis « Get 1 Free » le client ressent. Les stores qui utilisent « Get X Free » au lieu de pourcentages de réduction ont un taux de conversion plus élevé sur le tier le plus cher. C'est pas une opinion c'est de la behavioral economics.",
+        },
+        {
+          title: "Le checkbox qui verrouille le récurrent",
+          text: "Les meilleurs stores ajoutent un simple toggle « Subscribe & Save 20% » en dessous de leurs tiers. Le client vient pour un achat one-time et il se retrouve en récurrent. Pourquoi ça marche : le client a déjà décidé d'acheter, il est dans un état de décision positive. Rajouter -20% pour un abonnement à ce moment là c'est une évidence pour lui. Un checkbox. Pas un formulaire. Pas une page en plus. Un checkbox.",
+        },
+        {
+          title: "L'urgence qui ne ressemble pas à du fake",
+          text: "Countdown timer random = le client sait que c'est fake et ça détruit la confiance. Stock display réel = le client sent l'urgence sans se sentir manipulé. Les stores qui scalent le plus utilisent des systèmes de batch : « Lot de mars : SOLD OUT. Lot d'avril : 78% réservé. Lot de mai : en production. » C'est réel, vérifiable, et ça crée une urgence 10x plus puissante qu'un timer.",
+        },
+      ],
+      countdownLabel: "Cette offre expire dans :",
+      ctaTitle: "Tout ce que tu viens de lire se configure en 5 min avec Moonbundles",
+      ctaSubtitle:
+        "Bundles, tiers, cart drawer, upsell post-achat, A/B test — tout dans une seule app.",
+      promoLabel: "20% de réduction avec le code",
+      copyIdle: "Copier",
+      copyDone: "Copié ✓",
+      ctaButton: "Installer Moonbundles maintenant",
+      socialProof: "448+ reviews · 5.0/5 · Built for Shopify · Utilisé par 1 200+ stores",
+      whatsappText: "Une question ? On t'aide à setup tes offres",
+      whatsappButton: "WhatsApp",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choisis ta langue",
@@ -621,6 +665,50 @@ export const translations: Record<Language, TranslationDict> = {
       whatsappButton: "Contact us on WhatsApp",
     },
 
+    valueOffer: {
+      heroBadge: "Free Guide",
+      heroTitle: "The psychology behind the highest converting offers",
+      heroSubtitle:
+        "Why some stores 2x their AOV with the same product and the same traffic.",
+      sections: [
+        {
+          title: "1 product, 1 price, 1 button",
+          text: "That's how 90% of stores present their products. The customer sees the price, decides if it's too expensive, and leaves. You have zero leverage to influence the decision. The problem isn't your product. It's that you let the customer decide alone.",
+        },
+        {
+          title: "The anchoring effect: the first price your customer sees changes everything",
+          text: "When you show Buy 2 Get 2 Free at $70 instead of $180, the customer doesn't see $70. They see $110 in savings. The $180 crossed out price is an anchor. It defines the perceived value of the product in the customer's mind. The higher the anchor, the lower the real price feels. That's why stores that scale always show a high reference price crossed out. It's not fake. It's pricing psychology.",
+        },
+        {
+          title: "Why 3 choices convert better than 1",
+          text: "When you give your customer 1 option, the question is \u201Cdo I buy or not\u201D. When you give 3 options, the question becomes \u201Cwhich one do I pick\u201D. You go from a yes/no decision to a comparison decision. And in a comparison, the brain almost always picks the middle option. It's the compromise effect. The middle tier feels reasonable because it sits between the small and the large one. That's why the best stores tag the middle tier \u201CMost Popular\u201D — you're confirming the choice the brain already made.",
+        },
+        {
+          title: "Buy 2 Get 1 Free vs -33%: same discount, different result",
+          text: "Mathematically it's the same. Psychologically it's a different world. The word FREE triggers an emotional reaction. The human brain overvalues anything that's free. When you say -33% the customer calculates. When you say \u201CGet 1 Free\u201D the customer feels. Stores using \u201CGet X Free\u201D instead of percentage discounts have a higher conversion rate on the most expensive tier. It's not an opinion, it's behavioral economics.",
+        },
+        {
+          title: "The checkbox that locks in recurring revenue",
+          text: "The best stores add a simple \u201CSubscribe & Save 20%\u201D toggle below their tiers. The customer comes for a one-time purchase and ends up on recurring. Why it works: the customer has already decided to buy, they're in a positive decision state. Adding -20% for a subscription at that moment is a no-brainer. One checkbox. Not a form. Not an extra page. One checkbox.",
+        },
+        {
+          title: "Urgency that doesn't look fake",
+          text: "Random countdown timers = the customer knows it's fake and it destroys trust. Real stock display = the customer feels urgency without feeling manipulated. The highest scaling stores use batch systems: \u201CMarch batch: SOLD OUT. April batch: 78% reserved. May batch: in production.\u201D It's real, verifiable, and creates urgency 10x more powerful than a timer.",
+        },
+      ],
+      countdownLabel: "This offer expires in:",
+      ctaTitle: "Everything you just read can be set up in 5 minutes with Moonbundles",
+      ctaSubtitle:
+        "Bundles, tiers, cart drawer, post-purchase upsell, A/B testing — all in one app.",
+      promoLabel: "20% off with code",
+      copyIdle: "Copy",
+      copyDone: "Copied ✓",
+      ctaButton: "Install Moonbundles now",
+      socialProof: "448+ reviews · 5.0 rating · Built for Shopify · Used by 1,200+ stores",
+      whatsappText: "Got a question? We'll help you set up your offers",
+      whatsappButton: "WhatsApp",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choose your language",
@@ -787,6 +875,22 @@ export interface TranslationDict {
     ctaButton: string;
     copyIdle: string;
     copyDone: string;
+    whatsappText: string;
+    whatsappButton: string;
+  };
+  valueOffer: {
+    heroBadge: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    sections: { title: string; text: string }[];
+    countdownLabel: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    promoLabel: string;
+    copyIdle: string;
+    copyDone: string;
+    ctaButton: string;
+    socialProof: string;
     whatsappText: string;
     whatsappButton: string;
   };

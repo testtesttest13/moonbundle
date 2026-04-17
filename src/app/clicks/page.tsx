@@ -11,6 +11,7 @@ const PAGES: { id: string; name: string; emoji: string }[] = [
   { id: "native-ads", name: "Native Ads", emoji: "📱" },
   { id: "prompts", name: "Prompts", emoji: "💬" },
   { id: "affiliate", name: "Affiliate", emoji: "🤝" },
+  { id: "value-offer", name: "Value Offer", emoji: "💰" },
 ];
 
 interface Events {
