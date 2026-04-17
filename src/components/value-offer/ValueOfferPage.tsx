@@ -46,6 +46,82 @@ function BoltIcon() {
   );
 }
 
+function StickyMobileCta() {
+  const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const hero = document.getElementById("vo-hero");
+      const mainCta = document.getElementById("vo-main-cta");
+      if (!hero || !mainCta) return;
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const mainCtaTop = mainCta.getBoundingClientRect().top;
+      setVisible(heroBottom < 0 && mainCtaTop > window.innerHeight);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed inset-x-0 bottom-0 z-40 md:hidden"
+      initial={{ y: 120 }}
+      animate={{ y: visible ? 0 : 120 }}
+      transition={{ duration: 0.35, ease }}
+      aria-hidden={!visible}
+    >
+      <div className="border-t border-blue-accent/25 bg-navy-900/95 px-4 py-3 backdrop-blur-lg">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-400" />
+              </span>
+              {t.valueOffer.stickyLabel}
+            </p>
+            <p className="mt-0.5 truncate text-sm font-bold tracking-widest text-white font-[family-name:var(--font-heading)]">
+              {PROMO_CODE}
+            </p>
+          </div>
+          <a
+            href={INSTALL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2.5 text-xs font-bold text-navy-900 transition-transform hover:scale-[1.03]"
+          >
+            <BoltIcon />
+            <span className="relative z-10">{t.valueOffer.stickyButton}</span>
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function Highlighted({ text }: { text: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("**") && part.endsWith("**") ? (
+          <span key={i} className="font-semibold text-blue-accent">
+            {part.slice(2, -2)}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
+
 function msUntilLocalMidnight() {
   const now = new Date();
   const midnight = new Date(now);
@@ -132,6 +208,7 @@ export default function ValueOfferPage() {
 
         {/* ===== HERO ===== */}
         <motion.div
+          id="vo-hero"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease }}
@@ -149,7 +226,7 @@ export default function ValueOfferPage() {
           </h1>
 
           <p className="mt-4 max-w-prose text-sm leading-relaxed text-text-muted sm:text-base lg:text-lg">
-            {tr.heroSubtitle}
+            <Highlighted text={tr.heroSubtitle} />
           </p>
         </motion.div>
 
@@ -171,7 +248,7 @@ export default function ValueOfferPage() {
                 {section.title}
               </h2>
               <p className="mt-4 max-w-prose text-sm leading-relaxed text-text-secondary sm:text-base lg:leading-[1.7]">
-                {section.text}
+                <Highlighted text={section.text} />
               </p>
             </motion.article>
           ))}
@@ -179,6 +256,7 @@ export default function ValueOfferPage() {
 
         {/* ===== CTA MOONBUNDLES ===== */}
         <motion.div
+          id="vo-main-cta"
           className="relative mt-14 overflow-hidden rounded-2xl border border-blue-accent/30 bg-gradient-to-br from-blue-accent/[0.12] via-navy-800/60 to-violet-accent/[0.08]"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -232,6 +310,11 @@ export default function ValueOfferPage() {
             <p className="mt-4 text-center text-[11px] text-text-muted/80 sm:text-xs">
               {tr.socialProof}
             </p>
+
+            {/* Risk reversal */}
+            <p className="mt-2 text-center text-[11px] text-text-muted/60 sm:text-xs">
+              {tr.riskReversal}
+            </p>
           </div>
         </motion.div>
 
@@ -260,7 +343,7 @@ export default function ValueOfferPage() {
         </motion.div>
 
         {/* ===== FOOTER ===== */}
-        <div className="mt-12 text-center text-xs text-text-muted/50">
+        <div className="mt-12 pb-20 text-center text-xs text-text-muted/50 md:pb-0">
           Moonbundles by Bambino ·{" "}
           <a
             href="https://x.com/bambino_moon"
@@ -273,6 +356,8 @@ export default function ValueOfferPage() {
           · Built for Shopify
         </div>
       </div>
+
+      <StickyMobileCta />
     </div>
   );
 }

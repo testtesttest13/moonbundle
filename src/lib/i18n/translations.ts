@@ -315,27 +315,27 @@ export const translations: Record<Language, TranslationDict> = {
       heroBadge: "Guide Gratuit",
       heroTitle: "La psychologie derrière les offres qui convertissent le mieux",
       heroSubtitle:
-        "Pourquoi certains stores font x2 sur leur panier moyen avec le même produit et le même trafic.",
+        "Pourquoi certains stores **x2 leur panier moyen** avec le même produit et le même trafic.",
       sections: [
         {
           title: "1 produit, 1 prix, 1 bouton",
-          text: "C'est comme ça que 90% des stores vendent. Le client voit le prix, juge si c'est trop cher, et part. Le problème c'est pas ton produit — c'est que tu le laisses décider seul.",
+          text: "**90% des stores** vendent comme ça : un prix, un bouton, un client qui part. Le problème c'est pas ton produit — c'est que **tu le laisses décider seul**.",
         },
         {
           title: "L'effet d'ancrage change tout",
-          text: "Affiche Buy 2 Get 2 Free à $70 au lieu de $180 : le client ne voit pas $70, il voit $110 d'économie. Le prix barré définit la valeur perçue. Plus l'ancre est haute, plus le prix réel paraît bas. Les stores qui scalent affichent toujours un prix de référence barré. C'est pas du fake, c'est de la psychologie de pricing.",
+          text: "Affiche Buy 2 Get 2 Free à $70 au lieu de $180 : le client ne voit pas $70, il voit **$110 d'économie**. Plus l'ancre est haute, plus le prix réel paraît bas. C'est pas du fake — c'est de la **psychologie de pricing**.",
         },
         {
-          title: "Pourquoi 3 choix convertissent mieux que 1",
-          text: "Avec 1 choix, la question c'est « j'achète ou pas ». Avec 3, elle devient « lequel je prends ». Tu passes du oui/non à la comparaison — et en comparaison, le cerveau choisit presque toujours le milieu. C'est l'effet de compromis. Tag le tier du milieu « Most Popular » : tu confirmes le choix que le cerveau a déjà fait.",
+          title: "3 choix convertissent mieux que 1",
+          text: "Avec 1 choix : « j'achète ou pas ». Avec 3 : « **lequel je prends** ». En comparaison, le cerveau choisit presque toujours le milieu. C'est l'**effet de compromis**. Tag le tier du milieu **« Most Popular »** : tu confirmes le choix que le cerveau a déjà fait.",
         },
         {
-          title: "Buy 2 Get 1 Free vs -33% : pas le même résultat",
-          text: "Mathématiquement c'est pareil. Psychologiquement, rien à voir. -33%, le client calcule. « Get 1 Free », il ressent. Le cerveau sur-évalue tout ce qui est gratuit. Les stores qui utilisent « Get X Free » au lieu de pourcentages convertissent plus sur le tier le plus cher. C'est pas une opinion, c'est de la behavioral economics.",
+          title: "Get 1 Free vs -33% : pas le même résultat",
+          text: "Mathématiquement c'est pareil. Psychologiquement, rien à voir. -33%, le client **calcule**. « Get 1 Free », il **ressent**. Le cerveau sur-évalue tout ce qui est gratuit. C'est pas une opinion — c'est de la **behavioral economics**.",
         },
         {
           title: "L'urgence qui ne ressemble pas à du fake",
-          text: "Un countdown random, le client sait que c'est fake — et ta confiance explose. Un stock réel, il sent l'urgence sans se sentir manipulé. Les meilleurs stores utilisent des batchs : « Mars : SOLD OUT. Avril : 78% réservé. Mai : en production. » Vérifiable, donc 10x plus puissant qu'un timer.",
+          text: "Un countdown random, le client sait que c'est fake — et ta confiance explose. Un stock réel, il sent l'urgence sans être manipulé. Les meilleurs stores utilisent des batchs : « Mars : SOLD OUT. Avril : 78% réservé. Mai : en production. » Vérifiable. **10x plus puissant qu'un timer**.",
         },
       ],
       countdownLabel: "Cette offre expire dans :",
@@ -345,8 +345,11 @@ export const translations: Record<Language, TranslationDict> = {
       promoLabel: "20% de réduction avec le code",
       copyIdle: "Copier",
       copyDone: "Copié ✓",
-      ctaButton: "Installer Moonbundles maintenant",
+      ctaButton: "Je veux x2 mon AOV",
       socialProof: "448+ reviews · 5.0/5 · Built for Shopify · Utilisé par 1 200+ stores",
+      riskReversal: "Sans carte bancaire · Plan gratuit · Annulable à tout moment",
+      stickyLabel: "-20% sur Moonbundles",
+      stickyButton: "Installer",
       whatsappText: "Une question ? On t'aide à setup tes offres",
       whatsappButton: "WhatsApp",
     },
@@ -665,27 +668,27 @@ export const translations: Record<Language, TranslationDict> = {
       heroBadge: "Free Guide",
       heroTitle: "The psychology behind the highest converting offers",
       heroSubtitle:
-        "Why some stores 2x their AOV with the same product and the same traffic.",
+        "Why some stores **2x their AOV** with the same product and the same traffic.",
       sections: [
         {
           title: "1 product, 1 price, 1 button",
-          text: "That's how 90% of stores sell. The customer sees the price, decides if it's too expensive, and leaves. The problem isn't your product — it's that you let them decide alone.",
+          text: "**90% of stores** sell like this: one price, one button, a customer who leaves. The problem isn't your product — it's that **you let them decide alone**.",
         },
         {
           title: "The anchoring effect changes everything",
-          text: "Show Buy 2 Get 2 Free at $70 instead of $180: the customer doesn't see $70, they see $110 in savings. The crossed price defines the perceived value. The higher the anchor, the lower the real price feels. Stores that scale always show a high reference price crossed out. Not fake — pricing psychology.",
+          text: "Show Buy 2 Get 2 Free at $70 instead of $180: the customer doesn't see $70, they see **$110 in savings**. The higher the anchor, the lower the real price feels. Not fake — **pricing psychology**.",
         },
         {
-          title: "Why 3 choices convert better than 1",
-          text: "With 1 option, the question is \u201Cbuy or not.\u201D With 3, it becomes \u201Cwhich one.\u201D You flip a yes/no into a comparison — and in a comparison, the brain almost always picks the middle. That's the compromise effect. Tag the middle tier \u201CMost Popular\u201D: you're confirming the choice the brain already made.",
+          title: "3 choices convert better than 1",
+          text: "With 1 option: \u201Cbuy or not.\u201D With 3: \u201C**which one**.\u201D In a comparison, the brain almost always picks the middle. That's the **compromise effect**. Tag the middle tier **\u201CMost Popular\u201D**: you're confirming the choice the brain already made.",
         },
         {
-          title: "Buy 2 Get 1 Free vs -33%: not the same result",
-          text: "Mathematically the same. Psychologically, worlds apart. -33%, the customer calculates. \u201CGet 1 Free,\u201D they feel. The brain overvalues anything free. Stores using \u201CGet X Free\u201D instead of percentages convert more on the most expensive tier. Not opinion — behavioral economics.",
+          title: "Get 1 Free vs -33%: not the same result",
+          text: "Mathematically the same. Psychologically, worlds apart. -33%, the customer **calculates**. \u201CGet 1 Free,\u201D they **feel**. The brain overvalues anything free. Not opinion — **behavioral economics**.",
         },
         {
           title: "Urgency that doesn't look fake",
-          text: "A random countdown, the customer knows it's fake — and trust dies. A real stock display, they feel urgency without feeling manipulated. The best stores use batches: \u201CMarch: SOLD OUT. April: 78% reserved. May: in production.\u201D Verifiable, so 10x more powerful than a timer.",
+          text: "A random countdown, the customer knows it's fake — and trust dies. A real stock display, they feel urgency without being manipulated. The best stores use batches: \u201CMarch: SOLD OUT. April: 78% reserved. May: in production.\u201D Verifiable. **10x more powerful than a timer**.",
         },
       ],
       countdownLabel: "This offer expires in:",
@@ -695,8 +698,11 @@ export const translations: Record<Language, TranslationDict> = {
       promoLabel: "20% off with code",
       copyIdle: "Copy",
       copyDone: "Copied ✓",
-      ctaButton: "Install Moonbundles now",
+      ctaButton: "I want to 2x my AOV",
       socialProof: "448+ reviews · 5.0 rating · Built for Shopify · Used by 1,200+ stores",
+      riskReversal: "No credit card · Free plan · Cancel anytime",
+      stickyLabel: "-20% on Moonbundles",
+      stickyButton: "Install",
       whatsappText: "Got a question? We'll help you set up your offers",
       whatsappButton: "WhatsApp",
     },
@@ -883,6 +889,9 @@ export interface TranslationDict {
     copyDone: string;
     ctaButton: string;
     socialProof: string;
+    riskReversal: string;
+    stickyLabel: string;
+    stickyButton: string;
     whatsappText: string;
     whatsappButton: string;
   };
