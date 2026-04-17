@@ -201,24 +201,8 @@ export default function ValueOfferPage() {
               {tr.ctaSubtitle}
             </p>
 
-            {/* Button */}
-            <a
-              href={INSTALL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-shine group mx-auto mt-8 flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-white py-4 text-base font-semibold text-navy-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] sm:text-lg"
-            >
-              <BoltIcon />
-              <span className="relative z-10">{tr.ctaButton}</span>
-            </a>
-
-            {/* Social proof */}
-            <p className="mt-4 text-center text-[11px] text-text-muted/80 sm:text-xs">
-              {tr.socialProof}
-            </p>
-
             {/* Promo code */}
-            <div className="mx-auto mt-6 flex max-w-md items-center justify-between gap-3 rounded-xl border border-blue-accent/25 bg-navy-900/70 px-4 py-3 sm:px-5">
+            <div className="mx-auto mt-8 flex max-w-md items-center justify-between gap-3 rounded-xl border border-blue-accent/25 bg-navy-900/70 px-4 py-3 sm:px-5">
               <div className="min-w-0">
                 <p className="text-[10px] font-medium uppercase tracking-wider text-blue-accent">
                   {tr.promoLabel}
@@ -229,6 +213,25 @@ export default function ValueOfferPage() {
               </div>
               <CopyButton text={PROMO_CODE} />
             </div>
+
+            {/* Button with pulsing glow */}
+            <div className="relative mx-auto mt-5 w-full max-w-md">
+              <div className="pointer-events-none absolute -inset-2 rounded-2xl bg-white/20 blur-xl animate-pulse-glow" />
+              <a
+                href={INSTALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-shine group relative flex w-full items-center justify-center gap-3 rounded-xl bg-white py-4 text-base font-semibold text-navy-900 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] sm:text-lg"
+              >
+                <BoltIcon />
+                <span className="relative z-10">{tr.ctaButton}</span>
+              </a>
+            </div>
+
+            {/* Social proof */}
+            <p className="mt-4 text-center text-[11px] text-text-muted/80 sm:text-xs">
+              {tr.socialProof}
+            </p>
           </div>
         </motion.div>
 
