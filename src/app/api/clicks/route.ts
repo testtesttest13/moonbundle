@@ -3,7 +3,7 @@ import { kv } from "@vercel/kv";
 
 const PASSWORD = "moonjules";
 
-const ALL_PAGES = ["home", "affiliate", "checklist", "native-ads", "prompts", "value-offer", "navbar", "cta", "footer"];
+const ALL_PAGES = ["home", "affiliate", "checklist", "native-ads", "prompts", "value-offer", "quiz-2026", "navbar", "cta", "footer"];
 
 export async function GET(req: NextRequest) {
   const auth = req.nextUrl.searchParams.get("key");

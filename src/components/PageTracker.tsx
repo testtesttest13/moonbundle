@@ -10,6 +10,7 @@ const PATH_TO_PAGE: Record<string, string> = {
   "/native-ads-guide": "native-ads",
   "/prompts": "prompts",
   "/value-offer": "value-offer",
+  "/2026": "quiz-2026",
 };
 
 export default function PageTracker() {

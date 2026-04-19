@@ -407,6 +407,74 @@ export const translations: Record<Language, TranslationDict> = {
       },
     },
 
+    quiz2026: {
+      heroBadge: "Quiz 2026",
+      heroTitle: "20 questions pour savoir si ton store est prêt pour 2026",
+      heroSubtitle:
+        "Réponds honnêtement. Si tu dis « non » ou « je sais pas » à plus de 5 questions, tu laisses de l'argent sur la table.",
+      heroCta: "Commencer le quiz",
+      aovTitle: "C'est quoi ton panier moyen actuel ?",
+      aovHint: "Ton CA divisé par le nombre de commandes.",
+      aovPlaceholder: "45",
+      aovNext: "Suivant",
+      questionCounter: "Question",
+      previous: "Précédent",
+      yes: "Oui",
+      no: "Non",
+      idk: "Je sais pas",
+      questions: [
+        "Tu connais ton panier moyen exact de cette semaine ?",
+        "Combien de tes clients achètent plus d'un produit par commande ? Tu le sais ?",
+        "T'as déjà regardé à quel moment exactement tes clients abandonnent le checkout ?",
+        "Ton meilleur produit c'est celui qui vend le plus ou celui qui a la meilleure marge ? Tu sais lequel ?",
+        "T'as testé une offre différente sur ton best-seller ces 30 derniers jours ?",
+        "Tu sais si ton client achète pour lui ou pour offrir ?",
+        "Tu sais combien de temps un visiteur reste sur ta page produit avant de partir ?",
+        "Tu connais le pourcentage de ton CA qui vient de clients qui reviennent ?",
+        "T'as une offre post-achat ou ton client voit juste « merci pour ta commande » ?",
+        "Si tu supprimes tes pubs demain tu fais encore du CA ?",
+        "T'as un produit complémentaire à proposer dans le panier ?",
+        "Ton bouton ajouter au panier dit autre chose que « Ajouter au panier » ?",
+        "Tes 3 meilleures pubs tu sais exactement pourquoi elles marchent ?",
+        "T'as un bundle sur ton site ?",
+        "T'as déjà lu les avis 1 étoile de tes concurrents pour trouver des angles ?",
+        "Ton site charge en moins de 3 secondes sur mobile ?",
+        "T'as une raison pour que ton client achète maintenant plutôt que la semaine prochaine ?",
+        "Tu connais ton coût d'acquisition client vs la lifetime value ?",
+        "T'as déjà A/B testé une offre sur ton site ?",
+        "Quelqu'un qui arrive sur ton site pour la première fois comprend ce que tu vends en moins de 3 secondes ?",
+      ],
+      scoreLabel: "Ton score",
+      resultHigh: "Ton store est bien optimisé. Mais y'a encore de la marge pour aller chercher plus.",
+      resultMid: "T'as des bases solides mais tu laisses pas mal d'argent sur la table.",
+      resultLow: "Ton store saigne et tu le sais même pas. Faut agir maintenant.",
+      aovCurrentLabel: "Ton AOV actuel",
+      aovProjectedLabel: "Ton AOV potentiel",
+      aovMultiplier: "×1.7 en moyenne",
+      revenueImpactPrefix: "Avec",
+      revenueImpactMid: "commandes par mois, ça représente",
+      revenueImpactBoldStart: "",
+      revenueImpactBoldEnd: "de revenu en plus",
+      revenueImpactSuffix: "chaque mois.",
+      ordersInputLabel: "Commandes / mois",
+      improveTitle: "Les points à améliorer sur ton store",
+      showAll: "Voir tout",
+      showLess: "Réduire",
+      countdownLabel: "Cette offre expire dans :",
+      ctaTitlePrefix: "Passe de",
+      ctaTitleMid: "à",
+      ctaTitleSuffix: "avec Moonbundles.",
+      ctaSubtitle: "Bundles, cart drawer, upsell post-achat, A/B test — tout dans une seule app.",
+      promoLabel: "20% de réduction avec le code",
+      copyIdle: "Copier",
+      copyDone: "Copié ✓",
+      ctaButton: "Installer Moonbundles maintenant",
+      socialProof: "448+ reviews · 5.0/5 · Built for Shopify · 1 200+ stores",
+      whatsappText: "Une question ? On t'aide à setup tes offres",
+      whatsappButton: "WhatsApp",
+      restart: "Refaire le quiz",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choisis ta langue",
@@ -813,6 +881,74 @@ export const translations: Record<Language, TranslationDict> = {
       },
     },
 
+    quiz2026: {
+      heroBadge: "2026 Quiz",
+      heroTitle: "20 questions to find out if your store is ready for 2026",
+      heroSubtitle:
+        "Answer honestly. If you say \"no\" or \"I don't know\" to more than 5 questions, you're leaving money on the table.",
+      heroCta: "Start the quiz",
+      aovTitle: "What's your current average order value?",
+      aovHint: "Revenue divided by number of orders.",
+      aovPlaceholder: "45",
+      aovNext: "Next",
+      questionCounter: "Question",
+      previous: "Previous",
+      yes: "Yes",
+      no: "No",
+      idk: "I don't know",
+      questions: [
+        "Do you know your exact average order value this week?",
+        "Do you know how many of your customers buy more than one product per order?",
+        "Have you ever looked at the exact moment your customers abandon checkout?",
+        "Is your best product the one that sells the most or the one with the best margin? Do you know which one?",
+        "Have you tested a different offer on your best-seller in the last 30 days?",
+        "Do you know if your customer buys for themselves or as a gift?",
+        "Do you know how long a visitor stays on your product page before leaving?",
+        "Do you know what percentage of your revenue comes from returning customers?",
+        "Do you have a post-purchase offer or does your customer just see \"thank you for your order\"?",
+        "If you turn off your ads tomorrow, do you still make revenue?",
+        "Do you have a complementary product to suggest in the cart?",
+        "Does your add to cart button say something other than \"Add to Cart\"?",
+        "Do you know exactly why your top 3 ads are working?",
+        "Do you have a bundle offer on your site?",
+        "Have you read your competitors' 1-star reviews to find new angles?",
+        "Does your site load in under 3 seconds on mobile?",
+        "Do you have a reason for your customer to buy now rather than next week?",
+        "Do you know your customer acquisition cost vs lifetime value?",
+        "Have you ever A/B tested an offer on your site?",
+        "Does a first-time visitor understand what you sell in under 3 seconds?",
+      ],
+      scoreLabel: "Your score",
+      resultHigh: "Your store is well optimized. But there's still room to push further.",
+      resultMid: "You have solid foundations but you're leaving a lot of money on the table.",
+      resultLow: "Your store is bleeding and you don't even know it. Time to act.",
+      aovCurrentLabel: "Your current AOV",
+      aovProjectedLabel: "Your potential AOV",
+      aovMultiplier: "×1.7 on average",
+      revenueImpactPrefix: "With",
+      revenueImpactMid: "orders per month, that's",
+      revenueImpactBoldStart: "",
+      revenueImpactBoldEnd: "in additional revenue",
+      revenueImpactSuffix: "every month.",
+      ordersInputLabel: "Orders / month",
+      improveTitle: "What you need to improve on your store",
+      showAll: "See all",
+      showLess: "Show less",
+      countdownLabel: "This offer expires in:",
+      ctaTitlePrefix: "Go from",
+      ctaTitleMid: "to",
+      ctaTitleSuffix: "with Moonbundles.",
+      ctaSubtitle: "Bundles, cart drawer, post-purchase upsell, A/B testing — all in one app.",
+      promoLabel: "20% off with code",
+      copyIdle: "Copy",
+      copyDone: "Copied ✓",
+      ctaButton: "Install Moonbundles now",
+      socialProof: "448+ reviews · 5.0 rating · Built for Shopify · 1,200+ stores",
+      whatsappText: "Got a question? We'll help you set up your offers",
+      whatsappButton: "WhatsApp",
+      restart: "Retake the quiz",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choose your language",
@@ -1031,6 +1167,51 @@ export interface TranslationDict {
       doneProjectionLabel: string;
       doneCta: string;
     };
+  };
+  quiz2026: {
+    heroBadge: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    heroCta: string;
+    aovTitle: string;
+    aovHint: string;
+    aovPlaceholder: string;
+    aovNext: string;
+    questionCounter: string;
+    previous: string;
+    yes: string;
+    no: string;
+    idk: string;
+    questions: string[];
+    scoreLabel: string;
+    resultHigh: string;
+    resultMid: string;
+    resultLow: string;
+    aovCurrentLabel: string;
+    aovProjectedLabel: string;
+    aovMultiplier: string;
+    revenueImpactPrefix: string;
+    revenueImpactMid: string;
+    revenueImpactBoldStart: string;
+    revenueImpactBoldEnd: string;
+    revenueImpactSuffix: string;
+    ordersInputLabel: string;
+    improveTitle: string;
+    showAll: string;
+    showLess: string;
+    countdownLabel: string;
+    ctaTitlePrefix: string;
+    ctaTitleMid: string;
+    ctaTitleSuffix: string;
+    ctaSubtitle: string;
+    promoLabel: string;
+    copyIdle: string;
+    copyDone: string;
+    ctaButton: string;
+    socialProof: string;
+    whatsappText: string;
+    whatsappButton: string;
+    restart: string;
   };
   languageModal: {
     welcome: string;

@@ -12,6 +12,7 @@ const PAGES: { id: string; name: string; emoji: string }[] = [
   { id: "prompts", name: "Prompts", emoji: "💬" },
   { id: "affiliate", name: "Affiliate", emoji: "🤝" },
   { id: "value-offer", name: "Value Offer", emoji: "💰" },
+  { id: "quiz-2026", name: "Quiz 2026", emoji: "🎯" },
 ];
 
 interface Events {
