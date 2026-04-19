@@ -44,19 +44,19 @@ const languages: { code: Language; name: string; subtitle: string; flag: React.R
 ];
 
 export default function LanguageModal() {
-  const { setLang, hasChosen, t } = useTranslation();
+  const { setLang, hasChosen, hydrated, t } = useTranslation();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hoveredCode, setHoveredCode] = useState<string | null>(null);
   const hasOwnPicker = PATHS_WITH_OWN_PICKER.has(pathname);
 
+  // Open immediately once the context has rehydrated localStorage and no
+  // language was previously chosen. Using `hydrated` avoids the modal
+  // flashing for visitors who already picked a language on a previous visit.
   useEffect(() => {
     if (hasOwnPicker) return;
-    if (!hasChosen) {
-      const timer = setTimeout(() => setOpen(true), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [hasChosen, hasOwnPicker]);
+    if (hydrated && !hasChosen) setOpen(true);
+  }, [hydrated, hasChosen, hasOwnPicker]);
 
   if (hasOwnPicker) return null;
 

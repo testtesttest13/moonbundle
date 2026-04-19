@@ -10,6 +10,7 @@ interface LanguageContextValue {
   setLang: (lang: Language) => void;
   t: TranslationDict;
   hasChosen: boolean;
+  hydrated: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
@@ -17,6 +18,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Language>("fr");
   const [hasChosen, setHasChosen] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
@@ -28,6 +30,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     } catch {
       // ignore
     }
+    setHydrated(true);
   }, []);
 
   const setLang = (l: Language) => {
@@ -48,7 +51,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang], hasChosen }}>
+    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang], hasChosen, hydrated }}>
       {children}
     </LanguageContext.Provider>
   );
