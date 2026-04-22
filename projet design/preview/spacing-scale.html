@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Spacing Scale</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:var(--text-primary);font-family:var(--font-body);}
+  .wrap{padding:20px 24px;display:flex;flex-direction:column;gap:8px;}
+  .row{display:grid;grid-template-columns:46px 1fr 64px;align-items:center;gap:10px;}
+  .lbl{font-family:var(--font-heading);font-weight:700;font-size:11px;color:var(--blue-accent);font-variant-numeric:tabular-nums;}
+  .bar{height:10px;background:linear-gradient(90deg,#4d7cff,#7c5cff);border-radius:4px;}
+  .val{font-family:var(--font-heading);font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--text-muted);text-align:right;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <div class="row"><span class="lbl">s-1</span><span class="bar" style="width:4px"></span><span class="val">4px</span></div>
+  <div class="row"><span class="lbl">s-2</span><span class="bar" style="width:8px"></span><span class="val">8px</span></div>
+  <div class="row"><span class="lbl">s-3</span><span class="bar" style="width:12px"></span><span class="val">12px</span></div>
+  <div class="row"><span class="lbl">s-4</span><span class="bar" style="width:16px"></span><span class="val">16px</span></div>
+  <div class="row"><span class="lbl">s-6</span><span class="bar" style="width:24px"></span><span class="val">24px</span></div>
+  <div class="row"><span class="lbl">s-8</span><span class="bar" style="width:32px"></span><span class="val">32px</span></div>
+  <div class="row"><span class="lbl">s-12</span><span class="bar" style="width:48px"></span><span class="val">48px</span></div>
+  <div class="row"><span class="lbl">s-16</span><span class="bar" style="width:64px"></span><span class="val">64px</span></div>
+  <div class="row"><span class="lbl">s-20</span><span class="bar" style="width:80px"></span><span class="val">80px</span></div>
+  <div class="row"><span class="lbl">s-24</span><span class="bar" style="width:96px"></span><span class="val">96px</span></div>
+</div>
+</body></html>

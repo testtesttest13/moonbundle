@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:#fff;font-family:var(--font-body);}
+  .wrap{padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;align-items:center;}
+  .lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600;}
+  button{font-family:var(--font-body);cursor:pointer;border:0;}
+  .btn-primary{background:#fff;color:#0a1628;border-radius:12px;padding:12px 24px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px;box-shadow:0 0 40px rgba(255,255,255,.15);}
+  .btn-accent{background:#4d7cff;color:#fff;border-radius:12px;padding:12px 22px;font-weight:600;font-size:13px;}
+  .btn-outline{background:transparent;color:#4d7cff;border:1px solid rgba(77,124,255,.3);border-radius:12px;padding:10px 20px;font-weight:600;font-size:13px;}
+  .btn-whatsapp{background:#25D366;color:#fff;border-radius:12px;padding:10px 20px;font-weight:600;font-size:13px;display:inline-flex;gap:8px;align-items:center;}
+  .btn-ghost{background:rgba(255,255,255,.05);color:#e2e8f0;border:1px solid rgba(255,255,255,.1);border-radius:9999px;padding:10px 20px;font-weight:500;font-size:13px;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <span class="lbl">Primary (white)</span><div><button class="btn-primary">Installer Gratuitement <span style="color:#4d7cff">→</span></button></div>
+  <span class="lbl">Accent solid</span><div><button class="btn-accent">Télécharger le prompt</button></div>
+  <span class="lbl">Outline blue</span><div><button class="btn-outline">Aller sur Nanobanana</button></div>
+  <span class="lbl">WhatsApp</span><div><button class="btn-whatsapp"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2z"/></svg>WhatsApp</button></div>
+  <span class="lbl">Ghost</span><div><button class="btn-ghost">Voir la démo ▶</button></div>
+</div>
+</body></html>

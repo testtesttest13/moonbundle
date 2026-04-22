@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>CTA Box</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:#fff;font-family:var(--font-body);}
+  .wrap{padding:18px 22px;}
+  .box{position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(77,124,255,.25);background:linear-gradient(135deg,rgba(77,124,255,.12),rgba(22,32,68,.6),rgba(124,92,255,.08));padding:22px;text-align:center;}
+  .box::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:260px;height:160px;border-radius:50%;background:rgba(77,124,255,.18);filter:blur(60px);}
+  .h{font-family:var(--font-heading);font-weight:700;font-size:18px;position:relative;}
+  .h .g{background:linear-gradient(90deg,#4d7cff,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .btn{position:relative;display:inline-flex;align-items:center;gap:10px;background:#fff;color:#0a1628;border-radius:12px;padding:12px 24px;font-weight:700;font-size:13px;margin-top:12px;box-shadow:0 0 40px rgba(255,255,255,.2);}
+  .perks{position:relative;margin-top:10px;font-size:11px;color:#94a3b8;display:flex;gap:14px;justify-content:center;}
+  .perks b{color:#22c55e;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <div class="box">
+    <div class="h">Tes native ads ramènent du trafic.<br><span class="g">Moonbundles le transforme en revenu.</span></div>
+    <button class="btn">Je veux doubler mon AOV <img src="../assets/shopify.png" alt="" style="height:16px"></button>
+    <div class="perks"><span><b>·</b> Sans carte</span><span><b>·</b> Plan gratuit</span><span><b>·</b> Annulable</span></div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Moonbundles — Eyebrows & Numbers</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:var(--text-primary);}
+  .wrap{padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .col{display:flex;flex-direction:column;gap:14px;}
+  .eye{font-family:var(--font-body);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-accent);}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:9999px;border:1px solid rgba(77,124,255,.2);background:rgba(77,124,255,.05);color:var(--blue-accent);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-accent);box-shadow:0 0 0 3px rgba(77,124,255,.3);}
+  .stat{font-family:var(--font-heading);font-weight:700;font-variant-numeric:tabular-nums;color:#fff;}
+  .s-big{font-size:44px;line-height:1;}
+  .s-mid{font-size:28px;line-height:1;}
+  .lbl{color:var(--text-muted);font-size:12px;margin-top:4px;}
+  .g{background:linear-gradient(90deg,#4d7cff,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <div class="col">
+    <div class="eye">Counter · step / eyebrow</div>
+    <div><span class="pill"><span class="dot"></span>Checklist CRO</span></div>
+    <div><span class="eye">01 · Persona</span></div>
+    <div><span class="eye">Built for Shopify · 5.0/5</span></div>
+  </div>
+  <div class="col">
+    <div class="eye">Numbers · tabular-nums</div>
+    <div><span class="stat s-big g">40%</span><div class="lbl">Commission récurrente</div></div>
+    <div><span class="stat s-mid">1 200+</span><div class="lbl">Marchands actifs</div></div>
+    <div><span class="stat s-mid">5.0 ★</span><div class="lbl">448+ avis</div></div>
+  </div>
+</div>
+</body></html>

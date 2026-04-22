@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Moonbundles — Gradients</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:var(--text-primary);font-family:var(--font-body);}
+  .wrap{padding:18px 20px;display:flex;flex-direction:column;gap:12px;}
+  .card{border-radius:14px;border:1px solid var(--border-subtle);overflow:hidden;}
+  .band{height:44px;}
+  .meta{padding:6px 12px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-muted);background:var(--surface);}
+  .name{font-family:var(--font-heading);font-weight:700;color:var(--text-primary);font-size:12px;}
+  .val{font-family:var(--font-heading);font-variant-numeric:tabular-nums;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <div class="card"><div class="band" style="background:linear-gradient(90deg,#4d7cff,#7c5cff,#5b8def)"></div><div class="meta"><span class="name">highlight text</span><span class="val">blue → violet → blue-light</span></div></div>
+  <div class="card"><div class="band" style="background:linear-gradient(to bottom right,#0a1628,#162044 60%,#1a2a5e)"></div><div class="meta"><span class="name">page gradient</span><span class="val">navy-900 → 800 → 700</span></div></div>
+  <div class="card"><div class="band" style="background:linear-gradient(135deg,rgba(77,124,255,0.25),rgba(22,32,68,0.6),rgba(124,92,255,0.2))"></div><div class="meta"><span class="name">CTA box</span><span class="val">blue/12 · navy/60 · violet/8</span></div></div>
+</div>
+</body></html>

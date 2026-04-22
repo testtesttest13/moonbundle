@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Elevation / Glows</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--navy-900);color:var(--text-primary);font-family:var(--font-body);}
+  .wrap{padding:28px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .card{aspect-ratio:1.2/1;background:var(--surface);border:1px solid var(--border-subtle);border-radius:16px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;}
+  .g1{box-shadow:0 0 80px rgba(77,124,255,.18),0 0 160px rgba(77,124,255,.06);}
+  .g2{box-shadow:0 0 80px rgba(124,92,255,.18),0 0 160px rgba(124,92,255,.06);}
+  .g3{box-shadow:0 0 40px rgba(255,255,255,.22);}
+  .g4{box-shadow:0 20px 60px rgba(0,0,0,.55);}
+  .t{font-family:var(--font-heading);font-weight:700;font-size:11px;color:#fff;}
+  .s{color:var(--text-muted);font-size:10px;margin-top:2px;}
+</style></head>
+<body class="grain">
+<div class="wrap">
+  <div class="card g1"><div class="t" style="color:#4d7cff">glow-blue</div><div class="s">CTA / orb</div></div>
+  <div class="card g2"><div class="t" style="color:#7c5cff">glow-violet</div><div class="s">accent / orb</div></div>
+  <div class="card g3"><div class="t">glow-white</div><div class="s">primary button hover</div></div>
+  <div class="card g4" style="background:var(--navy-800)"><div class="t">shadow-card</div><div class="s">hero image</div></div>
+</div>
+</body></html>
