@@ -107,9 +107,9 @@ function Simulator() {
 
       {/* Slider */}
       <div className="relative h-9">
-        <div className="absolute inset-x-0 top-1/2 h-2.5 -translate-y-1/2 overflow-hidden rounded-full border border-white/5 bg-white/[0.06]">
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 h-2.5 -translate-y-1/2 overflow-hidden rounded-full border border-white/5 bg-white/[0.06]">
           <div
-            className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-150"
+            className="absolute inset-y-0 left-0 rounded-full"
             style={{
               width: `${pct}%`,
               background: "linear-gradient(90deg, #4d7cff, #7c5cff)",

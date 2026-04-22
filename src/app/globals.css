@@ -295,7 +295,9 @@ body {
   animation: nav-float 7s ease-in-out infinite;
 }
 
-/* ===== RANGE SLIDER (calculator affiliate) ===== */
+/* ===== RANGE SLIDER (simulator affiliate) =====
+   Native track stays TRANSPARENT — the visible fill is a sibling div
+   in JSX so the width follows the input value 1:1, no double-paint. */
 .range-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -307,16 +309,14 @@ body {
   outline: none;
 }
 .range-slider::-webkit-slider-runnable-track {
-  height: 8px;
-  background: linear-gradient(
-    to right,
-    #4d7cff 0%,
-    #7c5cff var(--progress, 50%),
-    rgba(255, 255, 255, 0.06) var(--progress, 50%),
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  height: 10px;
+  background: transparent;
+  border: none;
+}
+.range-slider::-moz-range-track {
+  height: 10px;
+  background: transparent;
+  border: none;
 }
 .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -324,42 +324,40 @@ body {
   height: 22px;
   width: 22px;
   background: #ffffff;
-  border: 4px solid #4d7cff;
+  border: 2px solid #4d7cff;
   border-radius: 50%;
-  margin-top: -8px;
-  box-shadow: 0 0 24px rgba(77, 124, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: -6px; /* (track 10px - thumb 22px) / 2 = -6px */
+  box-shadow:
+    0 0 0 4px rgba(77, 124, 255, 0.18),
+    0 0 20px rgba(77, 124, 255, 0.45),
+    0 6px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
   cursor: grab;
 }
 .range-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 32px rgba(77, 124, 255, 0.7), 0 4px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.12);
 }
-.range-slider::-webkit-slider-thumb:active {
+.range-slider:active::-webkit-slider-thumb {
   cursor: grabbing;
-  transform: scale(1.1);
-}
-.range-slider::-moz-range-track {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.range-slider::-moz-range-progress {
-  height: 8px;
-  background: linear-gradient(to right, #4d7cff, #7c5cff);
-  border-radius: 999px;
+  transform: scale(1.18);
+  box-shadow:
+    0 0 0 6px rgba(77, 124, 255, 0.28),
+    0 0 32px rgba(77, 124, 255, 0.65),
+    0 8px 20px rgba(0, 0, 0, 0.5);
 }
 .range-slider::-moz-range-thumb {
   height: 22px;
   width: 22px;
   background: #ffffff;
-  border: 4px solid #4d7cff;
+  border: 2px solid #4d7cff;
   border-radius: 50%;
-  box-shadow: 0 0 24px rgba(77, 124, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease;
+  box-shadow:
+    0 0 0 4px rgba(77, 124, 255, 0.18),
+    0 0 20px rgba(77, 124, 255, 0.45),
+    0 6px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease;
   cursor: grab;
 }
 .range-slider::-moz-range-thumb:hover {
-  transform: scale(1.15);
+  transform: scale(1.12);
 }
