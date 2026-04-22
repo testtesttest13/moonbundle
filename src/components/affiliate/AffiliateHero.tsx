@@ -169,7 +169,7 @@ function Simulator() {
 export default function AffiliateHero() {
   const { t } = useTranslation();
   return (
-    <section className="relative overflow-hidden px-7 pt-12 pb-20 sm:pt-16 sm:pb-24">
+    <section className="relative overflow-hidden px-7 pt-28 pb-20 sm:pt-32 sm:pb-24">
       {/* Ambient radial */}
       <div
         aria-hidden
