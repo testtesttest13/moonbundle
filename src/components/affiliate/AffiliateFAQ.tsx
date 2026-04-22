@@ -1,58 +1,105 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FadeInSection } from "../AnimatedText";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+function ArrowIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  );
+}
+
 export default function AffiliateFAQ() {
   const { t } = useTranslation();
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const faqs = t.faq.items;
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-3xl">
-        <FadeInSection className="mb-14 text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-accent/15 bg-blue-accent/5 px-3 py-1 text-xs font-medium text-blue-accent">
-            {t.faq.badge}
-          </span>
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            {t.faq.titlePart1}{" "}
-            <span className="bg-gradient-to-r from-blue-accent to-violet-accent bg-clip-text text-transparent">
-              {t.faq.titlePart2}
+    <section className="relative px-7 py-20 sm:py-24">
+      <div className="mx-auto grid max-w-[1100px] items-start gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:gap-12 lg:gap-14">
+        <div>
+          <div className="mb-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-accent/25 bg-blue-accent/[0.12] px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-blue-accent">
+              {t.faq.badge}
             </span>
+          </div>
+          <h2 className="m-0 text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em] text-white font-[family-name:var(--font-heading)]">
+            {t.faq.titleA}
+            <br />
+            <span className="text-blue-accent">{t.faq.titleB}</span>
           </h2>
-        </FadeInSection>
+          <p className="mt-3.5 text-[14.5px] leading-relaxed text-text-muted">
+            {t.faq.subtitle}
+          </p>
+          <div className="mt-5">
+            <a
+              href="#"
+              className="btn-shine group inline-flex items-center gap-2.5 rounded-full bg-white px-5 py-3 text-[13px] font-semibold text-navy-900 shadow-[0_4px_14px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+            >
+              {t.faq.cta}
+              <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-[3px]" />
+            </a>
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-3">
-          {faqs.map((faq, i) => {
-            const isOpen = openIndex === i;
+        <div className="flex flex-col gap-2.5">
+          {t.faq.items.map(({ q, a }, i) => {
+            const isOpen = open === i;
             return (
               <motion.div
                 key={i}
-                className="glass-card overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
+                className="overflow-hidden rounded-2xl border transition-colors"
+                style={{
+                  background: isOpen ? "rgba(255,255,255,.03)" : "rgba(255,255,255,.02)",
+                  borderColor: isOpen ? "rgba(77,124,255,.25)" : "rgba(255,255,255,.06)",
+                }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.4, delay: i * 0.06, ease }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.35, delay: i * 0.05, ease }}
               >
                 <button
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 p-6 text-left transition-colors hover:bg-white/[0.02]"
+                  onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[14.5px] font-medium text-white"
                 >
-                  <span className="text-sm font-semibold text-white sm:text-base">
-                    {faq.q}
-                  </span>
+                  <span>{q}</span>
                   <motion.span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 text-blue-accent"
+                    className="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-lg transition-colors"
+                    style={{
+                      background: isOpen
+                        ? "rgba(77,124,255,.12)"
+                        : "rgba(255,255,255,.02)",
+                      color: isOpen ? "#4d7cff" : "#94a3b8",
+                    }}
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.3, ease }}
                   >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="h-3.5 w-3.5">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      aria-hidden
+                    >
                       <line x1="12" y1="5" x2="12" y2="19" />
                       <line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
@@ -62,14 +109,15 @@ export default function AffiliateFAQ() {
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
+                      key="content"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.35, ease }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-6 text-sm leading-relaxed text-text-muted">
-                        {faq.a}
+                      <p className="m-0 px-5 pb-[18px] text-[13.5px] leading-[1.6] text-text-muted">
+                        {a}
                       </p>
                     </motion.div>
                   )}

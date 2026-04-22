@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingBubbles from "@/components/FloatingBubbles";
+import StarfieldBg from "@/components/affiliate/StarfieldBg";
 import AffiliateHero from "@/components/affiliate/AffiliateHero";
-import EarningsCalculator from "@/components/affiliate/EarningsCalculator";
-import HowItWorks from "@/components/affiliate/HowItWorks";
-import WhoFor from "@/components/affiliate/WhoFor";
-import WhyMoonbundles from "@/components/affiliate/WhyMoonbundles";
+import AskAi from "@/components/affiliate/AskAi";
 import Repartition from "@/components/affiliate/Repartition";
+import HowItWorks from "@/components/affiliate/HowItWorks";
+import Targets from "@/components/affiliate/WhoFor";
 import AffiliateFAQ from "@/components/affiliate/AffiliateFAQ";
 import AffiliateCTA from "@/components/affiliate/AffiliateCTA";
 
@@ -34,15 +33,14 @@ export const metadata: Metadata = {
 export default function AffiliatePage() {
   return (
     <>
-      <FloatingBubbles />
+      <StarfieldBg />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <AffiliateHero />
-        <EarningsCalculator />
-        <HowItWorks />
-        <WhoFor />
-        <WhyMoonbundles />
+        <AskAi />
         <Repartition />
+        <HowItWorks />
+        <Targets />
         <AffiliateFAQ />
         <AffiliateCTA />
       </main>

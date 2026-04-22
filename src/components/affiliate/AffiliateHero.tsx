@@ -1,142 +1,272 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useSpring, useTransform } from "framer-motion";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const WHATSAPP_URL = "https://wa.me/33670438611";
 const ease = [0.22, 1, 0.36, 1] as const;
+const AOV = 40;
+const RATE = 0.4;
+const PRESETS = [10, 50, 100, 250, 500] as const;
 
-function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
+const fmt = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
+
+function CheckIcon() {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-blue-accent"
+      aria-hidden
+    >
+      <polyline points="20 6 9 17 4 12" />
     </svg>
+  );
+}
+
+function ArrowIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  );
+}
+
+function Simulator() {
+  const { t } = useTranslation();
+  const [referrals, setReferrals] = useState(100);
+
+  const monthly = referrals * AOV * RATE;
+  const yearly = monthly * 12;
+
+  const monthlySpring = useSpring(monthly, { stiffness: 120, damping: 24 });
+  const yearlySpring = useSpring(yearly, { stiffness: 120, damping: 24 });
+
+  useEffect(() => {
+    monthlySpring.set(monthly);
+    yearlySpring.set(yearly);
+  }, [monthly, yearly, monthlySpring, yearlySpring]);
+
+  const monthlyDisplay = useTransform(monthlySpring, (v) => fmt(v));
+  const yearlyDisplay = useTransform(yearlySpring, (v) => fmt(v));
+
+  const pct = (referrals / 500) * 100;
+
+  return (
+    <div className="w-full text-left">
+      {/* Readouts */}
+      <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-text-muted">
+            {t.simulator.eyebrow}
+          </div>
+          <div
+            className="text-[22px] font-bold text-white font-[family-name:var(--font-heading)]"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {referrals}{" "}
+            <span className="text-sm font-medium text-text-muted">{t.simulator.refs}</span>
+          </div>
+        </div>
+        <div className="text-right">
+          <motion.div
+            className="text-[clamp(40px,5.5vw,64px)] font-bold leading-none tracking-[-0.02em] text-white font-[family-name:var(--font-heading)]"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {monthlyDisplay}
+          </motion.div>
+          <div
+            className="mt-1.5 text-[13px] text-text-muted"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {t.simulator.perMonth} · {t.simulator.soit}{" "}
+            <motion.span className="font-semibold text-text-secondary">
+              {yearlyDisplay}
+            </motion.span>{" "}
+            {t.simulator.perYear}
+          </div>
+        </div>
+      </div>
+
+      {/* Slider */}
+      <div className="relative h-9">
+        <div className="absolute inset-x-0 top-1/2 h-2.5 -translate-y-1/2 overflow-hidden rounded-full border border-white/5 bg-white/[0.06]">
+          <div
+            className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-150"
+            style={{
+              width: `${pct}%`,
+              background: "linear-gradient(90deg, #4d7cff, #7c5cff)",
+              boxShadow: "0 0 16px rgba(77,124,255,.35)",
+            }}
+          />
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={500}
+          step={1}
+          value={referrals}
+          onChange={(e) => setReferrals(Number(e.target.value))}
+          aria-label={t.simulator.refs}
+          className="range-slider absolute inset-0 m-0 h-full w-full cursor-grab bg-transparent p-0"
+          style={{ WebkitAppearance: "none" }}
+        />
+      </div>
+
+      {/* Tick labels */}
+      <div
+        className="mt-2.5 flex justify-between text-[11px] text-text-muted"
+        style={{ fontVariantNumeric: "tabular-nums" }}
+      >
+        <span>0</span>
+        <span>125</span>
+        <span>250</span>
+        <span>375</span>
+        <span>500</span>
+      </div>
+
+      {/* Preset chips */}
+      <div className="mt-6 flex flex-wrap justify-center gap-2">
+        {PRESETS.map((n) => {
+          const active = referrals === n;
+          return (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setReferrals(n)}
+              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                active
+                  ? "border-blue-accent/30 bg-blue-accent/[0.12] text-blue-accent"
+                  : "border-white/5 bg-white/[0.02] text-text-muted hover:border-white/10 hover:text-white"
+              }`}
+            >
+              {n} {t.simulator.preset}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
 export default function AffiliateHero() {
   const { t } = useTranslation();
-  const headlineWords = t.affiliateHero.headline.map((word) => ({
-    text: word,
-    gradient: (t.affiliateHero.gradientWords as readonly string[]).includes(word),
-  }));
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-28 pb-20">
-      {/* Dot grid */}
-      <div className="dot-grid pointer-events-none absolute inset-0 opacity-60" />
+    <section className="relative overflow-hidden px-7 pt-12 pb-20 sm:pt-16 sm:pb-24">
+      {/* Ambient radial */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[20%] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: 900,
+          height: 500,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(77,124,255,.14), transparent 65%)",
+          filter: "blur(80px)",
+        }}
+      />
 
-      {/* Animated gradient orbs */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute top-1/4 left-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-accent/8 blur-[120px] animate-pulse-glow" />
-        <div className="absolute top-1/3 right-1/4 h-[300px] w-[400px] rounded-full bg-violet-accent/6 blur-[100px] animate-pulse-glow [animation-delay:2s]" />
-      </div>
-
-      {/* Decorative lines */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute top-0 bottom-0 left-[10%] w-px bg-gradient-to-b from-transparent via-blue-accent/10 to-transparent" />
-        <div className="absolute top-0 bottom-0 right-[10%] w-px bg-gradient-to-b from-transparent via-violet-accent/10 to-transparent" />
-      </div>
-
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-        {/* Badge */}
+      <div className="relative mx-auto max-w-[960px] text-center">
+        {/* Pill badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease }}
-          className="mb-8"
+          className="mb-5"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease }}
         >
-          <span className="badge-glow inline-flex items-center gap-2 rounded-full border border-blue-accent/20 bg-blue-accent/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-accent backdrop-blur-sm">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
-            </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-accent/25 bg-blue-accent/[0.12] px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-blue-accent">
+            <span className="h-[5px] w-[5px] rounded-full bg-blue-accent" />
             {t.affiliateHero.badge}
           </span>
         </motion.div>
 
-        {/* Headline — text reveal mot par mot */}
-        <h1 className="max-w-4xl text-4xl leading-[1.1] font-bold tracking-tight text-white sm:text-5xl lg:text-7xl font-[family-name:var(--font-heading)]">
-          {headlineWords.map((word, i) => (
-            <motion.span
-              key={i}
-              className="inline-block mr-[0.25em]"
-              initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease }}
-            >
-              {word.gradient ? (
-                <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-                  {word.text}
-                </span>
-              ) : (
-                word.text
-              )}
-            </motion.span>
-          ))}
-        </h1>
+        {/* Headline */}
+        <motion.h1
+          className="m-0 text-[clamp(44px,6.6vw,82px)] font-bold leading-[1.02] tracking-[-0.035em] text-white font-[family-name:var(--font-heading)]"
+          style={{ textWrap: "balance" }}
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, delay: 0.05, ease }}
+        >
+          {t.affiliateHero.headlineA}
+          <br />
+          <span className="text-text-muted">{t.affiliateHero.headlineB}</span>
+        </motion.h1>
 
         {/* Subtitle */}
         <motion.p
-          className="mt-8 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg"
-          initial={{ opacity: 0, y: 20 }}
+          className="mx-auto mt-[22px] max-w-[520px] text-[17px] leading-relaxed text-text-secondary"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease }}
+          transition={{ duration: 0.5, delay: 0.2, ease }}
         >
           {t.affiliateHero.subtitle}
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          className="mt-12 flex flex-col items-center gap-5 sm:flex-row"
-          initial={{ opacity: 0, y: 20 }}
+          className="mt-8 inline-flex flex-wrap justify-center gap-3"
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.95, ease }}
+          transition={{ duration: 0.5, delay: 0.3, ease }}
         >
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center"
+            href="#"
+            className="btn-shine group inline-flex items-center gap-2.5 rounded-full bg-white px-[26px] py-[14px] text-[14.5px] font-semibold text-navy-900 shadow-[0_4px_14px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
           >
-            <div className="absolute -inset-3 rounded-full bg-green-500/20 blur-xl animate-pulse-glow" />
-            <span className="btn-shine relative z-10 flex items-center gap-3 rounded-full bg-green-500 px-8 py-4 text-sm font-semibold text-white transition-all duration-300 group-hover:bg-green-400 group-hover:shadow-[0_0_40px_rgba(74,222,128,0.3)] group-hover:scale-[1.03]">
-              <WhatsAppIcon />
-              {t.affiliateHero.ctaPrimary}
-            </span>
+            {t.affiliateHero.ctaPrimary}
+            <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-[3px]" />
           </a>
           <a
             href="#how-it-works"
-            className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-text-secondary backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08]"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-[26px] py-[14px] text-[14.5px] font-semibold text-white transition-colors hover:bg-white/[0.08]"
           >
             {t.affiliateHero.ctaSecondary}
-            <span className="inline-block text-xs transition-transform duration-300 group-hover:translate-x-0.5">
-              →
-            </span>
+            <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-[3px]" />
           </a>
         </motion.div>
 
-        {/* 3 stats */}
+        {/* Trust row */}
         <motion.div
-          className="mt-16 grid grid-cols-3 gap-6 sm:gap-16"
+          className="mt-7 flex flex-wrap justify-center gap-x-[22px] gap-y-2 text-[12.5px] text-text-muted"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.45, ease }}
+        >
+          {t.affiliateHero.trust.map((x) => (
+            <span key={x} className="inline-flex items-center gap-1.5">
+              <CheckIcon />
+              {x}
+            </span>
+          ))}
+        </motion.div>
+
+        {/* Simulator card */}
+        <motion.div
+          className="glass-card mt-[54px] px-6 py-7 text-left sm:px-8 sm:py-8"
+          style={{ boxShadow: "0 24px 60px rgba(0,0,0,.3)" }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.1, ease }}
+          transition={{ duration: 0.6, delay: 0.55, ease }}
         >
-          {t.affiliateHero.stats.map((stat, i) => {
-            const gradients = [
-              "from-blue-accent to-violet-accent",
-              "from-violet-accent to-blue-light",
-              "from-blue-light to-blue-accent",
-            ];
-            return (
-              <div key={i} className="text-center">
-                <span className={`bg-gradient-to-r ${gradients[i]} bg-clip-text text-3xl font-bold text-transparent sm:text-4xl font-[family-name:var(--font-heading)]`}>
-                  {stat.value}
-                </span>
-                <p className="mt-1 text-xs text-text-muted sm:text-sm">{stat.label}</p>
-              </div>
-            );
-          })}
+          <Simulator />
         </motion.div>
       </div>
     </section>

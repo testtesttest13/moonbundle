@@ -2,81 +2,56 @@
 
 import { motion } from "framer-motion";
 import { FadeInSection } from "../AnimatedText";
+import { BrandChip, type BrandName } from "./BrandChip";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const personaIcons = [
-  (
-    <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-      <polygon points="23 7 16 12 23 17 23 7" />
-      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-    </svg>
-  ),
-  (
-    <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-      <path d="M6 12v5c3 3 9 3 12 0v-5" />
-    </svg>
-  ),
-  (
-    <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <path d="M16 10a4 4 0 0 1-8 0" />
-    </svg>
-  ),
-  (
-    <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
-];
-
-export default function WhoFor() {
+export default function Targets() {
   const { t } = useTranslation();
-  const personas = t.whoFor.personas.map((p, i) => ({
-    title: p.title,
-    desc: p.desc,
-    icon: personaIcons[i],
-  }));
   return (
-    <section className="relative px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-5xl">
-        <FadeInSection className="mb-14 text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-accent/15 bg-violet-accent/5 px-3 py-1 text-xs font-medium text-violet-accent">
-            {t.whoFor.badge}
-          </span>
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            {t.whoFor.titlePart1}{" "}
-            <span className="bg-gradient-to-r from-violet-accent to-blue-accent bg-clip-text text-transparent">
-              {t.whoFor.titlePart2}
+    <section className="relative px-7 py-16 sm:py-20">
+      <div className="mx-auto max-w-[1180px]">
+        <FadeInSection className="mb-11 text-center">
+          <div className="mb-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-accent/25 bg-blue-accent/[0.12] px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-blue-accent">
+              {t.targets.badge}
             </span>
+          </div>
+          <h2 className="m-0 text-[clamp(30px,4vw,44px)] font-bold leading-[1.1] tracking-[-0.02em] text-white font-[family-name:var(--font-heading)]">
+            {t.targets.title}
           </h2>
+          <p className="mx-auto mt-3.5 max-w-[520px] text-[15.5px] text-text-muted">
+            {t.targets.subtitle}
+          </p>
         </FadeInSection>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {personas.map((p, i) => (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {t.targets.items.map((item, i) => (
             <motion.div
-              key={p.title}
-              className="glass-card group relative p-7 transition-transform duration-300 hover:-translate-y-0.5"
-              initial={{ opacity: 0, y: 30 }}
+              key={item.title}
+              className="glass-card flex flex-col gap-3 p-5 sm:p-6"
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: i * 0.08, ease }}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-accent/15 text-blue-accent">
-                {p.icon}
+              <div className="flex gap-1.5">
+                {item.icons.map((n) => (
+                  <BrandChip key={n} name={n as BrandName} size={34} />
+                ))}
               </div>
-              <h3 className="mt-5 text-lg font-bold text-white font-[family-name:var(--font-heading)]">
-                {p.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-text-muted">
-                {p.desc}
-              </p>
+              <div>
+                <div className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-blue-accent">
+                  {item.tag}
+                </div>
+                <h3 className="mb-1.5 text-[18px] font-bold leading-tight text-white font-[family-name:var(--font-heading)]">
+                  {item.title}
+                </h3>
+                <p className="m-0 text-[13.5px] leading-relaxed text-text-muted">
+                  {item.desc}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>

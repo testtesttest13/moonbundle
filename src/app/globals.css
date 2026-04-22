@@ -275,6 +275,26 @@ body {
   box-shadow: 0 0 12px rgba(77, 124, 255, 0.2), inset 0 0 12px rgba(77, 124, 255, 0.05);
 }
 
+/* ===== STARFIELD TWINKLE ===== */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--twk-min, 0.25); transform: scale(1); }
+  50%      { opacity: var(--twk-max, 0.9);  transform: scale(1.25); }
+}
+.animate-twinkle {
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* ===== NAV FLOAT ===== */
+@keyframes nav-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+.animate-nav-float {
+  animation: nav-float 7s ease-in-out infinite;
+}
+
 /* ===== RANGE SLIDER (calculator affiliate) ===== */
 .range-slider {
   -webkit-appearance: none;

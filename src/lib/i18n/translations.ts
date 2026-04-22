@@ -9,6 +9,7 @@ export const translations: Record<Language, TranslationDict> = {
       compare: "Comparatif",
       affiliate: "Affilié",
       cta: "Essayer 14 jours",
+      ctaAffiliate: "Créer mon programme",
       menuOpen: "Ouvrir le menu",
     },
 
@@ -113,155 +114,156 @@ export const translations: Record<Language, TranslationDict> = {
 
     // ===== AFFILIATE PAGE =====
     affiliateHero: {
-      badge: "Programme Affilié",
-      headline: ["Gagne", "40%", "à", "vie", "sur", "chaque", "abonnement", "que", "tu", "génères"],
-      gradientWords: ["40%", "vie"], // mots à mettre en gradient
-      subtitle: "Un lien, un code promo. Pas de limite. Un revenu automatique chaque mois.",
-      ctaPrimary: "Devenir affilié",
-      ctaSecondary: "Voir comment ça marche",
-      stats: [
-        { value: "40%", label: "Commission récurrente" },
-        { value: "À vie", label: "Aucune limite de temps" },
-        { value: "0€", label: "Frais d'entrée" },
-      ],
+      badge: "Programme d'Affiliation",
+      headlineA: "40% de commission.",
+      headlineB: "Chaque mois. À vie.",
+      subtitle:
+        "Ton audience. Notre produit. Tu touches 40% à vie sur chaque abonnement que tu génères.",
+      ctaPrimary: "Je veux mes 40%",
+      ctaSecondary: "Comment ça marche",
+      trust: ["Aucun investissement", "Paiement le 15 du mois", "Seuil min. $100"],
     },
 
-    calculator: {
-      badge: "Calculateur de revenus",
-      titlePart1: "Combien tu peux",
-      titlePart2: "gagner ?",
-      subtitle: "Bouge le slider pour voir tes revenus estimés en temps réel.",
-      sliderLabel: "Filleuls actifs",
-      sliderAria: "Nombre de filleuls actifs",
-      perMonth: "Par mois",
-      perYear: "Par an",
-      basedOn: "Basé sur un abonnement moyen de",
-      perMonthLabel: "/mois",
-      multiplier: "× 40% commission",
-      disclaimer:
-        "Estimation indicative — les vrais montants varient selon le plan choisi par tes filleuls.",
+    simulator: {
+      eyebrow: "Simulateur",
+      refs: "parrainages actifs",
+      perMonth: "par mois",
+      perYear: "par an",
+      soit: "soit",
+      preset: "parrainages",
+    },
+
+    split: {
+      badge: "Flexibilité",
+      titleA: "Les 40%, c'est toi qui les",
+      titleB: "répartis.",
+      subtitle:
+        "Garde tout pour toi, ou partage avec tes sous-affiliés. Ton programme, tes règles.",
+      you: "Pour toi",
+      subs: "Pour tes sous-affiliés",
+      scenarioLabel: "Scénario",
+      scenarios: [
+        {
+          label: "Tu gardes tout",
+          you: 40,
+          subs: 0,
+          desc: "Tu encaisses 40% sur chaque abonnement. La formule la plus simple.",
+        },
+        {
+          label: "Tu partages 50/50",
+          you: 20,
+          subs: 20,
+          desc: "Tu gardes 20%, tu en reverses 20% à tes sous-affiliés. Ils t'amènent du volume, tu gardes du revenu passif.",
+        },
+        {
+          label: "Tu t'organises en réseau",
+          you: 8,
+          subs: 32,
+          desc: "Tu reverses 30-35% à tes sous-affiliés et gardes 5-10% de coordination. Parfait pour monter une machine.",
+        },
+      ],
+      footerA: "Total garanti :",
+      footerPct: "40%",
+      footerB: "à vie sur chaque abonnement. Tu décides comment le découper.",
+    },
+
+    askAi: {
+      badge: "Demande à l'IA",
+      titleA: "Pas convaincu que",
+      titleB: "soit fait pour toi ?",
+      ask: "Demander à",
+      prompt:
+        "Dis-moi pourquoi l'app Shopify Moonbundles est faite pour moi (j'ai une boutique Shopify, je veux augmenter mon panier moyen et mes revenus). Moonbundles fait bundles, cart drawer, post-purchase, free gifts et volume discounts — tout dans une seule app. Donne-moi des raisons concrètes.",
     },
 
     howItWorks: {
-      badge: "Comment ça marche",
-      titlePart1: "3 étapes pour commencer à",
-      titlePart2: "gagner",
+      badge: "Processus",
+      title: "Comment ça marche ?",
       steps: [
         {
-          title: "Crée ton compte affilié",
-          desc: "Contacte-nous sur WhatsApp. Tu reçois ton lien personnalisé et ton code promo en quelques minutes.",
+          tag: "Étape 1",
+          title: "Rejoins-nous en 2 minutes",
+          desc: "Crée ton compte affilié. Lien personnalisé + code promo instantané.",
         },
         {
+          tag: "Étape 2",
           title: "Partage ton lien",
-          desc: "Partage ton lien avec ton audience, ta communauté, tes clients. Sur YouTube, Twitter, Discord, Skool, partout.",
+          desc: "Sur YouTube, TikTok, Insta, X — ou dans ta newsletter.",
         },
         {
-          title: "Gagne chaque mois, à vie",
-          desc: "40% de chaque abonnement que tu génères, tant que ton filleul reste actif. Pas de plafond.",
+          tag: "Étape 3",
+          title: "Recrute tes sous-affiliés",
+          desc: "Parraine d'autres créateurs — tu touches aussi des commissions à vie sur leurs ventes.",
         },
       ],
     },
 
-    whoFor: {
-      badge: "Pour qui ?",
-      titlePart1: "Le programme Moonbundles est fait",
-      titlePart2: "pour toi si...",
-      personas: [
+    targets: {
+      badge: "Cibles",
+      title: "À qui s'adresse ce programme ?",
+      subtitle:
+        "Tu parles aux marchands Shopify ? On te paye 40% à vie pour les faire passer à Moonbundles.",
+      items: [
         {
+          tag: "Créateurs",
           title: "Créateurs de contenu",
-          desc: "Tu crées du contenu autour du e-commerce, des ads ou de Shopify ? Parle de Moonbundles dans tes vidéos et gagne des commissions à vie sur chaque abonné.",
+          desc: "Tu parles e-commerce, dropshipping, Shopify ? Ton audience est DTC. Moonbundles colle pile.",
+          icons: ["instagram", "tiktok", "youtube"],
         },
         {
-          title: "Coachs & formateurs",
-          desc: "Tu accompagnes des e-commerçants ? Recommande Moonbundles dans tes formations et gagne 40% récurrent sur chaque inscription.",
+          tag: "YouTubers",
+          title: "YouTubers",
+          desc: "Une vidéo « comment j'ai doublé mon AOV » = des leads qualifiés pour des années.",
+          icons: ["youtube"],
         },
         {
-          title: "E-commerçants",
-          desc: "Tu utilises déjà Moonbundles ? Partage ce qui marche pour toi avec ton réseau et sois payé chaque mois.",
+          tag: "Rédacteurs",
+          title: "Rédacteurs & SEO",
+          desc: "Articles comparatifs, guides bundles, tutos Shopify — chaque lien te rapporte 40% à vie.",
+          icons: ["google"],
         },
         {
-          title: "Communautés Ecom",
-          desc: "Tu gères un Discord, un groupe Skool ou un Telegram ? Intègre Moonbundles dans ta stack d'outils recommandés et transforme ton influence en revenu récurrent.",
-        },
-      ],
-    },
-
-    whyMoonbundles: {
-      points: [
-        "448+ avis 5 étoiles",
-        "Built for Shopify",
-        "Le produit se vend tout seul",
-      ],
-    },
-
-    repartition: {
-      badge: "Flexibilité",
-      titlePart1: "Répartis tes 40%",
-      titlePart2: "comme tu veux",
-      subtitle: "C'est toi qui décides comment ta commission est partagée.",
-      footnote: "Configurable depuis ton dashboard Mantle.",
-      splits: [
-        {
-          title: "Tu gardes tout",
-          subtext: "L'option par défaut. Simple et direct.",
-          description: "40% pour toi",
-          legendYou: "Toi",
-          legendOther: "",
-        },
-        {
-          title: "Réseau de sous-affiliés",
-          subtext: "Crée ton propre réseau d'ambassadeurs.",
-          description: "30% pour toi · 10% sous-affiliés",
-          legendYou: "Toi",
-          legendOther: "Sous-affiliés",
-        },
-        {
-          title: "Partenariat 50/50",
-          subtext: "Partage avec un collaborateur.",
-          description: "20% pour toi · 20% partenaire",
-          legendYou: "Toi",
-          legendOther: "Partenaire",
+          tag: "Agences",
+          title: "Agences & consultants",
+          desc: "Recommande Moonbundles à tes clients Shopify. Plus besoin de stacker 4 apps.",
+          icons: ["shopify"],
         },
       ],
     },
 
     faq: {
       badge: "FAQ",
-      titlePart1: "Questions",
-      titlePart2: "fréquentes",
+      titleA: "Encore des questions ?",
+      titleB: "On a les réponses.",
+      subtitle:
+        "Pas trouvé ton bonheur ? Écris-nous sur WhatsApp, on répond en quelques minutes.",
+      cta: "Rejoindre le programme",
       items: [
         {
-          q: "Comment sont faits les paiements ?",
-          a: "Les paiements sont effectués chaque mois via Mantle. Tu suis tout depuis ton dashboard affilié, avec un historique complet de tes commissions.",
+          q: "Quel est le taux de commission ?",
+          a: "40% à vie sur chaque abonnement que tu génères. Tant que ton référé reste client, tu touches 40% — chaque mois, sans limite.",
         },
         {
-          q: "Comment je suis mes filleuls ?",
-          a: "Tu as un dashboard dédié qui enregistre chaque inscription, chaque paiement et tes commissions en temps réel. Tu vois exactement qui s'est inscrit, quand, et combien tu as gagné.",
+          q: "Comment fonctionnent les paiements ?",
+          a: "Paiement automatique le 15 de chaque mois par Stripe, Wise ou virement. Seuil minimum $100. Versement en 3-5 jours ouvrés.",
         },
         {
-          q: "Le code promo fonctionne même sans le lien affilié ?",
-          a: "Oui. Si ton filleul utilise ton code promo à l'inscription (même sans cliquer sur ton lien), la commission est automatiquement attribuée à ton compte affilié.",
+          q: "Comment je répartis les 40% entre moi et mes sous-affiliés ?",
+          a: "Depuis ton dashboard, tu choisis librement ta part (de 0 à 40%) et ce qui revient à tes sous-affiliés. Tu peux changer le split à tout moment.",
         },
         {
-          q: "Je peux faire de la pub avec mon lien ?",
-          a: "Oui, tu peux promouvoir ton lien sur tous tes canaux : réseaux sociaux, email, YouTube, blog, communautés Discord/Skool, ou même en publicité payante.",
+          q: "Annuel ou mensuel — comment est calculée la commission ?",
+          a: "Tu touches 40% sur le paiement réel du client. S'il paye en annuel, tu reçois 40% du montant annuel dès validation (~30j pour couvrir la fenêtre de remboursement).",
         },
         {
-          q: "C'est vraiment à vie ?",
-          a: "Oui. Tant que ton filleul reste abonné à Moonbundles, tu touches ta commission chaque mois. Pas de limite dans le temps, pas de plafond de gains.",
+          q: "Si un visiteur ne s'inscrit pas tout de suite, je perds ?",
+          a: "Non. Cookie 30 jours. À chaque clic ou usage de ton code promo, le compteur redémarre. La commission reste à toi.",
+        },
+        {
+          q: "Qu'est-ce que je n'ai pas le droit de faire ?",
+          a: "Pas de publicité payante sur le nom Moonbundles. Pas de spam, fake reviews, cashback. Commissions non conformes annulées.",
         },
       ],
-    },
-
-    affiliateCta: {
-      stats: ["448+ avis 5 étoiles", "1 200+ stores actifs", "Built for Shopify"],
-      titlePart1: "Gagne de l'argent à vie",
-      titlePart2: "avec Moonbundles",
-      subtitlePart1: "Si quelqu'un s'abonne à Moonbundles grâce à toi, on te reverse",
-      subtitleHighlight: "40% chaque mois",
-      subtitlePart2: ". Automatiquement. Sans limite.",
-      button: "Devenir affilié",
-      footnote: "Réponse sous 24h — programme géré en direct par nous",
     },
 
     nativeAds: {
@@ -475,6 +477,15 @@ export const translations: Record<Language, TranslationDict> = {
       restart: "Refaire le quiz",
     },
 
+    deserves: {
+      titleA: "Ton audience mérite",
+      titleB: "Toi, tu mérites",
+      rate: "40% à vie.",
+      subtitle:
+        "Moonbundles est un produit que les marchands adorent utiliser. Tu amènes l'audience, on amène le produit.",
+      cta: "Je commence maintenant",
+    },
+
     languageModal: {
       welcome: "Welcome · Bienvenue",
       title: "Choisis ta langue",
@@ -491,6 +502,7 @@ export const translations: Record<Language, TranslationDict> = {
       compare: "Compare",
       affiliate: "Affiliate",
       cta: "Try 14 days",
+      ctaAffiliate: "Start my program",
       menuOpen: "Open menu",
     },
 
@@ -588,154 +600,163 @@ export const translations: Record<Language, TranslationDict> = {
 
     affiliateHero: {
       badge: "Affiliate Program",
-      headline: ["Earn", "40%", "for", "life", "on", "every", "subscription", "you", "generate"],
-      gradientWords: ["40%", "life"],
-      subtitle: "One link, one promo code. No limit. Automatic recurring income every month.",
-      ctaPrimary: "Become an affiliate",
-      ctaSecondary: "See how it works",
-      stats: [
-        { value: "40%", label: "Recurring commission" },
-        { value: "For life", label: "No time limit" },
-        { value: "$0", label: "Entry fees" },
-      ],
+      headlineA: "40% commission.",
+      headlineB: "Every month. For life.",
+      subtitle:
+        "Your audience. Our product. You earn 40% for life on every subscription you generate.",
+      ctaPrimary: "I want my 40%",
+      ctaSecondary: "How it works",
+      trust: ["No investment", "Paid on the 15th", "$100 min. threshold"],
     },
 
-    calculator: {
-      badge: "Earnings calculator",
-      titlePart1: "How much can you",
-      titlePart2: "earn?",
-      subtitle: "Move the slider to see your estimated earnings in real time.",
-      sliderLabel: "Active referrals",
-      sliderAria: "Number of active referrals",
-      perMonth: "Per month",
-      perYear: "Per year",
-      basedOn: "Based on an average subscription of",
-      perMonthLabel: "/month",
-      multiplier: "× 40% commission",
-      disclaimer:
-        "Indicative estimate — actual amounts vary based on the plan your referrals choose.",
+    simulator: {
+      eyebrow: "Simulator",
+      refs: "active referrals",
+      perMonth: "per month",
+      perYear: "per year",
+      soit: "that's",
+      preset: "referrals",
+    },
+
+    split: {
+      badge: "Flexibility",
+      titleA: "You decide how the 40%",
+      titleB: "gets split.",
+      subtitle:
+        "Keep it all, or share with sub-affiliates. Your program, your rules.",
+      you: "For you",
+      subs: "For sub-affiliates",
+      scenarioLabel: "Scenario",
+      scenarios: [
+        {
+          label: "Keep it all",
+          you: 40,
+          subs: 0,
+          desc: "You earn the full 40% on every subscription. The simplest setup.",
+        },
+        {
+          label: "Split 50/50",
+          you: 20,
+          subs: 20,
+          desc: "Keep 20%, pass 20% to your sub-affiliates. They bring volume, you keep passive revenue.",
+        },
+        {
+          label: "Build a network",
+          you: 8,
+          subs: 32,
+          desc: "Give 30-35% to sub-affiliates, keep 5-10% as orchestrator. Perfect for building a machine.",
+        },
+      ],
+      footerA: "Guaranteed total:",
+      footerPct: "40%",
+      footerB: "for life on every subscription. You decide how to split it.",
+    },
+
+    askAi: {
+      badge: "Ask the AI",
+      titleA: "Not sure",
+      titleB: "is made for you?",
+      ask: "Ask",
+      prompt:
+        "Tell me why the Moonbundles Shopify app is made for me (I run a Shopify store and want to boost my AOV and revenue). Moonbundles does bundles, cart drawer, post-purchase, free gifts and volume discounts — all in one app. Give me concrete reasons.",
     },
 
     howItWorks: {
-      badge: "How it works",
-      titlePart1: "3 steps to start",
-      titlePart2: "earning",
+      badge: "Process",
+      title: "How it works",
       steps: [
         {
-          title: "Create your affiliate account",
-          desc: "Contact us on WhatsApp. You'll receive your personal link and promo code in minutes.",
+          tag: "Step 1",
+          title: "Sign up in 2 minutes",
+          desc: "Create your affiliate account. Personal link + promo code, instant.",
         },
         {
+          tag: "Step 2",
           title: "Share your link",
-          desc: "Share your link with your audience, community, and clients. On YouTube, Twitter, Discord, Skool — anywhere.",
+          desc: "On YouTube, TikTok, Insta, X — or in your newsletter.",
         },
         {
-          title: "Earn every month, for life",
-          desc: "40% of every subscription you generate, as long as your referral stays active. No cap.",
+          tag: "Step 3",
+          title: "Recruit your sub-affiliates",
+          desc: "Refer other creators — you earn lifetime commissions on their sales too.",
         },
       ],
     },
 
-    whoFor: {
-      badge: "Who is it for?",
-      titlePart1: "The Moonbundles program is",
-      titlePart2: "for you if...",
-      personas: [
+    targets: {
+      badge: "Targets",
+      title: "Who's this program for?",
+      subtitle:
+        "Talk to Shopify merchants? We pay 40% for life to get them on Moonbundles.",
+      items: [
         {
+          tag: "Creators",
           title: "Content creators",
-          desc: "You create content around e-commerce, ads or Shopify? Talk about Moonbundles in your videos and earn lifetime commissions on every signup.",
+          desc: "Talk e-commerce, dropshipping, Shopify? Your audience is DTC. Moonbundles fits perfectly.",
+          icons: ["instagram", "tiktok", "youtube"],
         },
         {
-          title: "Coaches & trainers",
-          desc: "You support e-commerce founders? Recommend Moonbundles in your courses and earn 40% recurring on every signup.",
+          tag: "YouTubers",
+          title: "YouTubers",
+          desc: "One \"how I doubled my AOV\" video = qualified leads for years.",
+          icons: ["youtube"],
         },
         {
-          title: "E-commerce founders",
-          desc: "You already use Moonbundles? Share what works for you with your network and get paid every month.",
+          tag: "Writers",
+          title: "Writers & SEO",
+          desc: "Comparison articles, bundle guides, Shopify tutorials — every link earns 40% for life.",
+          icons: ["google"],
         },
         {
-          title: "Ecom communities",
-          desc: "You run a Discord, a Skool group or a Telegram? Add Moonbundles to your recommended tools stack and turn your influence into recurring income.",
-        },
-      ],
-    },
-
-    whyMoonbundles: {
-      points: [
-        "448+ 5-star reviews",
-        "Built for Shopify",
-        "The product sells itself",
-      ],
-    },
-
-    repartition: {
-      badge: "Flexibility",
-      titlePart1: "Split your 40%",
-      titlePart2: "however you want",
-      subtitle: "You decide how your commission is shared.",
-      footnote: "Configurable from your Mantle dashboard.",
-      splits: [
-        {
-          title: "Keep it all",
-          subtext: "The default option. Simple and direct.",
-          description: "40% for you",
-          legendYou: "You",
-          legendOther: "",
-        },
-        {
-          title: "Sub-affiliate network",
-          subtext: "Build your own network of ambassadors.",
-          description: "30% for you · 10% sub-affiliates",
-          legendYou: "You",
-          legendOther: "Sub-affiliates",
-        },
-        {
-          title: "50/50 partnership",
-          subtext: "Split with a collaborator.",
-          description: "20% for you · 20% partner",
-          legendYou: "You",
-          legendOther: "Partner",
+          tag: "Agencies",
+          title: "Agencies & consultants",
+          desc: "Recommend Moonbundles to your Shopify clients. No more stacking 4 apps.",
+          icons: ["shopify"],
         },
       ],
     },
 
     faq: {
       badge: "FAQ",
-      titlePart1: "Frequently asked",
-      titlePart2: "questions",
+      titleA: "Still have questions?",
+      titleB: "We've got answers.",
+      subtitle: "Didn't find it? Message us on WhatsApp, we reply in minutes.",
+      cta: "Join the program",
       items: [
         {
-          q: "How are payments made?",
-          a: "Payments are made monthly via Mantle. You track everything from your affiliate dashboard, with full commission history.",
+          q: "What's the commission rate?",
+          a: "40% for life on every subscription you generate. As long as your referral stays a customer, you earn 40% — every month, no limit.",
         },
         {
-          q: "How do I track my referrals?",
-          a: "You have a dedicated dashboard that tracks every signup, every payment, and your commissions in real time. You see exactly who signed up, when, and how much you earned.",
+          q: "How do payouts work?",
+          a: "Automatic payout on the 15th of each month via Stripe, Wise, or bank transfer. $100 minimum. Paid within 3-5 business days.",
         },
         {
-          q: "Does the promo code track without the affiliate link?",
-          a: "Yes. If your referral uses your promo code at signup (even without clicking your link), the commission is automatically attributed to your affiliate account.",
+          q: "How do I split the 40% between me and sub-affiliates?",
+          a: "From your dashboard, freely set your share (0-40%) and what goes to your sub-affiliates. You can change the split anytime.",
         },
         {
-          q: "Can I run ads with my link?",
-          a: "Yes, you can promote your link on all channels: social media, email, YouTube, blog, Discord/Skool communities, or even paid ads.",
+          q: "Annual or monthly — how is commission calculated?",
+          a: "You earn 40% on what the customer actually pays. Annual plans = 40% of annual amount, validated after ~30 days.",
         },
         {
-          q: "Is it really for life?",
-          a: "Yes. As long as your referral stays subscribed to Moonbundles, you earn your commission every month. No time limit, no earnings cap.",
+          q: "If a visitor doesn't sign up right away, do I lose?",
+          a: "No. 30-day cookie. Every click or promo code use resets it. Commission stays yours.",
+        },
+        {
+          q: "What am I not allowed to do?",
+          a: "No paid ads on the Moonbundles brand name. No spam, fake reviews, or cashback. Non-compliant commissions are voided.",
         },
       ],
     },
 
-    affiliateCta: {
-      stats: ["448+ 5-star reviews", "1,200+ active stores", "Built for Shopify"],
-      titlePart1: "Earn money for life",
-      titlePart2: "with Moonbundles",
-      subtitlePart1: "If someone subscribes to Moonbundles thanks to you, we pay you",
-      subtitleHighlight: "40% every month",
-      subtitlePart2: ". Automatically. No limits.",
-      button: "Become an affiliate",
-      footnote: "Reply within 24h — Program managed in direct",
+    deserves: {
+      titleA: "Your audience deserves",
+      titleB: "You deserve",
+      rate: "40% for life.",
+      subtitle:
+        "Moonbundles is a product merchants love using. You bring the audience, we bring the product.",
+      cta: "Start now",
     },
 
     nativeAds: {
@@ -966,6 +987,7 @@ export interface TranslationDict {
     compare: string;
     affiliate: string;
     cta: string;
+    ctaAffiliate: string;
     menuOpen: string;
   };
   hero: {
@@ -1030,71 +1052,66 @@ export interface TranslationDict {
   };
   affiliateHero: {
     badge: string;
-    headline: string[];
-    gradientWords: string[];
+    headlineA: string;
+    headlineB: string;
     subtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
-    stats: { value: string; label: string }[];
+    trust: string[];
   };
-  calculator: {
-    badge: string;
-    titlePart1: string;
-    titlePart2: string;
-    subtitle: string;
-    sliderLabel: string;
-    sliderAria: string;
+  simulator: {
+    eyebrow: string;
+    refs: string;
     perMonth: string;
     perYear: string;
-    basedOn: string;
-    perMonthLabel: string;
-    multiplier: string;
-    disclaimer: string;
+    soit: string;
+    preset: string;
+  };
+  split: {
+    badge: string;
+    titleA: string;
+    titleB: string;
+    subtitle: string;
+    you: string;
+    subs: string;
+    scenarioLabel: string;
+    scenarios: { label: string; you: number; subs: number; desc: string }[];
+    footerA: string;
+    footerPct: string;
+    footerB: string;
+  };
+  askAi: {
+    badge: string;
+    titleA: string;
+    titleB: string;
+    ask: string;
+    prompt: string;
   };
   howItWorks: {
     badge: string;
-    titlePart1: string;
-    titlePart2: string;
-    steps: { title: string; desc: string }[];
+    title: string;
+    steps: { tag: string; title: string; desc: string }[];
   };
-  whoFor: {
+  targets: {
     badge: string;
-    titlePart1: string;
-    titlePart2: string;
-    personas: { title: string; desc: string }[];
-  };
-  whyMoonbundles: {
-    points: string[];
-  };
-  repartition: {
-    badge: string;
-    titlePart1: string;
-    titlePart2: string;
+    title: string;
     subtitle: string;
-    footnote: string;
-    splits: {
-      title: string;
-      subtext: string;
-      description: string;
-      legendYou: string;
-      legendOther: string;
-    }[];
+    items: { tag: string; title: string; desc: string; icons: string[] }[];
   };
   faq: {
     badge: string;
-    titlePart1: string;
-    titlePart2: string;
+    titleA: string;
+    titleB: string;
+    subtitle: string;
+    cta: string;
     items: { q: string; a: string }[];
   };
-  affiliateCta: {
-    stats: string[];
-    titlePart1: string;
-    titlePart2: string;
-    subtitlePart1: string;
-    subtitleHighlight: string;
-    subtitlePart2: string;
-    button: string;
-    footnote: string;
+  deserves: {
+    titleA: string;
+    titleB: string;
+    rate: string;
+    subtitle: string;
+    cta: string;
   };
   nativeAds: {
     heroBadge: string;
