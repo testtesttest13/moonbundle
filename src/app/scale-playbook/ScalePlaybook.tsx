@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const INSTALL_URL = "/api/go?from=scale-playbook";
@@ -76,6 +77,8 @@ function CopyButton({
   text: string;
   size?: "sm" | "md" | "lg";
 }) {
+  const { t } = useTranslation();
+  const tr = t.scalePlaybook;
   const [copied, setCopied] = useState(false);
   const onClick = () => {
     navigator.clipboard.writeText(text).then(() => {
@@ -98,17 +101,14 @@ function CopyButton({
           : "border border-blue-accent/30 bg-blue-accent/10 text-blue-accent hover:bg-blue-accent/20"
       }`}
     >
-      {copied ? "Copié ✓" : "Copier"}
+      {copied ? tr.copyDone : tr.copyIdle}
     </button>
   );
 }
 
-function PrimaryCtaCard({ variant = "main" }: { variant?: "main" | "final" }) {
-  const heading = variant === "main" ? "⚡ Étape 1 : Installe Moonbundles" : "⚡ Prêt à appliquer ces hacks ?";
-  const sub =
-    variant === "main"
-      ? "Tous ces hacks demandent une app qui les supporte. Moonbundles fait tout en une seule app : bundles, cart drawer, upsell post-achat, A/B test. 1 200+ stores, 5.0/5 sur Shopify."
-      : "Une seule app pour bundles, cart drawer, upsell post-achat et A/B test. Code -20% à vie, install en 30 secondes.";
+function PrimaryCtaCard() {
+  const { t } = useTranslation();
+  const tr = t.scalePlaybook;
 
   return (
     <motion.div
@@ -124,16 +124,16 @@ function PrimaryCtaCard({ variant = "main" }: { variant?: "main" | "final" }) {
 
       <div className="relative z-10 p-6 sm:p-8 lg:p-10">
         <h3 className="text-center text-xl font-bold leading-tight text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]">
-          {heading}
+          ⚡ {tr.ctaTitle}
         </h3>
         <p className="mx-auto mt-3 max-w-prose text-center text-sm leading-relaxed text-text-muted sm:text-base">
-          {sub}
+          {tr.ctaSub}
         </p>
 
         <div className="mx-auto mt-6 flex max-w-md items-center justify-between gap-3 rounded-xl border border-blue-accent/25 bg-navy-900/70 px-4 py-3 sm:px-5">
           <div className="min-w-0">
             <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
-              -20% à vie · code
+              {tr.promoLabel}
             </p>
             <p className="mt-1 truncate text-lg font-bold tracking-widest text-white sm:text-xl font-[family-name:var(--font-heading)]">
               {PROMO_CODE}
@@ -151,7 +151,7 @@ function PrimaryCtaCard({ variant = "main" }: { variant?: "main" | "final" }) {
             className="btn-shine group relative flex w-full items-center justify-center gap-3 rounded-xl bg-blue-accent py-4 text-base font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:bg-blue-light hover:shadow-[0_0_40px_rgba(77,124,255,0.45)] sm:text-lg"
           >
             <BoltIcon />
-            <span className="relative z-10">Installer Moonbundles</span>
+            <span className="relative z-10">{tr.ctaButton}</span>
             <Image
               src="/shopify.png"
               alt="Shopify"
@@ -163,7 +163,7 @@ function PrimaryCtaCard({ variant = "main" }: { variant?: "main" | "final" }) {
         </div>
 
         <p className="mt-4 text-center text-[11px] text-text-muted/80 sm:text-xs">
-          Installation en 30 secondes · aucun code requis · 1 200+ stores · 5.0/5
+          {tr.ctaPerks}
         </p>
       </div>
     </motion.div>
@@ -211,6 +211,8 @@ function HackCard({
   apply: string;
   children?: React.ReactNode;
 }) {
+  const { t } = useTranslation();
+  const tr = t.scalePlaybook;
   return (
     <motion.article
       className="glass-card p-6 sm:p-8 lg:p-10"
@@ -220,7 +222,7 @@ function HackCard({
       transition={{ duration: 0.5, ease }}
     >
       <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-accent">
-        Hack {index} / 4
+        {tr.hackCounterPrefix} {index} {tr.hackCounterSuffix}
       </span>
       <h3 className="mt-3 text-xl font-bold leading-tight text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]">
         {title}
@@ -237,7 +239,7 @@ function HackCard({
         </span>
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
-            Comment l&apos;appliquer
+            {tr.applyLabel}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-text-secondary">
             {apply}
@@ -324,11 +326,13 @@ function FomoPreview() {
 }
 
 function FomoCodeBlock() {
+  const { t } = useTranslation();
+  const tr = t.scalePlaybook;
   return (
     <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-navy-900/80">
       <div className="flex items-center justify-between gap-3 border-b border-white/5 px-4 py-2.5 sm:px-5">
         <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
-          Code à copier-coller
+          {tr.fomoCodeLabel}
         </p>
         <CopyButton text={FOMO_HTML} size="sm" />
       </div>
@@ -340,6 +344,8 @@ function FomoCodeBlock() {
 }
 
 export default function ScalePlaybook() {
+  const { t } = useTranslation();
+  const tr = t.scalePlaybook;
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
       {/* Grid background */}
@@ -392,82 +398,61 @@ export default function ScalePlaybook() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-accent" />
             </span>
-            📊 Lead Magnet Moon
+            📊 {tr.badge}
           </span>
 
           <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl font-[family-name:var(--font-heading)]">
-            Le playbook des stores Shopify à{" "}
+            {tr.heroTitlePrefix}{" "}
             <span className="bg-gradient-to-r from-blue-accent via-violet-accent to-blue-light bg-clip-text text-transparent">
-              $10k/day
+              {tr.heroTitleHighlight}
             </span>
           </h1>
 
           <p className="mt-4 max-w-prose text-sm leading-relaxed text-text-muted sm:text-base lg:text-lg">
-            J&apos;ai analysé 50 boutiques qui impriment du chiffre en 2026.
-            Voilà les <span className="font-semibold text-blue-accent">4 hacks</span>{" "}
-            qui reviennent dans 98% des cas.
+            {tr.heroSub1}{" "}
+            <span className="font-semibold text-blue-accent">{tr.heroSubHighlight}</span>{" "}
+            {tr.heroSub2}
           </p>
         </motion.div>
 
-        {/* ===== PRIMARY CTA ===== */}
-        <div className="mt-10">
-          <PrimaryCtaCard variant="main" />
-        </div>
-
         {/* ===== HACKS HEADER ===== */}
         <motion.div
-          className="mt-16"
+          className="mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease }}
         >
           <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl font-[family-name:var(--font-heading)]">
-            Les 4 hacks à appliquer{" "}
-            <span className="text-blue-accent">dès maintenant</span>
+            {tr.hacksTitle}{" "}
+            <span className="text-blue-accent">{tr.hacksTitleHighlight}</span>
           </h2>
           <p className="mt-3 max-w-prose text-sm leading-relaxed text-text-muted sm:text-base">
-            Tous validés sur des stores qui font +$10k/jour.
+            {tr.hacksSubtitle}
           </p>
         </motion.div>
 
         {/* ===== HACKS ===== */}
         <div className="mt-8 flex flex-col gap-6 sm:gap-8">
-          <HackCard
-            index={1}
-            title="Inverse l'ordre de tes packs"
-            desc="La majorité des stores affichent leurs packs du moins cher au plus cher. Le client voit 30€ en premier, tout le reste paraît cher. Inverse l'ordre. Pack le plus cher en haut, le moins cher en bas. Le client voit 99€, le 30€ paraît dérisoire. C'est de l'ancrage psychologique pur."
-            apply="Dans Moonbundles, tu réordonnes tes tiers en glissé-déposé. 30 secondes."
-          />
-
-          <HackCard
-            index={2}
-            title="Abonnement coché par défaut"
-            desc="L'effet par défaut. Les utilisateurs ne décochent pas. Si tu coches « Subscribe & Save 20% » par défaut, tu transformes 30 à 40% de tes one-shots en abonnés récurrents. C'est le hack qui transforme un store en MRR machine."
-            apply="Dans Moonbundles, active l'option « Subscribe & Save » et coche-la par défaut. Tu peux personnaliser le discount."
-          />
-
-          <HackCard
-            index={3}
-            title="Le liquid de FOMO qui fait passer ton CVR de 1% à 3%"
-            desc="Un simple bloc d'urgence sous ton bouton ATC. Pas un timer relou, pas une alerte spammy. Juste un message qui rappelle 3 choses : la rareté, le côté limité, et le fait que c'est pas dispo ailleurs."
-            apply="Colle le code dans une section custom liquid sur ta page produit Shopify, juste sous ton bouton « Add to cart ». Adapte le texte à ton produit et ta langue."
-          >
-            <div className="mt-6">
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
-                Aperçu du bloc
-              </p>
-              <FomoPreview />
-              <FomoCodeBlock />
-            </div>
-          </HackCard>
-
-          <HackCard
-            index={4}
-            title="Les cadeaux qui se débloquent"
-            desc="Le client achète pas pour économiser. Il achète pour pas rater le cadeau. Pack 1 : rien. Pack 2 : un cadeau (mesure, accessoire). Pack 3 : 2 cadeaux + free shipping. Le tier supérieur devient irrésistible. Cette boutique de taurine pour chiens fait $100k/mois avec ce simple détail."
-            apply="Dans Moonbundles, ajoute des « Free gifts » à chaque tier de ton bundle. L'app affiche automatiquement ce qui se débloque à chaque palier."
-          />
+          {tr.hacks.map((hack, i) => (
+            <HackCard
+              key={i}
+              index={i + 1}
+              title={hack.title}
+              desc={hack.desc}
+              apply={hack.apply}
+            >
+              {i === 2 && (
+                <div className="mt-6">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-blue-accent">
+                    {tr.fomoPreviewLabel}
+                  </p>
+                  <FomoPreview />
+                  <FomoCodeBlock />
+                </div>
+              )}
+            </HackCard>
+          ))}
         </div>
 
         {/* ===== ALLER PLUS LOIN ===== */}
@@ -479,17 +464,17 @@ export default function ScalePlaybook() {
           transition={{ duration: 0.6, ease }}
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-accent">
-            Aller plus loin
+            {tr.furtherLabel}
           </span>
           <h2 className="mt-3 text-xl font-bold leading-tight text-white sm:text-2xl lg:text-3xl font-[family-name:var(--font-heading)]">
-            Tu veux que je décortique{" "}
-            <span className="text-blue-accent">TON store</span> ?
+            {tr.furtherTitlePrefix}{" "}
+            <span className="text-blue-accent">{tr.furtherTitleHighlight}</span>{" "}
+            {tr.furtherTitleSuffix}
           </h2>
           <p className="mt-4 max-w-prose text-sm leading-relaxed text-text-secondary sm:text-base">
-            Si t&apos;as installé Moonbundles avec le code{" "}
-            <span className="font-semibold text-blue-accent">{PROMO_CODE}</span>,
-            écris-moi sur WhatsApp. Je regarde ton store et je te dis exactement
-            quels hacks appliquer en priorité, gratuitement.
+            {tr.furtherTextPrefix}{" "}
+            <span className="font-semibold text-blue-accent">{PROMO_CODE}</span>
+            {tr.furtherTextSuffix}
           </p>
 
           <a
@@ -505,13 +490,13 @@ export default function ScalePlaybook() {
             >
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
-            <span className="relative z-10">M&apos;écrire sur WhatsApp</span>
+            <span className="relative z-10">{tr.furtherButton}</span>
           </a>
         </motion.div>
 
-        {/* ===== FINAL CTA ===== */}
+        {/* ===== FINAL CTA (only one) ===== */}
         <div className="mt-14">
-          <PrimaryCtaCard variant="final" />
+          <PrimaryCtaCard />
         </div>
 
         {/* ===== FOOTER ===== */}
@@ -540,7 +525,7 @@ export default function ScalePlaybook() {
           >
             <BoltIcon />
             <span className="relative z-10 truncate">
-              Installer · code {PROMO_CODE}
+              {tr.stickyButton} {PROMO_CODE}
             </span>
           </a>
           <a

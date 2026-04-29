@@ -313,6 +313,60 @@ export const translations: Record<Language, TranslationDict> = {
       whatsappButton: "Nous contacter sur WhatsApp",
     },
 
+    scalePlaybook: {
+      badge: "Lead Magnet Moon",
+      heroTitlePrefix: "Le playbook des stores Shopify à",
+      heroTitleHighlight: "$10k/day",
+      heroSub1: "J'ai analysé 50 boutiques qui impriment du chiffre en 2026. Voilà les",
+      heroSubHighlight: "4 hacks",
+      heroSub2: "qui reviennent dans 98% des cas.",
+      ctaTitle: "Prêt à appliquer ces hacks ?",
+      ctaSub: "Tous ces hacks demandent une app qui les supporte. Moonbundles fait tout en une seule app : bundles, cart drawer, upsell post-achat, A/B test. 1 200+ stores, 5.0/5 sur Shopify.",
+      promoLabel: "-20% à vie · code",
+      ctaButton: "Installer Moonbundles",
+      ctaPerks: "Installation en 30 secondes · aucun code requis · 1 200+ stores · 5.0/5",
+      hacksTitle: "Les 4 hacks à appliquer",
+      hacksTitleHighlight: "dès maintenant",
+      hacksSubtitle: "Tous validés sur des stores qui font +$10k/jour.",
+      hackCounterPrefix: "Hack",
+      hackCounterSuffix: "/ 4",
+      applyLabel: "Comment l'appliquer",
+      hacks: [
+        {
+          title: "Inverse l'ordre de tes packs",
+          desc: "La majorité des stores affichent leurs packs du moins cher au plus cher. Le client voit 30€ en premier, tout le reste paraît cher. Inverse l'ordre. Pack le plus cher en haut, le moins cher en bas. Le client voit 99€, le 30€ paraît dérisoire. C'est de l'ancrage psychologique pur.",
+          apply: "Dans Moonbundles, tu réordonnes tes tiers en glissé-déposé. 30 secondes.",
+        },
+        {
+          title: "Abonnement coché par défaut",
+          desc: "L'effet par défaut. Les utilisateurs ne décochent pas. Si tu coches « Subscribe & Save 20% » par défaut, tu transformes 30 à 40% de tes one-shots en abonnés récurrents. C'est le hack qui transforme un store en MRR machine.",
+          apply: "Dans Moonbundles, active l'option « Subscribe & Save » et coche-la par défaut. Tu peux personnaliser le discount.",
+        },
+        {
+          title: "Le liquid de FOMO qui fait passer ton CVR de 1% à 3%",
+          desc: "Un simple bloc d'urgence sous ton bouton ATC. Pas un timer relou, pas une alerte spammy. Juste un message qui rappelle 3 choses : la rareté, le côté limité, et le fait que c'est pas dispo ailleurs.",
+          apply: "Colle le code dans une section custom liquid sur ta page produit Shopify, juste sous ton bouton « Add to cart ». Adapte le texte à ton produit et ta langue.",
+        },
+        {
+          title: "Les cadeaux qui se débloquent",
+          desc: "Le client achète pas pour économiser. Il achète pour pas rater le cadeau. Pack 1 : rien. Pack 2 : un cadeau (mesure, accessoire). Pack 3 : 2 cadeaux + free shipping. Le tier supérieur devient irrésistible. Cette boutique de taurine pour chiens fait $100k/mois avec ce simple détail.",
+          apply: "Dans Moonbundles, ajoute des « Free gifts » à chaque tier de ton bundle. L'app affiche automatiquement ce qui se débloque à chaque palier.",
+        },
+      ],
+      fomoPreviewLabel: "Aperçu du bloc",
+      fomoCodeLabel: "Code à copier-coller",
+      copyIdle: "Copier",
+      copyDone: "Copié ✓",
+      furtherLabel: "Aller plus loin",
+      furtherTitlePrefix: "Tu veux que je décortique",
+      furtherTitleHighlight: "TON store",
+      furtherTitleSuffix: "?",
+      furtherTextPrefix: "Si t'as installé Moonbundles avec le code",
+      furtherTextSuffix: ", écris-moi sur WhatsApp. Je regarde ton store et je te dis exactement quels hacks appliquer en priorité, gratuitement.",
+      furtherButton: "M'écrire sur WhatsApp",
+      stickyButton: "Installer · code",
+    },
+
     valueOffer: {
       heroBadge: "Guide Gratuit",
       heroTitle: "La psychologie derrière les offres qui convertissent le mieux",
@@ -806,6 +860,60 @@ export const translations: Record<Language, TranslationDict> = {
       whatsappButton: "Contact us on WhatsApp",
     },
 
+    scalePlaybook: {
+      badge: "Lead Magnet Moon",
+      heroTitlePrefix: "The playbook for Shopify stores doing",
+      heroTitleHighlight: "$10k/day",
+      heroSub1: "I analyzed 50 stores printing money in 2026. Here are the",
+      heroSubHighlight: "4 hacks",
+      heroSub2: "that show up in 98% of them.",
+      ctaTitle: "Ready to apply these hacks?",
+      ctaSub: "All these hacks need an app that supports them. Moonbundles does it all in one app: bundles, cart drawer, post-purchase upsell, A/B testing. 1,200+ stores, 5.0/5 on Shopify.",
+      promoLabel: "-20% for life · code",
+      ctaButton: "Install Moonbundles",
+      ctaPerks: "Install in 30 seconds · no code required · 1,200+ stores · 5.0/5",
+      hacksTitle: "The 4 hacks to apply",
+      hacksTitleHighlight: "right now",
+      hacksSubtitle: "All validated on stores doing +$10k/day.",
+      hackCounterPrefix: "Hack",
+      hackCounterSuffix: "/ 4",
+      applyLabel: "How to apply it",
+      hacks: [
+        {
+          title: "Reverse the order of your bundles",
+          desc: "Most stores show their bundles from cheapest to most expensive. The customer sees $30 first, everything else looks expensive. Flip it. Most expensive on top, cheapest at the bottom. The customer sees $99, $30 looks tiny. Pure psychological anchoring.",
+          apply: "In Moonbundles, drag and drop to reorder your tiers. 30 seconds.",
+        },
+        {
+          title: "Subscription pre-checked by default",
+          desc: "The default effect. Users don't uncheck. If you check “Subscribe & Save 20%” by default, you turn 30 to 40% of your one-shots into recurring subscribers. The hack that turns a store into an MRR machine.",
+          apply: "In Moonbundles, enable “Subscribe & Save” and pre-check it. You can customize the discount.",
+        },
+        {
+          title: "The FOMO liquid that takes your CVR from 1% to 3%",
+          desc: "A simple urgency block under your ATC button. Not an annoying timer, not a spammy alert. Just a message reminding 3 things: scarcity, limited availability, and the fact it's not available elsewhere.",
+          apply: "Paste the code in a custom liquid section on your Shopify product page, just below your “Add to cart” button. Adapt the copy to your product and language.",
+        },
+        {
+          title: "Gifts that unlock as you upgrade",
+          desc: "The customer doesn't buy to save. They buy to not miss the gift. Tier 1: nothing. Tier 2: a gift (measure, accessory). Tier 3: 2 gifts + free shipping. The top tier becomes irresistible. This dog taurine store does $100k/month with this single trick.",
+          apply: "In Moonbundles, add “Free gifts” to each tier of your bundle. The app automatically displays what unlocks at each level.",
+        },
+      ],
+      fomoPreviewLabel: "Block preview",
+      fomoCodeLabel: "Copy-paste this code",
+      copyIdle: "Copy",
+      copyDone: "Copied ✓",
+      furtherLabel: "Going further",
+      furtherTitlePrefix: "Want me to break down",
+      furtherTitleHighlight: "YOUR store",
+      furtherTitleSuffix: "?",
+      furtherTextPrefix: "If you installed Moonbundles with code",
+      furtherTextSuffix: ", message me on WhatsApp. I'll look at your store and tell you exactly which hacks to apply first, for free.",
+      furtherButton: "Message me on WhatsApp",
+      stickyButton: "Install · code",
+    },
+
     valueOffer: {
       heroBadge: "Free Guide",
       heroTitle: "The psychology behind the highest converting offers",
@@ -1134,6 +1242,38 @@ export interface TranslationDict {
     copyDone: string;
     whatsappText: string;
     whatsappButton: string;
+  };
+  scalePlaybook: {
+    badge: string;
+    heroTitlePrefix: string;
+    heroTitleHighlight: string;
+    heroSub1: string;
+    heroSubHighlight: string;
+    heroSub2: string;
+    ctaTitle: string;
+    ctaSub: string;
+    promoLabel: string;
+    ctaButton: string;
+    ctaPerks: string;
+    hacksTitle: string;
+    hacksTitleHighlight: string;
+    hacksSubtitle: string;
+    hackCounterPrefix: string;
+    hackCounterSuffix: string;
+    applyLabel: string;
+    hacks: { title: string; desc: string; apply: string }[];
+    fomoPreviewLabel: string;
+    fomoCodeLabel: string;
+    copyIdle: string;
+    copyDone: string;
+    furtherLabel: string;
+    furtherTitlePrefix: string;
+    furtherTitleHighlight: string;
+    furtherTitleSuffix: string;
+    furtherTextPrefix: string;
+    furtherTextSuffix: string;
+    furtherButton: string;
+    stickyButton: string;
   };
   valueOffer: {
     heroBadge: string;
